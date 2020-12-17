@@ -1,0 +1,370 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh dethi.sty 3.2
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{color}
+ \usepackage{shortlst}
+\usepackage{enumerate}
+%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mathpazo} 
+\usepackage[bookmarksnumbered, colorlinks,hyperindex, unicode]{hyperref}%
+\usepackage{titledot}
+\voffset=-2cm
+% \hoffset=-2cm
+\textheight 23.5truecm 
+\textwidth 18.5truecm 
+\usepackage[baitap]{dethi}
+%%%%%%%%%%%%
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]%
+           {\markright{\it \thesection\ #1}}
+\lhead[\fancyplain{}{
+     \footnotesize{Page \thepage\ of \pageref{LastPage}}}]
+{\fancyplain{}{ https://nhdien.wordpress.com - {\it Nguyễn Hữu Điển}}}
+\rhead[\fancyplain{}{\leftmark}]%
+   {\fancyplain{}{\footnotesize{Trang số \thepage\ trong \pageref{LastPage}}}}
+\cfoot{\footnotesize{\thepage/\pageref{LastPage}}}
+\sloppy
+%%%%%%%%%%%%
+
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%%%%%%%%%%%%%%%%%%
+\usepackage{fancybox}
+\cornersize*{5mm}
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\usepackage{lastpage}
+\graphicspath{{hinh-cauhoi/}{images/}} 
+\def\v#1{\overrightarrow{#1}}
+%%%%%%%%%%%%%%%%
+\usepackage{verbatimbox}
+\usepackage{framed}
+\definecolor{shadecolor}{rgb}{1.0,0.8,1.0}
+\newenvironment{khung}{%
+  \def\FrameCommand{\fcolorbox{black}{shadecolor}}%
+  \MakeFramed {\advance\hsize-\width \FrameRestore}%
+  }%
+{\endMakeFramed}
+
+\def\dkhung{
+\begin{khung}
+\noindent\theverbbox[t]
+\end{khung}
+}
+
+%%%%%%%%%%%%%%%%%%%
+\begin{document}
+ \setlength{\shortitemwidth}{\textwidth/4-3em}
+ \setlength{\runitemsep}{1ex}
+ \setlength{\labelsep}{4pt}
+\setlength{\baselineskip}{12truept}
+
+\title{\bf TRỢ GIÚP [BAITAP] ĐẦU RA TRONG DETHI.STY 3.3} % Ten bai
+\author{{\bf Nguyễn Hữu Điển}\\
+Khoa Toán - Cơ - Tin học\\
+ĐHKHTN Hà Nội, ĐHQGHN
+} % Tac gia
+\date{} % Ngay
+
+\maketitle
+\vspace*{1cm}
+\tableofcontents
+\loadrandomproblems[bttracnghiem]{6}{vd08-cauhoi20170120}
+% \lamtieude
+\newpage
+\section{Phần đầu đề bài trắc nghiệm}
+ \begin{verbbox}  \documentclass[12pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{color}
+ \usepackage{shortlst}
+\usepackage{enumerate}
+\usepackage{mathpazo} 
+\usepackage[bookmarksnumbered, colorlinks,hyperindex, unicode]{hyperref}%
+\usepackage{titledot}
+\voffset=-2cm
+% \hoffset=-2cm
+\textheight 23.5truecm 
+\textwidth 18.5truecm 
+\usepackage[baitap]{dethi}
+\usepackage{fancybox}
+\cornersize*{5mm}
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\usepackage{lastpage}
+\graphicspath{{hinh-cauhoi/}{images/}} 
+\def\v#1{\overrightarrow{#1}}
+\begin{document}
+
+ \setlength{\shortitemwidth}{\textwidth/4-3em}
+ \setlength{\runitemsep}{1ex}
+ \setlength{\labelsep}{4pt}
+\setlength{\baselineskip}{12truept}
+\title{\bf TÙY CHỌN [BAITAP] TRONG DETHI.STY 3.3} % Ten bai
+\author{{\bf Nguyễn Hữu Điển}\\
+Khoa Toán - Cơ - Tin học\\
+ĐHKHTN Hà Nội, ĐHQGHN
+} % Tac gia
+\date{} % Ngay
+\maketitle
+\vspace*{1cm}
+\tableofcontents
+%\loadrandomproblems[bttracnghiem]{6}{vd08-cauhoi20170120}
+\loadrandomproblems[bttracnghiem]{6}{vd13-cauhoi-detk2017-toan}
+\lamtieude\end{verbbox} \dkhung  
+\newpage
+\section{Đề bài trắc nghiệm}
+\begin{verbbox}
+\indebai
+\begin{enumerate}
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\end{verbbox}
+\dkhung
+
+\indebai
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+
+% \end{document}
+\newpage
+\section{Đề bài và đánh dấu đáp án đúng}
+% \begin{center}
+% {\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+% \end{center}
+\begin{verbbox}
+\setcounter{page}{1}
+\indebaidapan
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\end{verbbox}
+\dkhung
+
+\setcounter{page}{1}
+\indebaidapan
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+\section{Đề bài, đánh dấu đáp án và lời giải}
+\begin{verbbox}
+\setcounter{page}{1}
+\indebailoigiai
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\end{verbbox}
+\dkhung
+
+\setcounter{page}{1}
+\indebailoigiai
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+
+
+\newpage
+\section{Đáp án rút gọn}
+\begin{verbbox}
+\thispagestyle{empty}
+\indapanrutgon
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{verbbox}
+\dkhung
+
+\indapanrutgon
+\thispagestyle{empty}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+\section{Đáp án liệt kê}
+\begin{verbbox}
+\setcounter{page}{1}
+\indapanlietke
+\thispagestyle{empty}
+\begin{center}
+\begin{multicols}{5}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+\end{verbbox}
+\dkhung
+
+\setcounter{page}{1}
+\indapanlietke
+\thispagestyle{empty}
+\begin{center}
+\begin{multicols}{5}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+
+
+\newpage
+\section{Đáp án liệt kê theo số}
+
+\begin{verbbox}
+\thispagestyle{empty}
+\indapanso
+\begin{center}
+\begin{multicols}{10}
+\begin{enumerate}[\socau]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+\end{verbbox}
+\dkhung
+
+\thispagestyle{empty}
+\indapanso
+\begin{center}
+\begin{multicols}{10}
+\begin{enumerate}[\socau]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+
+\newpage
+\section{Đáp án liệt kê theo chữ}
+
+\begin{verbbox} 
+ \indapanchu
+\thispagestyle{empty}
+\begin{center}
+\begin{multicols}{10}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+\end{verbbox} 
+\dkhung
+ 
+
+\indapanchu
+\thispagestyle{empty}
+\begin{center}
+\begin{multicols}{10}
+\begin{enumerate}[ ]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+
+\newpage
+\section{Đáp án liệt kê và lời giải}
+
+\begin{verbbox} \setcounter{page}{1}
+\inloigiai
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}\end{verbbox} \dkhung  
+\setcounter{page}{1}
+\inloigiai
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+
+
+\newpage
+\section{Làm phiếu đục lỗ}
+\begin{verbbox}  \setcounter{page}{1}
+\inphieuduclo
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}\end{verbbox} \dkhung  
+\setcounter{page}{1}
+\inphieuduclo
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+
+\newpage
+\section{Làm phiếu phiếu thi}
+\begin{verbbox}  \inphieuthi
+\lamphieuthi
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}\end{verbbox} \dkhung  
+\inphieuthi
+\lamphieuthi
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+
+% \addtocounter{page}{-2}
+% 
+
+\end{document}
+https://drive.google.com/open?id=0B6t6keI_Xwz5dmtjbHlIbjIyc0k

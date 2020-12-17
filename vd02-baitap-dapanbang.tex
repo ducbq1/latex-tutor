@@ -1,0 +1,257 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+% \usepackage{picinpar}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage[bookmarks,colorlinks,hyperindex,plainpages=false,unicode,hypertexnames=false,debug]{hyperref}
+\usepackage{bookmark}
+% \usepackage{titledot}
+% \usepackage{multicol}%
+% \usepackage{shortlst}
+% \usepackage{color}
+% \usepackage{enumerate}
+\usepackage{mathpazo} 
+% \usepackage{balance} 
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 25truecm 
+\textwidth 19truecm 
+\usepackage[baitap]{dethi}
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ THAM KHẢO}
+\loaidethi{(Đề gồm  \pageref{DebaiPage} trang)}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KỲ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA 2017}
+\tenmonhoc{Bài thi: TOÁN}
+\madethi{100}
+\tieudeduoi
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+% \hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+% \sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+
+\usepackage{lastpage}
+\graphicspath{{hinh-tracnghiem/}{hinh/}{hinh-cauhoi/}{images/}{dethamkhao/}} 
+\parindent 10pt
+% \renewcommand{\bonpa}[4]{#1#2#3#4}
+\usepackage{centerpage}
+\usepackage{forloop}
+\begin{document}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\setlength{\columnseprule}{0pt}
+%%%%%%%%%%%%%
+%%%Lập đề bài thi
+\addcontentsline{toc}{section}{Bài thi Toán 2017 (lần 3)}
+% \immediate\openout\tempfile=deluu100.tex
+\addcontentsline{toc}{subsection}{Đề bài mã 100}
+\loadrandomproblems[ma100]{50}{vd13-cauhoi-detk2017-toan}
+ \setlength{\columnsep}{10pt}
+\lamtieude
+\indebai
+\demexcel
+% \lapcauhoi{ma100}
+% 
+\begin{enumerate}[]
+\foreachproblem[ma100]{\item\causo\addcontentsline{toc}{subsubsection}{Câu \thesocauhoi.\thisproblemlabel}\thisproblem\dienbang}
+ \end{enumerate}
+
+\immediate\closeout\tempfile
+\immediate\closeout\file
+\label{DebaiPage}
+
+\newpage
+\thispagestyle{empty}
+\lamtieude
+\dempa
+\lapbang
+\dapanexcel
+\setlength{\columnsep}{5pt}
+\dapanlietke{ma100}
+\dapanma{ma100}
+%  \end{document}
+
+% \newpage
+%%In ra bản thống kê
+% \thispagestyle{empty}
+% \lamtieude
+% \dempa
+% \dapanexcel
+% \dapanma{ma100}
+
+%%%%%%%%%%%%%%%%
+\newpage
+%%%Lời giải
+\setcounter{page}{1}
+\loaidethi{(Lời giải  \pageref{lgPage} trang)}
+\trangcuoi{lgPage}
+\lamtieude
+\begin{center}
+\textbf{LỜI GIẢI}
+\end{center}
+\inloigiai
+\addcontentsline{toc}{subsection}{Lời giải mã 100}
+\begin{enumerate}[]
+\foreachproblem[ma100]{\item\thisproblem\addcontentsline{toc}{subsubsection}{Câu \thesocauhoi.\thisproblemlabel}}
+\end{enumerate}
+\label{lgPage}
+% \end{document}
+\newpage
+\setcounter{page}{1}
+\loaidethi{(Đề bài và lời giải  \pageref{dblgPage} trang)}
+\trangcuoi{dblgPage}
+\lamtieude
+\begin{center}
+\textbf{ĐỀ BÀI VÀ LỜI GIẢI}
+\end{center}
+\indebailoigiai
+\addtocontents{toc}{\quad }
+\addcontentsline{toc}{subsection}{Đề bài và Lời giải mã 100}
+% \lapcauhoi{ma100}
+\begin{enumerate}[]
+\foreachproblem[ma100]{\item\causo\addcontentsline{toc}{subsubsection}{Câu \thesocauhoi.\thisproblemlabel}\thisproblem}
+\end{enumerate}
+\label{dblgPage}
+
+  \end{document}
+\newpage
+\loaidethi{(Đáp án rút gọn)}
+\lamtieude
+\indapanrutgon
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+ \foreachproblem[ma100]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+\setcounter{page}{1}
+\thispagestyle{empty}
+\inphieuduclo
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[ma100]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+
+\newpage
+ \thispagestyle{empty}
+\inphieuthi
+\lamphieuthi
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[ma100]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+\setcounter{page}{1}
+\addcontentsline{toc}{section}{Bài thi Toán 2017 (lần 2)}
+\loaidethi{(Đề gồm  \pageref{DebPage} trang)}
+\madethi{150}
+\trangcuoi{DebPage}
+\addcontentsline{toc}{subsection}{Đề bài mã 150}
+\loadrandomproblems[ma150]{50}{2017-cauhoi-toan}
+ \setlength{\columnsep}{10pt}
+\lamtieude
+\indebai
+\demexcel
+\lapcauhoi{ma150}
+\label{DebPage}
+% \end{document}
+\newpage
+%%%In ra bản thống kê
+\thispagestyle{empty}
+\lamtieude
+\dempa
+\dapanexcel
+\dapanma{ma150}
+
+%%%%%%%%%%%%%%%%
+\newpage
+%%%Lời giải
+\setcounter{page}{1}
+\loaidethi{(Lời giải  \pageref{lgiPage} trang)}
+\trangcuoi{lgiPage}
+\lamtieude
+\inloigiai
+\addcontentsline{toc}{subsection}{Lời giải mã 150}
+\begin{enumerate}[]
+\foreachproblem[ma150]{\item\thisproblem\addcontentsline{toc}{subsubsection}{Câu \thesocauhoi.\thisproblemlabel}}
+\end{enumerate}
+\label{lgiPage}
+\end{document}
+% \newpage
+% \lamtieude
+% \indapanlietke
+% \thispagestyle{empty}
+% \begin{center}
+% {\bf ĐÁP ÁN LIỆT KÊ THEO SỐ}
+% \end{center}
+% \begin{enumerate}[\socau]
+% \begin{multicols}{5}
+% \foreachproblem[ma100]{\item\thisproblem}
+% \end{multicols}
+% \end{enumerate}
+
+
+% \newpage
+% \setcounter{page}{1}
+% \lamtieude
+% \begin{center}
+% {\bf LỜI GIẢI}
+% \end{center}
+% \inloigiai
+% \begin{enumerate}[]
+% \foreachproblem[ma100]{\item\thisproblem}
+% \end{enumerate}
+
+
+
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indebailoigiai
+\begin{center}
+{\bf ĐỀ BÀI - ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[ma100]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indebaidapan
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[ma100]{\item\causo\thisproblem}
+\end{enumerate}
+
+\end{document}
+https://drive.google.com/open?id=0B6t6keI_Xwz5UHNsTjY4NU1oMUU

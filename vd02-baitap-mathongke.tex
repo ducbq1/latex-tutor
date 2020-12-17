@@ -1,0 +1,81 @@
+%%15:35:53 27/5/2017 -VieTeX creates E:\tex\book-mau\mau-dethi33\vd02-tn-baitap-mathongke.tex
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+% \usepackage{picinpar}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage[colorlinks,hyperindex,plainpages=false,unicode]{hyperref}
+\usepackage{titledot}
+% \usepackage{multicol}%
+% \usepackage{shortlst}
+% \usepackage{color}
+% \usepackage{enumerate}
+\usepackage{mathpazo} 
+% \usepackage{balance} 
+
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 24.5truecm 
+\textwidth 19truecm 
+\usepackage[baitap]{dethi}
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ THAM KHẢO}
+\loaidethi{(Đề gồm  \pageref{dbPage} trang)}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KỲ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA 2017}
+\tenmonhoc{Bài thi: TOÁN}
+\madethi{100}
+\tieudeduoi
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+% \hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+% \sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\usepackage{lastpage}
+\graphicspath{{hinh-tracnghiem/}{hinh/}{hinh-cauhoi/}{images/}{dethamkhao/}} 
+\parindent 10pt
+% \renewcommand{\bonpa}[4]{#1#2#3#4}
+
+\begin{document}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\demexcel
+\loadrandomproblems[ma100]{50}{vd13-cauhoi-detk2017-toan}
+\trangcuoi{dbPage}
+\lamtieude
+\indebai
+\lapcauhoi{ma100}
+\label{dbPage}
+\newpage
+\thispagestyle{empty}
+\lamtieude
+\dempa
+\dapanexcel{100}
+% \dapanvama{ma100}
+\begin{center}
+\textbf{SỐ CÂU HỎI VÀ ĐÁP ÁN}
+\indapanlietke
+\begin{multicols}{5}
+\begin{enumerate}[\socau]
+\foreachproblem[ma100]{\item\thisproblem}
+ \end{enumerate}
+\end{multicols}
+\end{center}
+
+\end{document}

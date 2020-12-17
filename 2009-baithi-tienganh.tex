@@ -1,0 +1,385 @@
+%%17:53:48 21/10/2016 -VieTeX creates E:\tex\book-mau\mau-dethi30\vidu02-ftracnghiem.tex
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.0
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{mathptmx} 
+\usepackage{lastpage} 
+% \usepackage{mathpazo} 
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+% \usepackage{fancybox}
+% \cornersize*{3.6mm}
+\Fullpages %Định dạng trang đề thi
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{5} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+\tieudetracnghiem
+%\tieudethiviet
+\tieudedapan
+%\tieudetren
+\tieudeduoi
+\daungoac{}{.}                  %Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+%\chuphuongan{\alph}    %Ký tự cho các phương án
+%\chuphuongan{\arabic} %\Roman%\roman%kể cả số cho các phương án
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+\mauchu{red}                     %Mầu số câu hỏi và phương án
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}} %Đường dẫn của nơi để hình
+\khoanh{\cbox}         %Khoanh các phương án: \cbox, \fbox
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+%\NoRearrange  %Lệnh không trộn đề
+ \motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+%\nhieuphieuthi   %In ra mỗi đề một phiếu thi
+% \coloigiai           %In ra đáp án có lời giải
+\ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+%\OneKey            %Lệnh chỉ in ra 1 bản đáp án
+%\NoKey               %Lệnh không in ra phần đáp án
+
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ MINH HỌA}
+\loaidethi{Đề gồm có 06 trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KỲ THI TỐT NGHIỆP THPT NĂM 2009}
+\def\tenmonhoc{Môn thi: TIẾNG ANH - Hệ 3 năm}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 60 phút, không kể thời gian phát đề}}
+
+\def\dssuatu{suatu:2,suatu:3,suatu:4,suatu:5} %%suatu:1,
+ \loadselectedproblems[btsuatu]{\dssuatu}{2009-cauhoi-tienganh}
+
+\def\dschontu{chontu:2,chontu:3,chontu:4,chontu:5} %%chontu:1,
+\loadselectedproblems[btchontu]{\dschontu}{2009-cauhoi-tienganh}
+
+\def\ds{cumtu:2,cumtu:3,cumtu:4,cumtu:5,cumtu:6,cumtu:7,cumtu:8,cumtu:9,cumtu:10}
+\loadselectedproblems[btcumtu]{\ds}{2009-cauhoi-tienganh}%%cumtu:1,
+
+\def\dss{cumtu:12,cumtu:13,cumtu:14,cumtu:15,cumtu:16,cumtu:17,cumtu:18,cumtu:19,cumtu:20,cumtu:21,cumtu:22,cumtu:23,cumtu:24,cumtu:25}  %%cumtu:11,
+\loadselectedproblems[btcumtu]{\dss}{2009-cauhoi-tienganh}
+
+\def\dsss{dientu:1,dientu:3,dientu:4,dientu:5} %%dientu:2,
+\loadselectedproblems[btcumtus]{\dsss}{2009-cauhoi-tienganh}
+
+\def\dshoanthanh{hoanthanh:2,hoanthanh:3,hoanthanh:4,hoanthanh:5} %%hoanthanh:1,
+\loadselectedproblems[bthoanthanh]{\dshoanthanh}{2009-cauhoi-tienganh}
+
+\def\dsdungtu{dungtu:1,dungtu:2,dungtu:3,dungtu:4,dungtu:5}
+\loadselectedproblems[btdungtu]{\dsdungtu}{2009-cauhoi-tienganh}
+
+\newcommand{\tieude}[1]{\par{\itshape\textbf{#1}}}
+\begin{document}
+\setlength{\baselineskip}{12truept}
+ \begin{multiplechoice}[ keycolumns=3]
+ \tieude{Chọn phương án (A hoặc B, C, D) ứng với từ/ cụm từ có gạch dưới cần phải sửa để các câu sau trở thành chính xác.}%
+% \baitracnghiemb{suatu:1}{
+\begin{question}
+\saih{That} is \saih{the} man \dungh{which} told me \saih{the} bad news.
+% }{%Phương án trả lời
+\datcot
+\bonpah
+{\sai{That}}
+{\sai{the}} 
+{\dung{which}} 
+{\sai{the}}
+\end{question}
+% }
+
+% \useproblems{suatu:1}
+\foreachproblem[btsuatu]{\thisproblem}
+
+\end{multiplechoice}
+
+
+ \begin{multiplechoice}[ keycolumns=3]
+\tieude{Chọn từ (ứng với A hoặc B, C, D) có phần gạch dưới được phát âm khác với những từ còn lại trong mỗi câu sau.}%
+\begin{question}
+\datcot
+\bonpat
+{\dung{\underline{h}our }} 
+{\sai{\underline{h}igh }} 
+{\sai{\underline{h}ouse }} 
+{\sai{\underline{h}ome}}
+\end{question}
+\foreachproblem[btchontu]{\label{prob:\thisproblemlabel}\thisproblem}
+\end{multiplechoice}
+
+ \begin{multiplechoice}[ keycolumns=3]
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi câu từ 11 đến 15.}%
+
+George Washington was born on February 22nd, 1732 in Virginia. His parents were Augustine and Mary Washington. George grew up on a farm in Virginia. Little is known of his early childhood. He attended school irregularly from his 7th to his 15th year. His favorite subject was mathematics. He learned to be a surveyor of land when he grew up. He joined the army and was a leader during the American Revolution. He later became the first President of the United States. George Washington is called by his people the "Father of our country". The Americans celebrate his birthday on Presidents' Day in February. His picture is on the one-dollar bill.
+\begin{question}
+When was George Washington born?
+% }{%Phương án trả lời
+\datcot
+\bonpa
+{\sai{ In 1932. }} 
+{\dung{In 1732. }} 
+{\sai{In 1735. }} 
+{\sai{In 1772.}}
+\end{question}
+%%}%Hết một bài 
+
+% \begin{enumerate}[ resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btdungtu]{\label{prob:\thisproblemlabel}\thisproblem}
+% \end{enumerate}
+\end{multiplechoice}
+
+
+ \begin{multiplechoice}[ keycolumns=3]
+\tieude{Chọn từ/ cụm từ thích hợp (ứng với A hoặc B, C, D) để hoàn thành mỗi câu sau.}%
+\begin{question}
+So \daugach\ students attended the meeting that there weren’t enough chairs for all of them.
+\datcot
+\bonpa
+{\dung{many}} 
+{\sai{few}} 
+{\sai{much}} 
+{\sai{little}}
+\end{question}
+% \begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtu]{\thisproblem}
+% \end{enumerate}
+\end{multiplechoice}
+
+ \begin{multiplechoice}[ keycolumns=3]
+\tieude{Chọn phương án đúng (ứng với A hoặc B, C, D) để hoàn thành mỗi câu sau.}%
+% \begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+% \baitracnghiem{hoanthanh:1}{%Câu hỏi 1
+\begin{question}
+It takes him thirty minutes to go \daugach\ every day.
+% }{%Phương án trả lời
+\datcot[2]
+\bonpa
+{\dung{ to work by bus }} 
+{\sai{working on bus }} 
+{\sai{to work with bus }} 
+{\sai{working by a bus}}
+\end{question}
+ 
+\foreachproblem[bthoanthanh]{\label{prob:\thisproblemlabel}\thisproblem}
+% \end{enumerate}
+\end{multiplechoice}
+
+ \begin{multiplechoice}[ keycolumns=3]
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi chỗ trống từ 46 đến 50.}
+
+I had a terrible time last Saturday. It (46)\daugach\  cold, but quite sunny, so after lunch I walked into town. I wanted to buy a pullover. I was looking in the window of a clothes (47)\daugach\ when someone stole my wallet. While I was walking home, it started (48)\daugach\ and I arrived home cold and miserable. I decided to have a hot bath. I was getting ready to have my bath (49)\daugach\ the doorbell rang. It was a flower seller and it took me several minutes to make him go away. Unfortunately, all the time he was talking (50)\daugach\ me, the water was running. You can imagine how the kitchen was!
+\begin{question}
+\datcot
+\bonpat
+{\sai{ office}} 
+{\sai{cafe}} 
+{\sai{bar}} 
+{\dung{shop}}
+\end{question}
+% \begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtus]{\thisproblem}
+% \end{enumerate}
+\begin{examclosing}
+\centerline{-- HẾT --}
+\end{examclosing}
+\end{multiplechoice}
+\end{document}
+% \setlist{itemsep=0em,topsep=0pt, partopsep=0pt,parsep=0pt}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+  \setlength{\shortitemwidth}{0.12\textwidth}
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN }
+\end{center}
+% \hideproblems
+\showanswers
+\tieude{Chọn phương án (A hoặc B, C, D) ứng với từ/ cụm từ có gạch dưới cần phải sửa để các câu sau trở thành chính xác.}
+\begin{enumerate}[ resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btsuatu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\tieude{Chọn từ (ứng với A hoặc B, C, D) có phần gạch dưới được phát âm khác với những từ còn lại trong mỗi câu sau.}
+\begin{enumerate}[ resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btchontu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi câu từ 11 đến 15.}
+
+George Washington was born on February 22nd, 1732 in Virginia. His parents were Augustine and Mary Washington. George grew up on a farm in Virginia. Little is known of his early childhood. He attended school irregularly from his 7th to his 15th year. His favorite subject was mathematics. He learned to be a surveyor of land when he grew up. He joined the army and was a leader during the American Revolution. He later became the first President of the United States. George Washington is called by his people the "Father of our country". The Americans celebrate his birthday on Presidents' Day in February. His picture is on the one-dollar bill.
+\begin{enumerate}[ resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btdungtu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\tieude{Chọn từ/ cụm từ thích hợp (ứng với A hoặc B, C, D) để hoàn thành mỗi câu sau.}
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+%\foreachproblem[btcumtus]{\item\label{prob:\thisproblemlabel}\thisproblem}
+\end{enumerate}
+
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi chỗ trống từ 46 đến 50.}
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[bthoanthanh]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi chỗ trống từ 46 đến 50.}
+
+I had a terrible time last Saturday. It (46)\daugach\  cold, but quite sunny, so after lunch I walked into town. I wanted to buy a pullover. I was looking in the window of a clothes (47)\daugach\ when someone stole my wallet. While I was walking home, it started (48)\daugach\ and I arrived home cold and miserable. I decided to have a hot bath. I was getting ready to have my bath (49)\daugach\ the doorbell rang. It was a flower seller and it took me several minutes to make him go away. Unfortunately, all the time he was talking (50)\daugach\ me, the water was running. You can imagine how the kitchen was!
+
+\baitracnghiem{dientu:2}{%Câu hỏi 1
+}{
+\datcot
+\bonpat
+{\sai{ office}} 
+{\sai{cafe}} 
+{\sai{bar}} 
+{\dung{shop}}
+}%Hết một bài 
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtus]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\hideproblems
+\showanswers
+\begin{multicols}{3}
+\begin{enumerate}[resume,label={\bf Câu \arabic *.\  }]
+\foreachproblem[btsuatu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btchontu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btdungtu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+%\foreachproblem[btcumtus]{\item\label{prob:\thisproblemlabel}\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[bthoanthanh]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtus]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf PHIẾU KIỂM TRA TRẮC NGHIỆM}
+\end{center}
+Họ và tên \dotfill Lớp \dotfill 
+\hideproblems
+\showanswers
+ \lamphieu
+\begin{multicols}{3}
+% {\sf Phương án} A\quad B\quad C\quad D
+\begin{enumerate}[ resume,label={\bf Câu \arabic *.\  }]
+\foreachproblem[btsuatu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btchontu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btdungtu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+%\foreachproblem[btcumtus]{\item\label{prob:\thisproblemlabel}\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[bthoanthanh]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtus]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+ \newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf PHIẾU KIỂM TRA TRẮC NGHIỆM}
+\end{center}
+Họ và tên: Nguyễn Hữu Điển  \quad Lớp Đáp án gốc\dotfill 
+\hideproblems
+\showanswers
+\lamdapan{$\times$}
+\begin{multicols}{3}
+% {\sf Phương án} A\quad B\quad C\quad D
+\begin{enumerate}[resume,label={\bf Câu \arabic *.\  }]
+\foreachproblem[btsuatu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btchontu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btdungtu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtu]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+%\foreachproblem[btcumtus]{\item\label{prob:\thisproblemlabel}\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[bthoanthanh]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[resume,label={\bf Câu \arabic*.\  }]
+\foreachproblem[btcumtus]{\item[\ref{prob:\thisproblemlabel}]\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+
+
+\end{document}
+

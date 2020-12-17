@@ -1,0 +1,155 @@
+
+% LaTeX Article Template - using defaults
+\documentclass[10pt,a4letter]{article}
+%\usepackage{vnfonts}
+\usepackage{mathptmx,courier}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{indentfirst}
+\usepackage[mathscr]{eucal}
+%\usepackage{graphics,graphpap}
+
+\usepackage{picinpar}
+\usepackage{floatflt}
+\usepackage[vnantique]{vntex}
+\usepackage{epic}
+\usepackage{curves}
+\usepackage{makeidx}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{\bf Ch­¬ng tr×nh}
+
+\voffset=-0.8in
+\hoffset=-1in
+\textheight 27.5truecm 
+\textwidth 17truecm 
+%\textheight 25truecm 
+%\textwidth 16truecm 
+\font\bfh=vhtimeb
+\font\bfhh=vhtimeb 
+\setlength{\baselineskip}{14truept}
+\newcommand{\vd}[1]{\par\medskip\noindent{\large\bf #1}}
+\newcommand{\chuong}[1]{\par\bigskip\noindent{\large\bfh #1}}
+\newcounter{deso}
+\setcounter{deso}{0}
+\renewcommand{\figurename}{{H×nh}}
+
+
+%\usepackage{program}
+
+\begin{document}
+\setlength{\baselineskip}{14truept}
+
+\centerline{\bfhh §Ò thi 1:  LÝ thuyÕt ®å thÞ vµ øng dông}    
+\medskip     
+\centerline{\bf (K49-2007: Thêi gian 90 phót)}
+\vspace*{.2cm}
+\noindent{\bf C©u 1.}  Ph¸t biÓu c¸c quy t¾c t×m chu tr×nh Hamilton. H·y chøng minh r»ng ®å thÞ trong h×nh ~\ref{fig:hinh1} cã chu tr×nh Hamilton.
+\begin{figure}[!ht]
+\begin{minipage}[b]{5cm}
+\centering
+\input hamilton.tex
+\caption{}\label{fig:hinh1}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{9cm}
+\begin{tabular}{ l  l }
+ Tªn sinh viªn & M«n ®· chän häc \\
+\hline
+ An & VËt lÝ, To¸n, TiÕng Anh \\
+V©n& VËt lÝ, Khoa häc tr¸i ®Êt, Kinh tÕ\\
+Lan & Khoa häc tr¸i ®Êt, Kinh doanh\\
+Hµo &Thèng kª, Kinh tÕ\\
+Hïng&To¸n, Kinh doanh\\
+B¶o&VËt lÝ, Khoa häc tr¸i ®Êt\\
+Hång& Kinh doanh, Thèng kª\\
+§iÒn &To¸n, Khoa häc tr¸i ®Êt\\
+C­êng&VËt lÝ, M«i tr­êng, Thèng kª\\
+Quý&VËt lÝ, Kinh tÕ, M«i tr­êng.
+\end{tabular}
+\caption{}\label{fig:hinh00}
+\end{minipage}
+\end{figure}
+
+\noindent{\bf C©u 2.} Cã 10 sinh viªn trong mét häc k× häc c¸c m«n tïy chän vµ c¸c m«n b¾t buéc theo b¶ng ë h×nh ~\ref{fig:hinh00}. H·y thiÕt lËp lÞch thi cã Ýt ®ît nhÊt   sao cho  c¸c sinh viªn nµy kh«ng bÞ nhì thi mét m«n ®· häc nµo.
+
+
+\noindent{\bf C©u 3.} H·y ph¸t biÓu ®Þnh nghÜa vµ c¸c tÝnh chÊt cña ®å thÞ Kuratowski. Chøng minh r»ng ®å thÞ  h×nh ~\ref{fig:hinh5} lµ kh«ng ph¼ng.
+
+\begin{figure}[!ht]
+\begin{minipage}[b]{5cm}
+\centering
+\input dothiphang1.tex
+\caption{}\label{fig:hinh5}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{9cm}
+\centering
+\input thuattoan1.tex
+\caption{}\label{fig:hinh7}
+\end{minipage}
+\end{figure}
+
+
+\noindent{\bf C©u 4.} Tr×nh bµy thuËt to¸n Prime. Dïng thuËt to¸n Prime t×m c©y bao trïm cã träng sè nhá nhÊt trong ®å thÞ trong h×nh ~\ref{fig:hinh7}, b¾t ®Çu tõ ®Ønh $S$.
+
+
+
+
+\noindent{\bf C©u 5.} Cho ch­¬ng tr×nh nguån sau ®©y b»ng ng«n ng÷ C. 
+ H·y gi¶i thÝch c¸c dßng lÖnh cña ch­¬ng tr×nh cã ý nghÜa g×.
+ H·y vÏ l¹i ®å thÞ mµ d÷ liÖu ®· cho trong ch­¬ng tr×nh.
+ Dùa vµo ®å thÞ  vµ ch­¬ng tr×nh nguån ®Ó t×m ra kÕt qu¶ ch¹y ch­¬ng tr×nh. 
+\lstset{language=C++,emph={printf,*},emphstyle=\bf,numbers=left, xleftmargin=16pt, numberblanklines=false, numberstyle=\footnotesize, numbersep=5pt, tabsize=4}
+\lstset{emph={printf,fprintf,scanf,fscanf,fclose,fopen,gotoxy,clrscr},emphstyle=\bf}
+\setlength{\columnseprule}{1pt}
+\setlength{\columnsep}{10pt}
+{\small
+\begin{multicols}{2}
+\begin{lstlisting}[caption={\bf Néi dung}, label={ct:dfs}]
+#include <stdio.h>
+#define MAXN 200
+const unsigned n = 14;
+const unsigned v = 5;
+const char A[MAXN][MAXN] = {
+{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+{1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+{0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+{0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+{0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+{0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1},
+{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+{0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0}
+};
+
+char used[MAXN];
+
+void DFS(unsigned i)
+{ 
+  unsigned k;
+  used[i] = 1;
+  printf("%u ", i+1);
+  for (k = 0; k < n; k++)
+    if (A[i][k] && !used[k]) DFS(k);
+}
+
+int main(void) {
+  unsigned k;
+  for (k = 1; k < n; k++) used[k] = 0;
+  printf("Duyet tu dinh %u: \n", v);
+  DFS(v-1);
+  printf("\n");
+  return 0;
+}
+\end{lstlisting}
+\end{multicols}
+}
+
+\end{document}

@@ -1,0 +1,101 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+%%%%%%%%%%%%%%%%%%%%%
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 18truecm 
+\usepackage{mathpazo} 
+\usepackage[baitap]{dethi}
+% \usepackage{mathpazo} 
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{dbPage} trang}%
+\trangcuoi{dbPage}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\tieudeduoi
+\daungoac{\cboxx}{}
+\khoanh{\cboxv}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\graphicspath{{hinh-cauhoi/}} 
+\begin{document}
+% \hovaten{Họ và tên}
+% \sobaodanh{Số báo danh}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+
+\loadrandomproblems[bttracnghiem]{20}{vd02-cauhoi-dtracnghiem}
+
+\lamtieude
+\indebai
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\label{dbPage}
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indebaidapan
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN }
+\end{center}
+
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+\lamtieude
+\thispagestyle{empty}
+\indapanrutgon
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+
+
+\newpage
+% \setcounter{page}{1}
+\inphieuthi
+\lamphieuthi
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+ \foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\addtocounter{page}{-2}
+\end{document}
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd,txfonts}
+\usepackage[utf8]{vietnam}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+\usepackage{lastpage}
+% \usepackage{fancybox}
+% \cornersize*{3.6mm}
+\Fullpages %Định dạng trang đề thi
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{10} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+\tieudetracnghiem
+%\tieudetuluan
+\tieudedapan
+%\tieudetren
+\tieudeduoi
+\daungoac{}{.}                  %Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+%\chuphuongan{\alph}    %Ký tự cho các phương án
+%\chuphuongan{\arabic} %\Roman%\roman%kể cả số cho các phương án
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+%\mauchu{red}                     %Mầu số câu hỏi và phương án
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}} %Đường dẫn của nơi để hình
+\khoanh{\cbox}         %Khoanh các phương án: \cbox, \fbox
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+% \NoRearrange  %Lệnh không trộn đề
+%\motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+\nhieuphieuthi   %In ra mỗi đề một phiếu thi
+% \coloigiai           %In ra đáp án có lời giải\\
+\ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+% \OneKey            %Lệnh chỉ in ra 1 bản đáp án
+% \NoKey               %Lệnh không in ra phần đáp án
+\tentruong{Sở GD \& ĐT Ninh Thuận}
+\tenkhoa{Trường THPT NINH HẢI}
+\loaidethi{Đề gồm có \pageref{dbPage} 
+ trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KIỂM TRA ĐỊNH KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán Hình}
+\madethi{321}
+\thoigian{Thời gian làm bài: 45 phút, không kể thời gian phát đề}
+%\soanthao %Lệnh dùng khi soạn cau hỏi, khi dịch 1 bản và không đảo
+\begin{document}
+\setlength{\baselineskip}{12truept}
+ \begin{vnmultiplechoice}[keycolumns=3]%
+\selectrandomly{vd07-cauhoi-biet}{8} %chọn ngau nhien
+\selectrandomly{vd07-cauhoi-hieu}{7} %chọn ngau nhien
+\end{vnmultiplechoice}
+\begin{vnmultiplechoice}[keycolumns=3]%
+\selectrandomly{vd07-cauhoi-vandung}{7} %chọn ngau nhien
+\selectrandomly{vd07-cauhoi-vdcao}{3} %chọn ngau nhien
+%\selectallproblems{vdcao} %chọn tat ca
+\begin{examclosing}
+\centerline{--------- HẾT ---------}
+\label{dbPage}
+\end{examclosing}
+ \end{vnmultiplechoice}
+
+\end{document}

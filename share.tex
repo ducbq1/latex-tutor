@@ -1,0 +1,30 @@
+%%8:7:18 2/12/2016 -VieTeX creates e:\tex\book-mau\mau-dethi30\share.tex
+\documentclass[a4paper,11pt]{exam}
+\usepackage{multicol}
+\usepackage[utf8]{vietnam}
+\usepackage{tikz}
+\usepackage{amsmath,amssymb}
+%%%%%%%%%% Khoanh tròn text
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {\small #1};}}
+%%%%%%%%%%
+\begin{document}
+Ví dụ khoanh tròn: \circled{A}
+\setlength{\multicolsep}{0.2em}
+\begin{questions}
+\question Tìm giá trị cực đại $y_{\tiny\text{CĐ}}$ của hàm số $y=x^3-3x+2$.
+\begin{multicols}{2} \begin{choices}
+\choice $y_{\tiny\text{CĐ}}=4$
+\choice $y_{\tiny\text{CĐ}}=1$
+\choice $y_{\tiny\text{CĐ}}=0$
+\choice $y_{\tiny\text{CĐ}}=-1$
+\end{choices} \end{multicols}
+\question Tìm giá trị nhỏ nhất của hàm số $y=\dfrac{x^2+3}{x-1}$ trên đoạn $[2;4]$
+\begin{multicols}{2} \begin{choices}
+\choice $\min_{[2;4]} y=6$
+\choice $\min_{[2;4]} y=-2$
+\choice $\min_{[2;4]} y=-3$
+\choice $\min_{[2;4]} y=\dfrac{19}{3}$
+\end{choices} \end{multicols}
+\end{questions}
+\end{document} 

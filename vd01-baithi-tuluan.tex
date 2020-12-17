@@ -1,0 +1,74 @@
+%%15:19:28 21/10/2016 -VieTeX creates E:\tex\book-mau\mau-dethi30\vidu01-ftuluan.tex
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.0
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{picinpar}
+% \usepackage{mathptmx} 
+\usepackage{mathpazo} 
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+% \usepackage{fancybox}
+% \cornersize*{3.6mm}
+\Fullpages %Định dạng trang đề thi
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{1} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+\tieudetuluan
+\tieudedapan
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}{hinh-vidu/}}  %Đường dẫn của nơi để hình
+\khoanh{\cbox}         %Khoanh các phương án: \cbox, \fbox
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+%\NoRearrange  %Lệnh không trộn đề
+%\motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+%\nhieuphieuthi   %In ra mỗi đề một phiếu thi
+% \coloigiai           %In ra đáp án có lời giải
+\ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+%\OneKey            %Lệnh chỉ in ra 1 bản đáp án
+%\NoKey               %Lệnh không in ra phần đáp án
+%\soanthao %Lệnh dùng khi soạn cauu hỏi, khi dịch 1 bản và không đảo
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ MINH HỌA}
+%\loaidethi{Đề gồm có 06 trang}
+\tenkythi{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}
+\tenmonhoc{Môn: Toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}
+\graphicspath{{hinh-cauhoi/}}
+\usepackage{lastpage}
+
+\begin{document}
+
+% \loadrandomproblems[tuluan]{6}{cauhoi01-tuluan} %PA(1)
+\PSNrandseed{\time}
+
+\begin{vnshortanswer}[ rearrange=no ]
+%  \foreachproblem[tuluan]{\thisproblem} %P(1)
+% \selectrandomly{cauhoi01-tuluan}{3} %P(2)
+  \selectallproblems{vd01-cauhoi-tuluan} %P(3)
+%  \foreachproblem[tuluan]{\thisproblem} %P(1)
+\begin{examclosing}
+\centerline{-- HẾT --}
+\end{examclosing}
+\end{vnshortanswer}
+
+\end{document}

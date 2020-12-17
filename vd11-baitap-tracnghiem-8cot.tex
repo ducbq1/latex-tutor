@@ -1,0 +1,125 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+% \usepackage{picinpar}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+% \usepackage{multicol}%
+% \usepackage{shortlst}
+% \usepackage{enumerate}
+% \usepackage{color}
+\usepackage{mathpazo} 
+\usepackage[baitap]{dethi}
+% \usepackage{mathpazo} 
+\voffset=-4cm
+% \hoffset=-2cm
+\textheight 26truecm 
+\textwidth 20truecm 
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{dbPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\trangcuoi{dbPage}
+\madethi{100}
+\tieudeduoi
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+% \hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+% \sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+% \setlength{\shortitemwidth}{0.12\textwidth}
+%  \usepackage{fancybox}
+% \cornersize*{5mm}
+% \usepackage{tikz}
+% \khoanh{\cboxv}
+\daungoac{\cboxx}{}
+% \khoanh{\Ovalbox}
+% \khoanh{\ovalbox}
+%\daungoac{(}{)}%%{[}{]}%Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+ \PSNrandseed{\time}
+\usepackage{centerpage}
+\usepackage{lastpage}
+\graphicspath{{hinh-cauhoi/}{hinh/}} 
+\def\lamtieude{
+\begin{center}\large\bf ĐỀ ÔN THI TỐT NGHIỆP THPT QG 2017 LÊ PHÚC LỮ lần 2\end{center}
+}
+\begin{document}
+% \setlength{\columnsep}{10pt}
+% \setlength{\columnseprule}{0.5pt}
+% \setlength{\shortitemwidth}{\linewidth/8-\columnsep/8-3em}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+% \loadrandomproblems[bttracnghiem]{50}{2017-cauhoi-toan-2cot}
+\loadrandomproblems[bttracnghiem]{50}{vd12-cauhoi-lephulu}
+% \setcounter{page}{1}
+
+\indebai
+\lamtieude
+\begin{multicols}{2}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+% \foreachproblem[bttracnghiem]{\cauhoitn}
+\end{multicols}
+\label{dbPage}
+% \end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\columnsep}{0pt}
+\setlength{\columnseprule}{0pt}
+\indapanso
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{center}
+\begin{minipage}[t]{19cm}
+\begin{multicols}{10}
+% \foreachproblem[bttracnghiem]{\cauhoitn[3]}
+\begin{enumerate}[\socau]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{minipage}
+\end{center}
+\setlength{\columnsep}{10pt}
+\setlength{\columnseprule}{0.5pt}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\setcounter{page}{1}
+\indebaidapan
+\lamtieude
+\begin{multicols}{2}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\end{multicols}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\columnsep}{0pt}
+\setlength{\columnseprule}{0pt}
+\indapanso
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{center}
+\begin{minipage}[t]{19cm}
+\begin{multicols}{10}
+\begin{enumerate}[\socau]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{minipage}
+\end{center}
+\setlength{\columnsep}{10pt}
+\setlength{\columnseprule}{0.5pt}
+%%%%%%%%%%%%%%%%%%%%%%
+\end{document}%

@@ -1,0 +1,3616 @@
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.2
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp vieexamdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%vieexamdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%% randomly select 25 problems from derivatives.tex and add to
+%% the data set called 'deriv'
+%% Display the problems
+%% You may need to change \theenumi back here
+%% randomly select 25 problems from probspaces.tex and add to
+%% the data set called 'spaces'
+%% Display the problems
+%% You may need to change \theenumi back here
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dethi}[2016/10/27 v3.0]
+% \RequirePackage{ifthen}
+% \RequirePackage{etoolbox}
+% \RequirePackage{xkeyval}
+\RequirePackage{ifthen}
+ \RequirePackage{etoolbox}
+\RequirePackage{xkeyval}
+\RequirePackage{graphicx}
+\RequirePackage{answers}
+\RequirePackage{calc}
+\RequirePackage{tikz}
+\RequirePackage{picinpar}
+\RequirePackage{shortlst}
+\RequirePackage{enumerate}
+\RequirePackage{color}
+\RequirePackage{multicol}
+\RequirePackage{lastpage}
+\newboolean{baithi}
+\newboolean{baitap}
+\DeclareOption{baithi}{
+\setboolean{baithi}{true}
+}
+\DeclareOption{baitap}{
+\setboolean{baitap}{true}
+}
+% 
+\newif\iflietkeda \lietkedafalse
+\newif\ifshowanswers
+\showanswersfalse
+\let\showanswers\showanswerstrue
+\let\hideanswers\showanswersfalse
+\DeclareOption{answers}{\showanswerstrue}
+\DeclareOption{noanswers}{\showanswersfalse}
+\newif\ifusedefaultprobargs
+\DeclareOption{usedefaultargs}{\usedefaultprobargstrue}
+\DeclareOption{nousedefaultargs}{\usedefaultprobargsfalse}
+\usedefaultprobargsfalse
+\newcommand*{\prob@showdraftlabel}[2]{}
+\newcommand*{\draftproblemlabel}[2]{[#1,#2]}
+\DeclareOption{draft}{%
+\renewcommand*{\prob@showdraftlabel}[2]{\draftproblemlabel{#1}{#2}}}
+\DeclareOption{final}{%
+\renewcommand*{\prob@showdraftlabel}[2]{}}
+\ProcessOptions
+\define@boolkey{probsoln}[@prob@]{fragile}[true]{}
+\newcommand*{\ProbSolnFragileExt}{vrb}
+\newcommand*{\ProbSolnFragileFile}{\jobname}
+\newwrite\probsoln@write
+\newcount\probsoln@startyear
+\newcommand*{\SetStartYear}[1]{%
+   \probsoln@startyear=#1\relax
+   \renewcommand\SetStartMonth[1]{%
+      \PackageError{probsoln}{\string\SetStartMonth\space
+        can't be used after \string\SetStartYear}{}}%
+}
+\newcommand*{\GetStartYear}{\probsoln@startyear}
+\newcount\probsoln@startmonth
+\newcommand*{\SetStartMonth}[1]{%
+  \probsoln@startmonth=#1\relax
+  \probsoln@startyear=\year\relax
+  \ifnum\month<\probsoln@startmonth
+    \advance\probsoln@startyear by -1\relax
+  \fi
+}
+\SetStartMonth{9}
+\newwrite\probsoln@prev
+\newwrite\probsoln@used
+\newcount\probsoln@prev@cutoff
+\newcommand*{\@probsoln@usedfilename}{\jobname.prb}
+\newcommand*{\SetUsedFileName}[1]{%
+  \renewcommand*{\@probsoln@usedfilename}{#1}%
+}
+\newcommand*{\ClearUsedFile}[1]{%
+  \probsoln@prev@cutoff=0\relax
+  \@probsoln@readprev{#1}%
+  \@for\@this@db:=\prob@databases\do{%
+    {%
+      \edef\@prev@list{\csname probsoln@prev@list@\@this@db\endcsname}%
+      \ifdefempty{\@prev@list}%
+      {}%
+      {%
+        \@for\@this@label:=\@prev@list\do{%
+          \ifcsundef{@used@problem@\@this@db @\@this@label}%
+          {%
+            \immediate\write\probsoln@prev{%
+              \string\previousproblem{\@this@label}{\@this@db}%
+               {\csname @prev@problem@\@this@db @\@this@label\endcsname}}%
+          }%
+          {}%
+        }%
+      }%
+    }%
+  }%
+  \immediate\closeout\probsoln@prev
+  \immediate\closeout\probsoln@used
+  \@disable@exclude@prev
+}
+\newcommand*{\ExcludePreviousFile}[2][3]{%
+  \probsoln@prev@cutoff=\probsoln@startyear\relax
+  \advance\probsoln@prev@cutoff by -#1\relax
+  \@probsoln@readprev{#2}%
+  \@write@prev
+  \def\ExcludePreviousFile[2][3]{\PackageError{probsoln}{Only one
+    instance of \string\ExcludePreviousFile\space allowed}{You've
+    already used this command. You are only allowed to use it once}}%
+  \def\ClearUsedFile[1]{%
+     \PackageError{probsoln}%
+       {\string\ClearUsedFile\space may not be used after
+          \string\ExcludePreviousFile}{}}%
+}
+\newcommand*{\@probsoln@readprev}[1]{%
+  \@enable@exclude@prev
+  \InputIfFileExists{#1}%
+     {\PackageInfo{probsoln}%
+        {Excluded problem file `#1' found}}%
+     {\PackageInfo{probsoln}%
+        {Excluded problem file `#1' not found. A new one will be
+            created}}%
+  \InputIfFileExists{\@probsoln@usedfilename}%
+     {\PackageInfo{probsoln}%
+        {Current problems file `\@probsoln@usedfilename' found}}%
+     {\PackageInfo{probsoln}%
+        {No current problem file `\@probsoln@usedfilename' found. A new one will be created}}%
+  \immediate\openout\probsoln@prev=#1
+  \immediate\openout\probsoln@used=\@probsoln@usedfilename
+}
+%%%%%%
+\newcommand*{\probsoln@prev@list@default}{}
+\newcommand*{\@write@prev}{%
+  \@for\@this@db:=\prob@databases\do{%
+    {%
+      \edef\@prev@list{\csname probsoln@prev@list@\@this@db\endcsname}%
+      \ifdefempty{\@prev@list}%
+      {}%
+      {%
+        \@for\@this@label:=\@prev@list\do{%
+          \immediate\write\probsoln@prev{%
+            \string\previousproblem{\@this@label}{\@this@db}%
+             {\csname @prev@problem@\@this@db @\@this@label\endcsname}}%
+        }%
+      }%
+    }%
+  }%
+}
+\newcommand*{\@enable@exclude@prev}{%
+  \renewcommand*{\@add@used@problem}[2]{%
+    \immediate\write\probsoln@used{\string\usedproblem{##1}{##2}{\number\probsoln@startyear}}%
+    \ifcsundef{@prev@problem@##2@##1}%
+    {%
+      \immediate\write\probsoln@prev{%
+          \string\previousproblem{##1}{##2}{\number\probsoln@startyear}}%
+      \expandafter\xdef\csname @prev@problem@##2@##1\endcsname{%
+          \number\probsoln@startyear}%
+    }%
+    {%
+      \expandafter\ifnum\csname @prev@problem@##2@##1\endcsname
+         <\probsoln@startyear
+      \immediate\write\probsoln@prev{%
+          \string\previousproblem{##1}{##2}{\number\probsoln@startyear}}%
+      \expandafter\xdef\csname @prev@problem@##2@##1\endcsname{%
+          \number\probsoln@startyear}%
+      \fi
+    }%
+  }%
+  \renewcommand*{\@fetch@excluded@list}[2]{%
+    \def##1{}%
+    \ifcsdef{probsoln@prev@list@##2}%
+    {%
+      \edef\@prev@list{\csname probsoln@prev@list@##2\endcsname}%
+      \@for\@this@label:=\@prev@list\do{%
+       \ifcsundef{@used@problem@##2@\@this@label}%
+       {%
+          \ifcsempty{##1}%
+          {\edef##1{\@this@label}}%
+          {\edef##1{##1,\@this@label}}%
+       }%
+       {}%
+      }%
+    }%
+    {}%
+  }%
+  \renewcommand*{\@add@newprevlist}[1]{%
+     \expandafter\gdef\csname probsoln@prev@list@##1\endcsname{}%
+  }%
+  \renewcommand*{\close@probsoln@prev}{%
+    \closeout\probsoln@prev
+    \closeout\probsoln@used
+  }%
+}
+\newcommand*{\@disable@exclude@prev}{%
+  \renewcommand*{\@add@used@problem}[2]{}%
+  \renewcommand*{\@fetch@excluded@list}[2]{\def##1{}}%
+  \renewcommand*{\@add@newprevlist}[1]{}%
+  \renewcommand*{\close@probsoln@prev}{}%
+}
+\newcommand*{\@add@used@problem}[2]{}
+\newcommand*{\@fetch@excluded@list}[2]{%
+  \def#1{}%
+}
+\newcommand*{\@add@newprevlist}[1]{}
+\newcommand*{\close@probsoln@prev}{}
+\AtEndDocument{\close@probsoln@prev}
+\newcommand*{\previousproblem}[3]{%
+  \ifnum#3>\probsoln@prev@cutoff
+    \ifcsundef{prob@db@#2}{\prob@newdb{#2}}{}%
+    \expandafter\gdef\csname @prev@problem@#2@#1\endcsname{#3}%
+    \edef\@prev@list{\csname probsoln@prev@list@#2\endcsname}%
+    \ifdefempty{\@prev@list}%
+    {%
+       \expandafter\xdef\csname probsoln@prev@list@#2\endcsname{#1}%
+    }%
+    {%
+       \expandafter\xdef\csname probsoln@prev@list@#2\endcsname{%
+         \@prev@list,#1}%
+    }%
+  \fi
+}
+\newcommand*{\usedproblem}[3]{%
+  \ifnum#3=\probsoln@startyear
+    \expandafter\def\csname @used@problem@#2@#1\endcsname{#3}%
+  \fi
+}
+
+\newcommand*{\prob@db@default}{}
+\newcommand*{\prob@databases}{default}
+\newcommand*{\prob@db@default@solutions}{}
+\newcommand*{\prob@newdb}[1]{%
+  \ifcsundef{prob@db@#1}%
+  {%
+    \expandafter\gdef\csname prob@db@#1\endcsname{}%
+    \xdef\prob@databases{\prob@databases,#1}%
+    \expandafter\gdef\csname prob@db@#1@solutions\endcsname{}%
+    \@add@newprevlist{#1}%
+  }%
+  {%
+    \PackageError{probsoln}{Data set `#1' is already defined}%
+      {Data set names must be unique}%
+  }%
+}
+\newcommand*{\prob@currentdb}{default}
+\newcommand{\moveproblem}[3]{%
+\@moveproblem{#1}{#2}{#3}%
+\expandafter\let\expandafter\@tmpdblist
+ \csname prob@db@#2\endcsname
+\expandafter\gdef\csname prob@db@#2\endcsname{}%
+\@for\@tmplab:=\@tmpdblist\do{%
+ \ifthenelse{\equal{\@tmplab}{#1}}{}{%
+   \expandafter\ifx\csname prob@db@#2\endcsname\@empty
+     \expandafter\xdef\csname prob@db@#2\endcsname{\@tmplab}%
+   \else
+     \expandafter\xdef\csname prob@db@#2\endcsname{%
+       \csname prob@db@#2\endcsname,%
+       \@tmplab}%
+   \fi
+ }%
+}%
+}
+\newcommand*{\@moveproblem}[3]{%
+  \ifcsempty{prob@db@#3}%
+  {%
+    \expandafter\xdef\csname prob@db@#3\endcsname{#1}%
+  }%
+  {%
+    \expandafter\xdef\csname prob@db@#3\endcsname{%
+      \csname prob@db@#3\endcsname,#1}%
+  }%
+  \edef\do@movedata{%
+    \noexpand\global\noexpand\let\expandafter\noexpand
+      \csname prob@data@#3@#1\endcsname=%
+      \expandafter\noexpand\csname prob@data@#2@#1\endcsname
+      \noexpand\global\noexpand\let
+      \expandafter\noexpand
+      \csname prob@data@#2@#1\endcsname=\noexpand\undefined
+    }%
+  \do@movedata
+  \edef\do@moveargN{%
+    \noexpand\global\noexpand\let\expandafter\noexpand
+      \csname prob@argN@#3@#1\endcsname=%
+      \expandafter\noexpand\csname prob@argN@#2@#1\endcsname
+      \noexpand\global\noexpand\let
+      \expandafter\noexpand
+      \csname prob@argN@#2@#1\endcsname=\noexpand\undefined
+    }%
+  \do@moveargN
+  \@ifundefined{prob@args@#2@#1}{}{%
+    \edef\do@moveargs{%
+      \noexpand\global\noexpand\let\expandafter\noexpand
+        \csname prob@args@#3@#1\endcsname=%
+        \expandafter\noexpand\csname prob@args@#2@#1\endcsname
+        \noexpand\global\noexpand\let
+        \expandafter\noexpand
+        \csname prob@args@#2@#1\endcsname=\noexpand\undefined
+      }%
+    \do@moveargs
+  }%
+}
+\newcommand{\prob@newproblem}[5]{%
+  \@ifundefined{prob@db@#2}{\prob@newdb{#2}}{}%
+  \@ifundefined{prob@data@#2@#3}%
+  {%
+    \let\@tmp=\undefined
+    \newcommand\@tmp[#1]{#4}%
+    \expandafter\global\expandafter\let
+       \csname prob@data@#2@#3\endcsname=\@tmp
+    \expandafter\xdef\csname prob@argN@#2@#3\endcsname{\number#1}%
+    \let\@tmp=\undefined
+    \expandafter\ifx\csname prob@db@#2\endcsname\@empty
+      \expandafter\xdef\csname prob@db@#2\endcsname{#3}%
+    \else
+      \expandafter\xdef\csname prob@db@#2\endcsname{%
+        \csname prob@db@#2\endcsname,#3}%
+    \fi
+    \ifx\@empty#5\@empty
+    \else
+       \edef\thisprob@currentdb{#2}%
+       \edef\thisprob@currentlabel{#3}%
+       \expandafter\@setdefaultprobargs\expandafter{#5}%
+    \fi
+  }%
+  {%
+    \PackageError{probsoln}{Problem `#3' is already defined for
+    data base `#2'}{Problem labels must be unique for each data base}%
+  }%
+}
+
+\newcommand{\@prob@gobblethree}[3]{}
+\newcommand{\@prob@getargs}[3]{%
+\message{Problem `#3' (in data base `#2') requires #1 argument(s).^^J
+Please specify (e.g. \csname @prob@getargs@eg@\romannumeral#1\endcsname):}%
+\read-1to\@tmp
+\expandafter\global\expandafter\let
+  \csname prob@args@#2@#3\endcsname=\@tmp
+}
+\def\@prob@getargs@eg@i{{12}}
+\def\@prob@getargs@eg@ii{{5}{3}}
+\def\@prob@getargs@eg@iii{{4}{5}{2}}
+\def\@prob@getargs@eg@iv{{5}{3}{10}{8}}
+\def\@prob@getargs@eg@v{{5}{3}{10}{8}{4}}
+\def\@prob@getargs@eg@vi{{5}{3}{10}{8}{4}{24}}
+\def\@prob@getargs@eg@vii{{5}{3}{10}{8}{4}{24}{32}}
+\def\@prob@getargs@eg@viii{{5}{3}{10}{8}{4}{24}{32}{9}}
+\def\@prob@getargs@eg@ix{{5}{3}{10}{8}{4}{24}{32}{9}{2}}
+\let\@prob@do@getargs\@prob@gobblethree
+\newcommand*{\setprobargs}[3][default]{%
+  \expandafter\gdef\csname prob@args@#1@#2\endcsname{#3}%
+}
+\newcommand*{\@setdefaultprobargs}[1]{%
+  \ifusedefaultprobargs
+    \setprobargs[\thisprob@currentdb]{\thisprob@currentlabel}{#1}%
+  \fi
+}
+\long\def\long@collect@body#1{%
+  \@envbody{\@xp#1\@xp{\the\@envbody}}%
+  \edef\process@envbody{\the\@envbody\@nx\end{\@currenvir}}%
+  \@envbody\@emptytoks \def\begin@stack{b}%
+  \begingroup
+  \if@prob@fragile
+    \obeylines\obeyspaces
+    \@makeother\#
+    \@makeother\%
+  \fi
+  \@xp\let\csname\@currenvir\endcsname\long@collect@@body
+  \edef\process@envbody{\@xp\@nx\csname\@currenvir\endcsname}%
+  \process@envbody
+}
+\long\def\long@addto@envbody#1{%
+  \toks@{#1}%
+  \edef\@psn@tmp{\the\@envbody\the\toks@}%
+  \global\@envbody\@xp{\@psn@tmp}%
+}
+\long\def\long@collect@@body#1\end#2{%
+  \protected@edef\begin@stack{%
+    \long@push@begins#1\begin\end \@xp\@gobble\begin@stack
+  }%
+  \ifx\@empty\begin@stack
+    \endgroup
+    \@checkend{#2}%
+    \long@addto@envbody{#1}%
+  \else
+    \long@addto@envbody{#1\end{#2}}%
+  \fi
+  \process@envbody
+}
+\long\def\long@push@begins#1\begin#2{%
+  \ifx\end#2\else b\@xp\long@push@begins\fi
+}
+{\obeylines
+ \gdef\@char@M{^^M}%
+}
+\@onelevel@sanitize\@char@M
+\def\@beg@env@string{\begin}
+\@onelevel@sanitize\@beg@env@string
+\def\@end@env@string{\end}
+\@onelevel@sanitize\@end@env@string
+\edef\def@replace@markers{%
+ \noexpand\def\noexpand\do@replace@charM##1\@char@M##2\noexpand\end@replace@marker{%
+    \noexpand\expandafter\noexpand\toks@\noexpand\expandafter{\noexpand\replace@text}%
+    \noexpand\ifx\noexpand\relax##2\noexpand\relax
+      \noexpand\edef\noexpand\replace@text{\noexpand\the\noexpand\toks@##1}%
+      \noexpand\let\noexpand\do@replacenext\noexpand\replace@mark@noop
+    \noexpand\else
+      \noexpand\edef\noexpand\replace@text{\noexpand\the\noexpand\toks@##1^^J}%
+      \noexpand\let\noexpand\do@replacenext\noexpand\do@replace@charM
+    \noexpand\fi
+    \noexpand\do@replacenext##2\noexpand\end@replace@marker
+  }%
+ \noexpand\def\noexpand\doreplace@begverb##1\@beg@env@string##2\noexpand\end@replace@marker{%
+    \noexpand\expandafter\noexpand\toks@\noexpand\expandafter{\noexpand\replace@text}%
+    \noexpand\ifx\noexpand\relax##2\noexpand\relax
+      \noexpand\edef\noexpand\replace@text{\noexpand\the\noexpand\toks@##1}%
+      \noexpand\let\noexpand\do@replacenext\noexpand\replace@mark@noop
+    \noexpand\else
+      \noexpand\edef\noexpand\replace@text{\noexpand\the\noexpand\toks@
+        ##1\expandafter\@gobble\string\\begin}%
+      \noexpand\let\noexpand\do@replacenext\noexpand\doreplace@begverb
+    \noexpand\fi
+    \noexpand\do@replacenext##2\noexpand\end@replace@marker
+  }%
+ \noexpand\def\noexpand\doreplace@endverb##1\@end@env@string##2\noexpand\end@replace@marker{%
+    \noexpand\expandafter\noexpand\toks@\noexpand\expandafter{\noexpand\replace@text}%
+    \noexpand\ifx\noexpand\relax##2\noexpand\relax
+      \noexpand\edef\noexpand\replace@text{\noexpand\the\noexpand\toks@##1}%
+      \noexpand\let\noexpand\do@replacenext\noexpand\replace@mark@noop
+    \noexpand\else
+      \noexpand\edef\noexpand\replace@text{\noexpand\the\noexpand\toks@
+        ##1\expandafter\@gobble\string\\end}%
+      \noexpand\let\noexpand\do@replacenext\noexpand\doreplace@endverb
+    \noexpand\fi
+    \noexpand\do@replacenext##2\noexpand\end@replace@marker
+  }%
+  \noexpand\def\noexpand\replace@markers##1{%
+    \noexpand\def\noexpand\replace@text{}%
+    \noexpand\expandafter\noexpand\do@replace@charM##1\@char@M\relax\noexpand\end@replace@marker
+    \noexpand\let##1\noexpand\replace@text
+    \noexpand\def\noexpand\replace@text{}%
+    \noexpand\expandafter\noexpand\doreplace@begverb##1\@beg@env@string\relax\noexpand\end@replace@marker
+    \noexpand\let##1\noexpand\replace@text
+    \noexpand\def\noexpand\replace@text{}%
+    \noexpand\expandafter\noexpand\doreplace@endverb##1\@end@env@string\relax\noexpand\end@replace@marker
+    \noexpand\let##1\noexpand\replace@text
+  }
+}
+\def\replace@mark@noop#1\end@replace@marker{}
+\def@replace@markers
+\newenvironment{defproblem}[1][0]{%
+  \edef\@prob@currentargN{\number0#1}%
+  \@defproblem@beginenv
+}{}
+\newcommand*{\@defproblem@beginenv}[2][]{%
+  \def\@prob@currentdefaultargs{#1}%
+  \def\@prob@currentlabel{#2}%
+  \@defproblem@beginenv@
+}
+\newcommand*{\@defproblem@beginenv@}[1][]{%
+  \setkeys{probsoln}{#1}%
+  \long@collect@body\prob@do@defproblem
+}
+\newcommand{\prob@do@newproblem}[1]{%
+  \if@prob@fragile
+    \probsoln@process@fragile{#1}%
+    \protected@edef\do@def@new@problem{%
+      \noexpand\prob@newproblem
+        {\@prob@currentargN}%
+        {\prob@currentdb}%
+        {\@prob@currentlabel}%
+        {%
+          \noexpand\probsoln@write@tmp{\@prob@tmp@problem}%
+          \noexpand\probsoln@read@tmp
+        }%
+        {\@prob@currentdefaultargs}%
+    }%
+  \else
+    \toks@{#1}%
+    \protected@edef\do@def@new@problem{%
+      \noexpand\prob@newproblem
+      {\@prob@currentargN}%
+      {\prob@currentdb}%
+      {\@prob@currentlabel}%
+      {\the\toks@}%
+      {\@prob@currentdefaultargs}%
+    }%
+  \fi
+  \do@def@new@problem
+}
+\let\prob@do@defproblem=\prob@do@newproblem
+\newenvironment{onlysolution}[1][]{%
+   \setkeys{probsoln}{#1}%
+   \long@collect@body\do@onlysolution
+}{}
+\newcommand{\do@onlysolution}[1]{%
+  \ifshowanswers
+    \probsoln@do@body{#1}%
+  \fi
+  \@ifundefined{@prob@currentlabel}
+  {}%
+  {%
+    \expandafter
+     \psn@add@unique@label
+       \csname prob@db@\prob@currentdb @solutions\endcsname{%
+         \@prob@currentlabel
+       }%
+  }%
+}
+
+\newcommand*{\psn@add@unique@label}[2]{%
+  \ifx#1\@empty
+    \xdef#1{#2}%
+  \else
+    \edef\@tmp@label{#2}%
+    \expandafter\DTLifinlist\expandafter{\@tmp@label}{#1}%
+    {}% ignore
+    {\xdef#1{#1,\@tmp@label}}%
+  \fi
+}
+\providecommand{\DTLifinlist}[4]{%
+  \def\@dtl@doifinlist##1,#1,##2\end@dtl@doifinlist{%
+     \def\@before{##1}%
+     \def\@after{##2}%
+  }%
+  \expandafter\@dtl@doifinlist\expandafter,#2,#1,\@nil
+    \end@dtl@doifinlist
+  \ifx\@after\@nnil
+    #4%
+  \else
+    #3%
+  \fi
+}
+\newenvironment{onlyproblem}[1][]{%
+   \setkeys{probsoln}{#1}%
+   \long@collect@body\do@onlyproblem
+}{}
+\newcommand{\do@onlyproblem}[1]{%
+  \ifshowanswers
+  \else
+    \probsoln@do@body{#1}%
+  \fi
+}
+\newcommand{\probsoln@do@body}[1]{%
+  \if@prob@fragile
+    \probsoln@process@fragile{#1}%
+    \probsoln@write@tmp{\@prob@tmp@problem}%
+    \probsoln@read@tmp
+  \else
+    #1%
+  \fi
+}
+\newcommand{\probsoln@process@fragile}[1]{%
+  \def\@prob@tmp@problem{#1}%
+  \@onelevel@sanitize\@prob@tmp@problem
+  \replace@markers\@prob@tmp@problem
+}
+\newcommand{\probsoln@write@tmp}[1]{%
+  \immediate\openout\probsoln@write=\ProbSolnFragileFile.\ProbSolnFragileExt
+  \immediate\write\probsoln@write{#1}%
+  \immediate\closeout\probsoln@write
+}
+\newcommand{\probsoln@read@tmp}{%
+  \input{\ProbSolnFragileFile.\ProbSolnFragileExt}%
+}
+\newcommand{\useproblem}[2][default]{%
+  \def\@prob@currentlabel{#2}%
+  \def\prob@currentdb{#1}%
+  \prob@showdraftlabel{#1}{#2}%
+  \@add@used@problem{#2}{#1}%
+  \let\@useprob@next=\relax
+  \@ifundefined{prob@data@#1@#2}%
+  {%
+    \PackageError{probsoln}%
+      {Problem `#2' is not defined in data set `#1'}{}%
+  }%
+  {%
+    \def\@useprob@next{\csname prob@data@#1@#2\endcsname}%
+  }%
+  \@useprob@next
+}
+\newcommand*{\loadallproblems}[2][default]{%
+\bgroup
+ \let\par\relax
+ \edef\prob@currentdb{#1}%
+ \input{#2}%
+\egroup
+}
+\newcommand{\prob@do@selectedproblem}[1]{%
+  \expandafter\DTLifinlist\expandafter{\@prob@currentlabel}{\prob@selectedlabels}%
+  {%
+    \prob@do@newproblem{#1}%
+  }%
+  {}%
+}
+\newcommand{\loadselectedproblems}[3][default]{%
+\bgroup
+ \let\par\relax
+ \edef\prob@currentdb{#1}%
+ \edef\prob@selectedlabels{#2}%
+ \let\prob@do@defproblem=\prob@do@selectedproblem
+ \input{#3}%
+\egroup
+}
+\newcommand{\prob@do@exceptedproblem}[1]{%
+  \expandafter\DTLifinlist\expandafter{\@prob@currentlabel}{\prob@selectedlabels}%
+  {}%
+  {%
+    \prob@do@newproblem{#1}%
+  }%
+}
+\newcommand{\loadexceptproblems}[3][default]{%
+\bgroup
+ \let\par\relax
+ \edef\prob@currentdb{#1}%
+ \edef\prob@selectedlabels{#2}%
+ \let\prob@do@defproblem=\prob@do@exceptedproblem
+ \input{#3}%
+\egroup
+}
+\newcommand{\prob@add@currentlabel}[1]{%
+\ifx\prob@selectedlabels\@empty
+ \xdef\prob@selectedlabels{\@prob@currentlabel}%
+\else
+ \xdef\prob@selectedlabels{\prob@selectedlabels,\@prob@currentlabel}%
+\fi
+}
+\newif\iffirstpass
+\firstpasstrue
+\newcommand{\loadrandomproblems}[3][default]{%
+  \@fetch@excluded@list{\@excl@list}{#1}%
+  \@loadrandomproblems{#1}{#2}{#3}{\@excl@list}%
+}
+\newcommand{\loadrandomexcept}[4][default]{%
+  \@loadrandomproblems{#1}{#2}{#3}{#4}%
+}
+\newcommand{\@loadrandomproblems}[4]{%
+\bgroup
+ \let\par\relax
+ \def\prob@db@reserved{}%
+ \def\prob@currentdb{reserved}%
+ \edef\prob@selectedlabels{}%
+ \let\prob@do@defproblem=\prob@add@currentlabel
+ \firstpasstrue
+ \input{#3}%
+ \@probselN=0\relax
+ \@for\@thislabel:=\prob@selectedlabels\do{%
+   \edef\@if@in@list{\noexpand\DTLifinlist{\@thislabel}{#4}}%
+   \@if@in@list
+   {}%
+   {%
+     \advance\@probselN by 1\relax
+     \expandafter
+       \edef\csname @prob@tmp@\romannumeral\@probselN\endcsname{%
+         \@thislabel}%
+   }%
+ }%
+ \edef\@do@excludedlist{#4}%
+ \ifdefempty{\@do@excludedlist}%
+   {}%
+   {\def\@do@excludedlist{(Excluded list: #4.) }}%
+ \ifnum\@probselN=0\relax
+     \PackageWarning{probsoln}{You have requested
+       \number#2\space\space problem(s) but there are no available
+       problems in `#3'. \@do@excludedlist No problems will be selected}%
+ \else
+   \shuffle{@prob@tmp@}{\@probselN}%
+   \ifnum\@probselN<#2\relax
+     \ifnum\@probselN=1\relax
+       \PackageWarning{probsoln}{You have requested
+         \number#2\space\space problem(s) but there is only
+         1 problem available in `#3'. \@do@excludedlist
+         Only 1 problem will be selected}%
+     \else
+       \PackageWarning{probsoln}{You have requested
+         \number#2\space\space problem(s) but there are only
+         \number\@probselN\space problems available in `#3'.
+           \@do@excludedlist
+           Only \number\@probselN\space problems will be selected}%
+     \fi
+   \else
+     \@probselN=#2\relax
+   \fi
+ \fi
+ \@probN=0\relax
+ \def\prob@selectedlabels{}%
+ \whiledo{\@probN<\@probselN}{%
+   \advance\@probN by 1\relax
+   \ifx\prob@selectedlabels\@empty
+     \edef\prob@selectedlabels{%
+       \csname @prob@tmp@\romannumeral\@probN\endcsname}%
+   \else
+     \edef\prob@selectedlabels{%
+       \prob@selectedlabels,%
+       \csname @prob@tmp@\romannumeral\@probN\endcsname}%
+   \fi
+ }%
+ \let\prob@do@defproblem=\prob@do@selectedproblem
+ \firstpassfalse
+ \input{#3}%
+\@ifundefined{prob@db@#1}{\prob@newdb{#1}}{}%
+\@for\@thislabel:=\prob@selectedlabels\do{%
+  \@moveproblem{\@thislabel}{reserved}{#1}%
+}%
+ \let\prob@selectedlabels=\undefined
+\egroup
+}
+\newcommand{\foreachproblem}[2][default]{%
+\@ifundefined{prob@db@#1}{%
+  \PackageError{probsoln}{Data base `#1' is not defined}{}%
+}{%
+  \expandafter\let\expandafter\@tmp\csname prob@db@#1\endcsname
+  \@for\thisproblemlabel:=\@tmp\do{%
+    \expandafter\ifnum
+       \csname prob@argN@#1@\thisproblemlabel\endcsname>0\relax
+       \@ifundefined{prob@args@#1@\thisproblemlabel}{%
+         \expandafter\@prob@getargs
+           \csname prob@argN@#1@\thisproblemlabel\endcsname
+           {#1}{\thisproblemlabel}}{}%
+       \expandafter\let\expandafter\thisproblemargs
+         \csname prob@args@#1@\thisproblemlabel\endcsname
+    \else
+       \let\thisproblemargs\@empty
+    \fi
+    \expandafter\toks@\expandafter{\thisproblemargs}%
+    \edef\thisproblem{\noexpand\useproblem[#1]{\thisproblemlabel}%
+       \the\toks@}%
+    #2%
+  }%
+}%
+}
+\newcommand{\foreachsolution}[2][default]{%
+\@ifundefined{prob@db@#1}{%
+  \PackageError{probsoln}{Data base `#1' is not defined}{}%
+}{%
+  \expandafter\let\expandafter\@tmp\csname prob@db@#1@solutions\endcsname
+  \@for\thisproblemlabel:=\@tmp\do{%
+    \ifx\thisproblemlabel\@empty
+    \else
+      \expandafter\ifnum
+         \csname prob@argN@#1@\thisproblemlabel\endcsname>0\relax
+         \@ifundefined{prob@args@#1@\thisproblemlabel}{%
+           \expandafter\@prob@getargs
+             \csname prob@argN@#1@\thisproblemlabel\endcsname
+             {#1}{\thisproblemlabel}}{}%
+         \expandafter\let\expandafter\thisproblemargs
+           \csname prob@args@#1@\thisproblemlabel\endcsname
+      \else
+         \let\thisproblemargs\@empty
+      \fi
+      \expandafter\toks@\expandafter{\thisproblemargs}%
+      \edef\thisproblem{\noexpand\useproblem[#1]{\thisproblemlabel}%
+         \the\toks@}%
+      #2%
+    \fi
+  }%
+}%
+}
+
+\newcommand{\foreachdataset}[2]{%
+\@for#1:=\prob@databases\do{#2}}
+\newcount\@probN \newcount\@probselN \newcount\@rndselctr
+\newcount\r@ndcur
+\newcount\@ps@randtmp
+\r@ndcur=1\relax
+\newcommand*{\PSNrandseed}[1]{%
+  \ifnum#1=0\relax
+    \PackageWarning{probsoln}{Can't have 0 as random seed, changing to 1}%
+    \global\r@ndcur=1\relax
+  \else
+    \global\r@ndcur=#1\relax
+  \fi
+  \PackageInfo{probsoln}{Random Seed = \number\r@ndcur}%
+}
+\newcommand*{\PSNgetrandseed}[1]{#1=\r@ndcur\relax}
+\newcommand*{\PSNrand}{%
+  \@ps@randtmp=\r@ndcur
+  \multiply\@ps@randtmp by 16811\relax
+  \r@ndcur=\@ps@randtmp
+  \global\divide\r@ndcur by 39989\relax
+  \global\multiply\r@ndcur by 39989\relax
+  \advance\@ps@randtmp by -\r@ndcur
+  \global\r@ndcur = \@ps@randtmp
+  \ifnum\r@ndcur=0\relax
+    \global\r@ndcur=1\relax
+  \fi
+}
+\newcommand*{\PSN@old@rand}{%
+  \@ps@randtmp=\r@ndcur
+  \multiply\@ps@randtmp by 16807\relax
+  \r@ndcur=\@ps@randtmp
+  \global\divide\r@ndcur by 120001\relax
+  \global\multiply\r@ndcur by 120001\relax
+  \advance\@ps@randtmp by -\r@ndcur
+  \global\r@ndcur = \@ps@randtmp
+  \ifnum\r@ndcur=0\relax
+    \global\r@ndcur=1\relax
+  \fi
+}
+\newcommand*{\PSNuseoldrandom}{%
+  \let\PSNrand\PSN@old@rand
+}
+\newcommand{\PSNrandom}[2]{%
+  \PSNrand
+  #1=\r@ndcur
+  \@ps@randtmp=\r@ndcur
+  \divide\@ps@randtmp by #2\relax
+  \multiply\@ps@randtmp by #2\relax
+  \advance#1 by -\@ps@randtmp
+  \advance#1 by 1\relax
+}
+\newcommand{\random}[3]{%
+\ifnum#2=1\relax
+  \PSNrandom{\value{#1}}{#3}%
+\else
+  \@rndselctr=#3%
+  \advance\@rndselctr by -#2\relax
+  \advance\@rndselctr by 1\relax
+  \PSNrandom{\value{#1}}{\@rndselctr}%
+  \addtocounter{#1}{#2}%
+  \addtocounter{#1}{-1}%
+\fi
+}
+\newcount\@shfctr \newcount\@shfA \newcount\@shfB
+\newcommand{\shuffle}[2]{%
+  \@shfctr=1\relax
+  \whiledo{\@shfctr < 101}%
+  {%
+    \PSNrandom{\@shfA}{#2}\PSNrandom{\@shfB}{#2}%
+    \ifnum\@shfA=\@shfB
+    \else
+      \edef\@@tmpA{\csname#1\romannumeral\@shfA\endcsname}%
+      \let\@tmpA=\@@tmpA
+      \edef\@@tmpB{\csname#1\romannumeral\@shfB\endcsname}%
+      \let\@tmpB=\@@tmpB
+      \expandafter\xdef\csname#1\romannumeral\@shfA\endcsname{\@tmpB}%
+      \expandafter\xdef\csname#1\romannumeral\@shfB\endcsname{\@tmpA}%
+    \fi
+    \advance\@shfctr by 1\relax
+  }%
+}
+\newcount\@ps@forrand
+\newcount\@ps@forrand@level
+\newcommand{\daopa}[2]{\PSNrandom{#1}{#2}}
+\newcommand{\doforrandN}[4]{%
+  \global\advance\@ps@forrand@level by 1\relax
+  {%
+    \@ps@forrand=0\relax
+    \@for#2:=#3\do{%
+      \advance\@ps@forrand by 1\relax
+      \expandafter
+        \edef\csname @doforrandN@\number\@ps@forrand@level @\romannumeral\@ps@forrand\endcsname{#2}%
+    }%
+    \ifnum\@ps@forrand<#1\relax
+      \PackageError{probsoln}{Can't randomly select \number#1\space item(s)}{You
+      have requested \number#1\space item(s), but there
+      are only \number\@ps@forrand\space item(s) in the list: #3}%
+    \else
+      \shuffle{@doforrandN@\number\@ps@forrand@level @}{\@ps@forrand}%
+      \ifnum#1>0\relax
+        \@ps@forrand=0\relax
+        \loop
+          \advance\@ps@forrand by 1\relax
+          \edef#2{\csname @doforrandN@\number\@ps@forrand@level @\romannumeral\@ps@forrand\endcsname}%
+           #4%
+        \ifnum\@ps@forrand<#1\relax
+        \repeat
+      \fi
+    \fi
+  }%
+  \global\advance\@ps@forrand@level by -1\relax
+}
+
+\ifthenelse{\boolean{baithi}}
+{%\input{baithi.tex}
+\RequirePackage{dethi-baithi} 
+\newcommand*{\newproblem}{\@ifstar\@snewproblem\@newproblem}
+\newcommand{\@snewproblem}[1][0]{%
+  \def\@newprob@argN{#1}%
+  \@s@newproblem
+}%
+\newcommand{\@s@newproblem}[3][]{%
+  \begin{defproblem}[\@newprob@argN][#1]{#2}%
+    #3%
+  \end{defproblem}%
+}
+\newcommand{\@newproblem}[1][0]{%
+  \def\@newprob@argN{#1}%
+  \@ns@newproblem
+}
+\newcommand{\@ns@newproblem}[4][]{%
+  \begin{defproblem}[\@newprob@argN][#1]{#2}%
+    #3%
+    \begin{onlysolution}%
+      \begin{solution}%
+        #4%
+      \end{solution}%
+    \end{onlysolution}%
+  \end{defproblem}%
+}
+\newcommand*{\selectallproblems}[1]{{\loadallproblems[#1]{#1}}%
+\foreachproblem[#1]{\PSNitem\thisproblem\endPSNitem}}
+\newcommand*{\selectrandomly}[2]{%
+{\loadrandomproblems[#1]{#2}{#1}}%
+\foreachproblem[#1]{\PSNitem\thisproblem\endPSNitem}%
+}
+\newenvironment{PSNitem}{\item}{}
+\@ifundefined{solution}{%
+  \newenvironment{solution}{\par\noindent\textbf{\solutionname}\space
+    \ignorespaces}{}%
+}{}
+\newcommand*{\solutionname}{Lời giải}
+\newenvironment{textenum}{%
+  \ifnum\@enumdepth>\thr@@
+    \@toodeep
+  \else
+    \advance\@enumdepth by 1\relax
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+    \let\@item\@textitem
+    \def\@itemlabel{%
+      \refstepcounter{\@enumctr}%
+      \csname label\@enumctr\endcsname
+    }%
+    \setcounter{\@enumctr}{0}%
+  \fi
+  \ignorespaces
+}%
+{%
+}
+\def\@textitem[#1]{#1\space\ignorespaces}
+\newcommand*{\correctitemformat}[1]{\fbox{#1}}
+\newcommand*{\incorrectitemformat}[1]{%
+\hspace{\fboxsep}\hspace{\fboxrule}#1}
+\newcommand*{\correctitem}{\@inmatherr\correctitem
+\@ifnextchar[\@correctitem{\@noitemargtrue\@correctitem[\@itemlabel]}}
+\def\@correctitem[#1]{%
+\ifshowanswers
+  \@item[\correctitemformat{#1}]%
+\else
+  \@item[#1]%
+\fi}
+\newcommand*{\incorrectitem}{\@inmatherr\incorrectitem
+\@ifnextchar[\@incorrectitem{\@noitemargtrue\@incorrectitem[\@itemlabel]}}
+\def\@incorrectitem[#1]{%
+\ifshowanswers
+  \@item[\incorrectitemformat{#1}]%
+\else
+  \@item[#1]%
+\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\parskip=0pt
+\parindent=0pt
+\makeatletter
+
+\PSNrandseed{\time}
+\newcommand{\@ttruong}{ĐẠI HỌC KHOA HỌC TỰ NHIÊN HÀ NỘI}
+\newcommand{\@tkhoa}{$\overline{\qquad\qquad\qquad}$}
+\newcommand{\@ldethi}{\small ĐỀ CHÍNH THỨC}
+\newcommand{\@tkythi}{ĐỀ THI KIỂM TRA GIỮA KÌ}
+\newcommand{\@tmonhoc}{Đại số tuyến tính}
+\newcommand{\@tenlop}{\ }
+\newcommand{\@tgian}{\  }
+\newcommand{\@tchuy}{\ }
+\newcommand{\@hovaten}{\ }
+\newcommand{\@sobaodanh}{\ }
+\newcommand{\@khaibaohoten}{\ }
+% \newcommand{\cotdapan}{3}
+\newcommand{\@ketqua}{{\textbf{Họ tên và chữ kí của hai giám khảo}\hfil  
+\textbf{Số câu trả lời đúng:........., điểm:.........}\hfill}}
+\newcommand{\@giamkhao}{Giám khảo 1: ..............................\\[0.3cm]
+Giám khảo 2: ..............................}
+% \newcommand\@scau{\ }
+\newcounter{quee}
+\newcommand{\@sophieua}{\value{version}<0}
+\newcommand{\nhieuphieuthi}{\renewcommand{\@sophieua}{\value{version}=\value{version}}}
+\newcommand{\motphieuthi}{\renewcommand{\@sophieua}{\value{version}<2}}
+
+\def\@phieu{
+\setcounter{quee}{0}
+\begin{center}
+\begin{multicols}{\csname sec\current@section @KCol\endcsname}%%%\cotdapan}
+ { \setlength{\baselineskip}{16truept}
+  \@whilenum \value{quee}<\value{enumi} \do{%1
+ \addtocounter{quee}{1}%%%
+
+\textcolor{\@mauchu}{ \textbf{Câu \ifthenelse{\value{quee}<10}{ 0\thequee.}{ \thequee.}}}%%%
+\@khoanh{A}%%
+\@khoanh{B}%%
+\@khoanh{C}%%
+\@khoanh{D}\\
+}
+}
+\end{multicols}
+\end{center}
+}
+
+\newcounter{madetracnghiem}
+
+\newcommand{\madethi}[1]{\setcounter{madetracnghiem}{#1}
+\addtocounter{madetracnghiem}{-1}}
+\newcommand{\tentruong}[1]{\renewcommand{\@ttruong}{\small #1}}
+\newcommand{\tenkhoa}[1]{\renewcommand{\@tkhoa}{$\underline{\mbox{#1}}$}}
+\newcommand{\loaidethi}[1]{\renewcommand{\@ldethi}{\small #1}}
+\newcommand{\tenkythi}[1]{\renewcommand{\@tkythi}{\small #1}}
+\newcommand{\tenmonhoc}[1]{\renewcommand{\@tmonhoc}{#1}}
+\newcommand{\tenlop}[1]{\renewcommand{\@tenlop}{\makebox[4cm]{{\bf #1:}\dotfill} }}
+\newcommand{\thoigian}[1]{\renewcommand{\@tgian}{#1}}
+\newcommand{\chuy}[1]{\renewcommand{\@tchuy}{#1}}
+\newcommand{\hovaten}[1]{\renewcommand{\@hovaten}{\makebox[7cm]{{\bf #1:}\dotfill} }}
+\newcommand{\sobaodanh}[1]{\renewcommand{\@sobaodanh}{{\bf  #1:} \fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}}}
+% \newcommand{\socauhoi}[1]{\renewcommand{\@scau}{ #1}}
+\newcommand{\khoanh}[1]{\renewcommand{\@khoanh}{ #1}}
+\newcommand{\ketqua}[1]{\renewcommand{\@ketqua}{ #1}}
+\newcommand{\giamkhao}[1]{\renewcommand{\@giamkhao}{ #1}}
+% \newcommand{\socotdapan}[1]{\renewcommand{\cotdapan}{#1}}
+\makeatother
+
+\renewcommand{\Fullpages}{\setlength{\topmargin}{0pc}
+                        \setlength{\oddsidemargin}{0pc}
+                        \setlength{\evensidemargin}{0pc}
+                        \setlength{\headheight}{0pt}
+                        \setlength{\headsep}{0pt}
+                        \setlength{\textwidth}{17truecm}
+                        \setlength{\textheight}{25truecm}
+%\setlength{\hoffset}{-0.5cm}
+\setlength{\shortitemwidth}{0.20\textwidth}
+ \setlength{\voffset}{-1cm}
+}
+
+\makeatletter
+\def\tieudetracnghiem{
+\begin{examtop}
+\stepcounter{madetracnghiem}
+\begin{minipage}[b]{0.35\textwidth}
+\centering
+\textbf{\@ttruong}\\
+\@tkhoa\\    %\makebox[4cm]{\hrulefill}\\
+\@ldethi
+% {({\it Đề thi \@scau{} câu / \@strang{} trang})}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.65\textwidth}
+\centering
+{\bf \@tkythi}\\
+{\bf  \@tmonhoc}\quad \textbf{\fbox{Mã đề thi \themadetracnghiem}}\\
+{\it \@tgian}\\
+%\qquad %{\it \@scau}
+% \textbf{\fbox{Mã đề thi \themadetracnghiem}}
+\end{minipage}
+
+ \vspace*{0.5cm}
+%\hfill \framebox{\bf Mã đề thi  \themadetracnghiem}%\arabic{version}} 
+\bigskip
+\par
+
+\@khaibaohoten
+\end{examtop}
+}
+
+\newcommand{\khaibaohoten}{\renewcommand{\@khaibaohoten}{
+\@hovaten\@tenlop\\[0.3cm]
+}}
+
+\def\tieudetuluan{
+\begin{examtop}
+\thispagestyle{empty}
+\begin{minipage}[b]{0.4\textwidth}
+\centering
+{ \@ttruong}\\
+\@tkhoa\\ %\makebox[4cm]{\hrulefill}\\
+\qquad
+% \@ldethi\\
+% {({\it Đề thi có \pageref{LastPage} trang})}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.6\textwidth}
+\centering
+{\bf \@tkythi}\\
+{\bf  \@tmonhoc}\\
+{\it \@tgian}
+\end{minipage}
+
+
+\bigskip
+\vspace*{1cm}
+\par
+
+%\makebox[10cm]{{\bf Họ và tên thí sinh:} \dotfill}\\
+%\makebox[10cm]{{\bf Số báo danh:} \dotfill}\\
+\end{examtop}
+}
+% 
+%Trang dap an
+\def\tieudedapan{
+\begin{keytop}
+\begin{minipage}[b]{0.4\textwidth}
+\centering
+\textbf{\@ttruong}\\
+\fbox{\textbf{Mã đề thi \themadetracnghiem}}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.6\textwidth}
+\centering
+\textbf{\@tkythi}\\
+\textbf{\large ĐÁP ÁN}
+\end{minipage}
+% \bigskip
+% \par
+% \@@line{\textbf{\@ttruong}\hfill  \textbf{\@tkythi}\hfill}
+% \@@line{\fbox{\textbf{Mã đề thi \themadetracnghiem}}\hfill{\bf\Large ĐÁP ÁN}\hfill}
+\thispagestyle{empty}
+\setcounter{figure}{0}
+\end{keytop}
+
+\begin{examclosing}
+\centerline{-- HẾT --}
+
+\noindent
+\hrulefill
+\begin{center}
+\textbf{\large PHIẾU TRẢ LỜI TRẮC NGHIỆM}
+
+\bigskip
+
+\@hovaten %%Mã Sinh viên \dotfill\hfill \fbox{\bf Mã đề thi \themadetracnghiem}
+\@tenlop
+\fbox{\textbf{Mã đề thi : \themadetracnghiem}}
+% \makebox[4cm]{\textbf{Mã đề thi:} \fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}}
+% \@sobaodanh
+
+\@phieu
+\end{center}
+% \vfill
+\vspace*{0.5cm}
+\@ketqua
+
+% \@giamkhao
+% \vfill
+\end{examclosing}
+
+
+
+\def\@khaibaophieu{
+\setlength{\tabcolsep}{2pt}\setlength{\arrayrulewidth}{1pt}
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabular}[b]{l p{0.2em}l}
+\begin{tabular}{| p{4.5truecm} | p{0.2em} | p{6.5truecm} |}
+\cline{1-1}\cline{3-3}
+&&\\
+\textbf{Giám thị 1:}&&1. Tỉnh/TP\dotfill\\[4pt]
+Họ và Tên\dotfill&&2. Hội đồng thi\dotfill\\[4pt] 
+\dotfill&&3. Phòng thi\dotfill\\[4pt] 
+Chữ kí\dotfill&&4. Họ và tên \dotfill\\[4pt] 
+\cline{1-1}
+&&\dotfill\\[4pt]
+\textbf{Giám thị 2:}&&5. Ngày sinh\dotfill\\[4pt] 
+Họ và Tên\dotfill&&6. Chữ kí của thí sinh\dotfill\\[4pt] 
+\dotfill&&7. Môn thi\dotfill\\[4pt] 
+Chữ kí\dotfill&&8. Ngày thi\dotfill\\[4pt]
+% &&\\ 
+\cline{1-1}\cline{3-3}
+\end{tabular}
+&
+&
+\begin{tabular}{| c | c | c | c | c | c | p{0.2em} | c | c|c|l}
+\multicolumn{6}{l}{9. Số báo danh}&\multicolumn{5}{r}{10. Mã đề thi}\\[0.2ex]
+\cline{1-6}\cline{8-10}
+&&&&&&&&&&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{0}&\@ccbox{0}&\@ccbox{0}&\@ccbox{0}&\@ccbox{0}&\@ccbox{0}&&\@ccbox{0}&\@ccbox{0}&\@ccbox{0}&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{1}&\@ccbox{1}&\@ccbox{1}&\@ccbox{1}&\@ccbox{1}&\@ccbox{1}&&\@ccbox{1}&\@ccbox{1}&\@ccbox{1}&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{2}&\@ccbox{2}&\@ccbox{2}&\@ccbox{2}&\@ccbox{2}&\@ccbox{2}&&\@ccbox{2}&\@ccbox{2}&\@ccbox{2}&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{3}&\@ccbox{3}&\@ccbox{3}&\@ccbox{3}&\@ccbox{3}&\@ccbox{3}&&\@ccbox{3}&\@ccbox{3}&\@ccbox{3}&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{4}&\@ccbox{4}&\@ccbox{4}&\@ccbox{4}&\@ccbox{4}&\@ccbox{4}&&\@ccbox{4}&\@ccbox{4}&\@ccbox{4}&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{5}&\@ccbox{5}&\@ccbox{5}&\@ccbox{5}&\@ccbox{5}&\@ccbox{5}&&\@ccbox{5}&\@ccbox{5}&\@ccbox{5}&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{6}&\@ccbox{6}&\@ccbox{6}&\@ccbox{6}&\@ccbox{6}&\@ccbox{6}&&\@ccbox{6}&\@ccbox{6}&\@ccbox{6}&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{7}&\@ccbox{7}&\@ccbox{7}&\@ccbox{7}&\@ccbox{7}&\@ccbox{7}&&\@ccbox{7}&\@ccbox{7}&\@ccbox{7}&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{8}&\@ccbox{8}&\@ccbox{8}&\@ccbox{8}&\@ccbox{8}&\@ccbox{8}&&\@ccbox{8}&\@ccbox{8}&\@ccbox{8}&\\ 
+\cline{1-6}\cline{8-10}
+\@ccbox{9}&\@ccbox{9}&\@ccbox{9}&\@ccbox{9}&\@ccbox{9}&\@ccbox{9}&&\@ccbox{9}&\@ccbox{9}&\@ccbox{9}&\\ 
+\cline{1-6}\cline{8-10}
+\end{tabular}
+\\
+\end{tabular}
+}
+
+\newcommand{\khaibaophieu}{\renewcommand{\@khaibaophieu}{
+\begin{center}
+ \@hovaten %%Mã Sinh viên \dotfill\hfill \fbox{\bf Mã đề thi \themadetracnghiem}
+ \@tenlop\\[6pt]
+ \@sobaodanh\qquad
+\textbf{Mã đề thi:} \fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\hspace*{0.5cm}
+\end{center}}
+}
+
+\begin{keyclosing}
+\ifthenelse{\@sophieua}{
+\newpage
+\thispagestyle{empty}
+
+\begin{minipage}[b]{0.4\textwidth}
+\centering
+\textbf{\@ttruong}\\[0.1cm]
+\@tkhoa\\
+%%%% \makebox[4cm]{\textbf{Mã đề thi:} \fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.6\textwidth}
+\centering
+\textbf{\@tkythi}\\
+\textbf{\large PHIẾU TRẢ LỜI TRẮC NGHIỆM}
+\end{minipage}
+
+\vspace*{0.7cm}
+% \@hovaten %%Mã Sinh viên \dotfill\hfill \fbox{\bf Mã đề thi \themadetracnghiem}
+% \@tenlop
+% \@sobaodanh
+\@khaibaophieu
+
+\begin{description}
+\item[Thí sinh lưu ý:]  Giữ cho phiếu phẳng, không bôi bẩn, làm rách. Phải ghi đầy đủ các mục theo hướng dẫn. Dùng bút chì đen tô kín các ô tròn trong mục: Số báo danh, Mã đề thi trước khi làm bài.
+\item[Phần trả lời:] Số thứ tự câu trả lời dưới đây ứng với số thứ tự câu trắc nghiệm trong đề thi.
+Đối với mỗi câu trắc nghiệm, thí sinh chọn và tô kín một ô tròn tương ứng với phương án trả lời đúng.\\
+Cách tô đúng là: {\Huge\textbullet} và tô sai là \@khoanh{X}\@khoanh{V}\@khoanh{\LARGE $\bullet$}:
+\end{description}
+
+\@phieu
+
+\vfill
+\@ketqua\\[0.2cm]
+
+\@giamkhao
+\vfill
+}{\relax }
+\end{keyclosing}
+}
+%Gach cuoi trang
+% \def\@strang{ }
+% \newcommand{\sotrang}[1]{\renewcommand{\@strang}{#1}}
+
+\def\tieudeduoi{
+\renewcommand{\@oddfoot}{% 
+\parbox{\textwidth}{%
+ \vspace*{-18pt}%
+
+{\hfill {\it  Trang\ \thepage/\pageref{LastPage} - Mã đề thi \themadetracnghiem}}
+}%
+}}
+
+\def\tieudetren{
+\renewcommand{\@oddhead}{%\@strang\@strang 
+\ifthenelse{\value{page}>1}{
+\parbox{\textwidth}{%
+\fbox{Mã đề thi 0\arabic{version}} \hfill\ifthenelse{\isodd{\value{page}}}{{\it Họ và tên thí sinh:}\phantom{gom muoi tam chu cai la duoc}}{
+{\it Môn thi:~\tmonhoc}\hfill\scau 
+}
+ \hrule%\\
+ }%
+}{}
+ }}
+
+ \DefineAnswerWrapper{\begin{description}\item[Lời giải.]}{\end{description}}
+\newcommand{\chucauhoi}[1]{\renewcommand{\labelenumi}{\textcolor{\@mauchu}{\bf #1\ifthenelse{\value{enumi}<10}{ 0\theenumi.}{ \theenumi.}}}}
+\newcommand{\mauchu}[1]{\renewcommand{\@mauchu}{#1}}
+\newcommand{\daungoac}[2]{\renewcommand{\@leftdot}{#1}\renewcommand{\@rightdot}{#2}}
+\newcommand{\chuphuongan}[1]{\renewcommand{\@upletter}{#1}} 
+
+\newcommand{\saupa}[6]{
+\word{{#5}{#2}{#5}{#5}{#1}{#4}{#1}{#1}{#1}{#2}{#4}{#1}{#1}{#3}{#6}{#6}{#4}{#2}{#2}{#2}{#5}{#5}{#6}{#6}}
+\word{{#1}{#4}{#1}{#1}{#5}{#5}{#4}{#5}{#2}{#4}{#2}{#2}{#6}{#6}{#2}{#2}{#3}{#4}{#3}{#3}{#3}{#4}{#3}{#3}}
+\word{{#2}{#1}{#4}{#2}{#3}{#1}{#5}{#3}{#5}{#5}{#6}{#6}{#3}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#3}{#4}{#2}}
+\word{{#3}{#5}{#2}{#4}{#2}{#3}{#6}{#6}{#3}{#1}{#1}{#4}{#5}{#5}{#5}{#5}{#2}{#1}{#1}{#4}{#1}{#2}{#2}{#4}}
+\word{{#4}{#3}{#6}{#6}{#4}{#2}{#2}{#2}{#4}{#3}{#3}{#3}{#4}{#1}{#1}{#1}{#5}{#5}{#5}{#5}{#4}{#1}{#1}{#1}}
+\word{{#6}{#6}{#3}{#3}{#6}{#6}{#3}{#4}{#6}{#6}{#5}{#5}{#6}{#6}{#2}{#4}{#6}{#6}{#3}{#4}{#6}{#6}{#5}{#5}}
+}                                                                                             
+
+\newcommand{\saupak}[6]{%%#1#2#3#4#5#6
+\word{{#1}{#1}{#1}{#1}{#1}{#1}}
+\word{{#2}{#2}{#2}{#2}{#2}{#2}}
+\word{{#3}{#3}{#3}{#3}{#3}{#3}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\word{{#5}{#5}{#5}{#5}{#5}{#5}}
+\word{{#6}{#6}{#6}{#6}{#6}{#6}}
+}
+
+\newcommand{\saupab}[6]{
+\examvspace*{-0.6\baselineskip}
+\word{{#5}{#5}{#5}{#5}{#1}{#4}{#1}{#1}{#1}{#2}{#4}{#1}{#1}{#3}{#3}{#4}{#4}{#2}{#2}{#2}{#5}{#5}{#5}{#5}}
+\word{{#1}{#4}{#1}{#1}{#5}{#5}{#5}{#5}{#2}{#4}{#2}{#2}{#2}{#4}{#2}{#2}{#3}{#4}{#3}{#3}{#3}{#4}{#3}{#3}}
+\word{{#2}{#1}{#4}{#2}{#3}{#1}{#4}{#3}{#5}{#5}{#5}{#5}{#3}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#3}{#4}{#2}}
+\word{{#3}{#2}{#2}{#4}{#2}{#3}{#3}{#4}{#3}{#1}{#1}{#4}{#5}{#5}{#5}{#5}{#2}{#1}{#1}{#4}{#1}{#2}{#2}{#4}}
+\word{{#4}{#3}{#3}{#3}{#4}{#2}{#2}{#2}{#4}{#3}{#3}{#3}{#4}{#1}{#1}{#1}{#5}{#5}{#5}{#5}{#4}{#1}{#1}{#1}}
+\word{{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}{#6}}
+}                                                                                             
+
+\newcommand{\nampa}[5]{
+\examvspace*{-0.6\baselineskip}
+\word{{#5}{#5}{#5}{#5}{#1}{#4}{#1}{#1}{#1}{#2}{#4}{#1}{#1}{#3}{#3}{#4}{#4}{#2}{#2}{#2}{#5}{#5}{#5}{#5}}
+\word{{#1}{#4}{#1}{#1}{#5}{#5}{#5}{#5}{#2}{#4}{#2}{#2}{#2}{#4}{#2}{#2}{#3}{#4}{#3}{#3}{#3}{#4}{#3}{#3}}
+\word{{#2}{#1}{#4}{#2}{#3}{#1}{#4}{#3}{#5}{#5}{#5}{#5}{#3}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#3}{#4}{#2}}
+\word{{#3}{#2}{#2}{#4}{#2}{#3}{#3}{#4}{#3}{#1}{#1}{#4}{#5}{#5}{#5}{#5}{#2}{#1}{#1}{#4}{#1}{#2}{#2}{#4}}
+\word{{#4}{#3}{#3}{#3}{#4}{#2}{#2}{#2}{#4}{#3}{#3}{#3}{#4}{#1}{#1}{#1}{#5}{#5}{#5}{#5}{#4}{#1}{#1}{#1}}
+}                                                                                             
+\newcommand{\nampak}[5]{
+% #1#2#3#4#5
+\word{{#1}{#1}{#1}{#1}{#1}}
+\word{{#2}{#2}{#2}{#2}{#2}}
+\word{{#3}{#3}{#3}{#3}{#3}}
+\word{{#4}{#4}{#4}{#4}{#4}}
+\word{{#5}{#5}{#5}{#5}{#5}}
+}
+
+\newcommand{\nampab}[5]{
+\examvspace*{-0.6\baselineskip}
+\word{{#1}{#4}{#1}{#1}{#4}{#1}{#1}{#2}{#4}{#2}{#2}{#4}{#2}{#2}{#3}{#4}{#3}{#3}{#4}{#3}{#3}{#1}{#2}{#3}}
+\word{{#2}{#1}{#4}{#3}{#1}{#4}{#3}{#1}{#2}{#4}{#3}{#2}{#4}{#3}{#1}{#3}{#4}{#2}{#3}{#4}{#2}{#2}{#1}{#1}}
+\word{{#3}{#2}{#2}{#2}{#3}{#3}{#4}{#3}{#1}{#1}{#1}{#3}{#3}{#4}{#2}{#1}{#1}{#1}{#2}{#2}{#4}{#4}{#4}{#4}}
+\word{{#4}{#3}{#3}{#4}{#2}{#2}{#2}{#4}{#3}{#3}{#4}{#1}{#1}{#1}{#4}{#2}{#2}{#4}{#1}{#1}{#1}{#3}{#3}{#2}}
+\word{{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}{#5}}
+}
+
+\setlength{\labelwidth}{48truept}
+
+\newcommand{\bonpa}[4]{
+\examvspace*{-0.8\baselineskip}
+\count1=\value{enumi}
+\count2=\value{enumi}
+%  \divide \count1 by 24
+ \divide \count1 by 61
+
+\ifcase\count1 % select font face
+%          \or \advance\count2 by -23
+          \or \advance\count2 by -60
+%          \or \advance\count2 by -71
+          \or \advance\count2 by -120
+          \or \advance\count2 by -180
+          \or \advance\count2 by -240
+          \or \advance\count2 by -300
+          \or \advance\count2 by -360
+          \or \advance\count2 by -420
+          \or \advance\count2 by -480
+          \or \advance\count2 by -540
+          \or \advance\count2 by -600
+      \fi
+
+  \ifcase\count2 
+\or%1
+\word{{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}}
+\word{{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}}
+\word{{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}}
+\word{{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}}
+\or%2
+\word{{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}}
+\word{{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}}
+\word{{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}}
+\word{{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}}
+\or%3
+\word{{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}}
+\word{{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}}
+\word{{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}}
+\word{{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}}
+\or%4
+\word{{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}}
+\word{{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}}
+\word{{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}}
+\word{{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}}
+\or%5 
+\word{{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}}
+\word{{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}}
+\word{{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}}
+\word{{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}}
+\or %6
+\word{{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}}
+\word{{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}}
+\word{{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}}
+\word{{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}}
+\or %7
+\word{{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}}
+\word{{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}}
+\word{{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}}
+\word{{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}}
+\or %8
+\word{{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}}
+\word{{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}}
+\word{{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}}
+\word{{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}}
+\or %9
+\word{{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}}
+\word{{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}}
+\word{{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}}
+\word{{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}}
+\or %10
+\word{{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}}
+\word{{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}}
+\word{{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}}
+\word{{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}}
+\or %11
+\word{{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}}
+\word{{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}}
+\word{{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}}
+\word{{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}}
+\or %12
+\word{{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}}
+\word{{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}}
+\word{{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}}
+\word{{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}}
+\or %13
+\word{{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}}
+\word{{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}}
+\word{{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}}
+\word{{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}}
+\or %14
+\word{{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}}
+\word{{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}}
+\word{{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}}
+\word{{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}}
+\or %15
+\word{{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}}
+\word{{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}}
+\word{{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}}
+\word{{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}}
+\or %16
+\word{{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}}
+\word{{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}}
+\word{{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}}
+\word{{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}}
+\or %17
+\word{{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}}
+\word{{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}}
+\word{{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}}
+\word{{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}}
+\or %18
+\word{{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}}
+\word{{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}}
+\word{{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}}
+\word{{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}}
+\or %19
+\word{{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}}
+\word{{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}}
+\word{{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}}
+\word{{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}}
+\or %20
+\word{{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}}
+\word{{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}}
+\word{{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}}
+\word{{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}}
+\or %21
+\word{{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}}
+\word{{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}}
+\word{{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}}
+\word{{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}}
+\or %22
+\word{{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}}
+\word{{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}}
+\word{{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}}
+\word{{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}}
+\or %23
+\word{{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}}
+\word{{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}}
+\word{{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}}
+\word{{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}}
+\or %24
+\word{{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}}
+\word{{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}}
+\word{{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}}
+\word{{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}}
+%%%%%%%%%%%%%%%%
+\or %20
+\word{{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}}
+\word{{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}}
+\word{{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}}
+\word{{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}}
+\or %21
+\word{{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}}
+\word{{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}}
+\word{{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}}
+\word{{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}}
+\or %22
+\word{{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}}
+\word{{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}}
+\word{{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}}
+\word{{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}}
+\or %23
+\word{{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}}
+\word{{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}}
+\word{{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}}
+\word{{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}}
+\or %24
+\word{{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}}
+\word{{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}}
+\word{{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}}
+\word{{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}}
+\or %15
+\word{{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}}
+\word{{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}}
+\word{{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}}
+\word{{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}}
+\or %16
+\word{{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}}
+\word{{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}}
+\word{{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}}
+\word{{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}}
+\or %17
+\word{{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}}
+\word{{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}}
+\word{{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}}
+\word{{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}}
+\or %18
+\word{{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}}
+\word{{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}}
+\word{{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}}
+\word{{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}}
+\or %19
+\word{{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}}
+\word{{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}}
+\word{{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}}
+\word{{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}}
+\or %10
+\word{{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}}
+\word{{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}}
+\word{{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}}
+\word{{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}}
+\or %11
+\word{{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}}
+\word{{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}}
+\word{{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}}
+\word{{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}}
+\or %12
+\word{{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}}
+\word{{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}}
+\word{{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}}
+\word{{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}}
+\or %13
+\word{{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}}
+\word{{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}}
+\word{{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}}
+\word{{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}}
+\or %14
+\word{{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}}
+\word{{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}}
+\word{{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}}
+\word{{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}}
+\or%5 
+\word{{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}}
+\word{{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}}
+\word{{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}}
+\word{{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}}
+\or %6
+\word{{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}}
+\word{{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}}
+\word{{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}}
+\word{{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}}
+\or %7
+\word{{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}}
+\word{{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}}
+\word{{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}}
+\word{{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}}
+\or %8
+\word{{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}}
+\word{{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}}
+\word{{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}}
+\word{{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}}
+\or %9
+\word{{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}}
+\word{{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}}
+\word{{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}}
+\word{{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}}
+\or%1
+\word{{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}}
+\word{{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}}
+\word{{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}}
+\word{{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}}
+\or%2
+\word{{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}}
+\word{{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}}
+\word{{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}}
+\word{{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}}
+\or%3
+\word{{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}}
+\word{{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}}
+\word{{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}}
+\word{{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}}
+\or%4
+\word{{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}}
+\word{{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}}
+\word{{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}}
+\word{{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}}
+%%%%%
+\or %20
+\word{{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}}
+\word{{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}}
+\word{{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}}
+\word{{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}}
+\or %21
+\word{{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}}
+\word{{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}}
+\word{{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}}
+\word{{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}}
+\or %7
+\word{{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}}
+\word{{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}}
+\word{{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}}
+\word{{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}}
+\or %8
+\word{{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}}
+\word{{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}}
+\word{{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}}
+\word{{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}}
+\or %9
+\word{{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}}
+\word{{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}}
+\word{{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}}
+\word{{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}}
+\or%1
+\word{{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}}
+\word{{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}}
+\word{{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}}
+\word{{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}}
+\or%2
+\word{{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}}
+\word{{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}}
+\word{{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}}
+\word{{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}}
+\or %23
+\word{{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}}
+\word{{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}}
+\word{{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}}
+\word{{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}}
+\or %24
+\word{{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}}
+\word{{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}}
+\word{{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}}
+\word{{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}}
+\or %15
+\word{{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}}
+\word{{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}}
+\word{{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}}
+\word{{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}}
+\or %16
+\word{{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}}
+\word{{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}}
+\word{{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}}
+\word{{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}}
+\or %17
+\word{{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}}
+\word{{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}}
+\word{{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}}
+\word{{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}}
+\else
+\word{{#4}{#3}{#3}{#4}{#2}{#2}{#2}{#4}{#3}{#3}{#4}{#1}{#1}{#1}{#4}{#2}{#2}{#4}{#1}{#1}{#1}{#3}{#3}{#2}}
+\word{{#3}{#2}{#2}{#2}{#3}{#3}{#4}{#3}{#1}{#1}{#1}{#3}{#3}{#4}{#2}{#1}{#1}{#1}{#2}{#2}{#4}{#4}{#4}{#4}}
+\word{{#2}{#1}{#4}{#3}{#1}{#4}{#3}{#1}{#2}{#4}{#3}{#2}{#4}{#3}{#1}{#3}{#4}{#2}{#3}{#4}{#2}{#2}{#1}{#1}}
+\word{{#1}{#4}{#1}{#1}{#4}{#1}{#1}{#2}{#4}{#2}{#2}{#4}{#2}{#2}{#3}{#4}{#3}{#3}{#4}{#3}{#3}{#1}{#2}{#3}}
+\fi
+}
+
+\newcommand{\bonpat}[4]{
+\examvspace*{-0.9\baselineskip}
+ \setlength{\labelwidth}{24pt}
+% \daopa{\count1}{24}
+%   \ifcase\count1 
+\count1=\value{enumi}
+\count2=\value{enumi}
+ \divide \count1 by 24
+  \ifcase\count1 % select font face
+          \or \advance\count2 by -23
+          \or \advance\count2 by -47
+          \or \advance\count2 by -71
+          \or \advance\count2 by -95
+          \or \advance\count2 by -119
+      \fi
+
+  \ifcase\count2 
+\or
+\word{{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}}
+\word{{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}}
+\word{{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}}
+\word{{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}}
+\or
+\word{{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}}
+\word{{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}}
+\word{{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}}
+\word{{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}}
+\or
+\word{{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}}
+\word{{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}}
+\word{{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}}
+\word{{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}}
+\or
+\word{{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}}
+\word{{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}}
+\word{{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}}
+\word{{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}}
+\or 
+\word{{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}}
+\word{{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}}
+\word{{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}}
+\word{{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}}
+\or 
+\word{{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}}
+\word{{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}}
+\word{{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}}
+\word{{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}}
+\or 
+\word{{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}}
+\word{{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}}
+\word{{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}}
+\word{{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}}
+\or 
+\word{{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}}
+\word{{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}}
+\word{{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}}
+\word{{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}}
+\or 
+\word{{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}}
+\word{{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}}
+\word{{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}}
+\word{{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}}
+\or 
+\word{{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}}
+\word{{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}}
+\word{{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}}
+\word{{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}}
+\or 
+\word{{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}}
+\word{{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}}
+\word{{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}}
+\word{{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}}
+\or
+\word{{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}}
+\word{{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}}
+\word{{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}}
+\word{{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}}
+\or 
+\word{{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}}
+\word{{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}}
+\word{{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}}
+\word{{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}}
+\or 
+\word{{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}}
+\word{{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}}
+\word{{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}}
+\word{{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}}
+\or 
+\word{{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}}
+\word{{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}}
+\word{{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}}
+\word{{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}}
+\or 
+\word{{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}}
+\word{{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}}
+\word{{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}}
+\word{{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}}
+\or 
+\word{{#1}{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}}
+\word{{#3}{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}}
+\word{{#4}{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}}
+\word{{#2}{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}}
+\or 
+\word{{#2}{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}}
+\word{{#4}{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}}
+\word{{#1}{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}}
+\word{{#3}{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}}
+\or 
+\word{{#3}{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}}
+\word{{#1}{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}}
+\word{{#2}{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}}
+\word{{#4}{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}}
+\or 
+\word{{#4}{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}}
+\word{{#2}{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}}
+\word{{#3}{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}}
+\word{{#1}{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}}
+\or 
+\word{{#4}{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}}
+\word{{#1}{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}}
+\word{{#2}{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}}
+\word{{#3}{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}}
+\or 
+\word{{#1}{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}}
+\word{{#4}{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}}
+\word{{#3}{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}}
+\word{{#2}{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}}
+\or 
+\word{{#2}{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}}
+\word{{#3}{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}}
+\word{{#4}{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}}
+\word{{#1}{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}}
+\or
+\word{{#3}{#3}{#4}{#1}{#2}{#1}{#2}{#4}{#3}{#1}{#3}{#2}{#4}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#4}{#4}{#1}{#2}}
+\word{{#2}{#4}{#3}{#2}{#1}{#4}{#3}{#1}{#2}{#3}{#1}{#4}{#2}{#1}{#2}{#3}{#4}{#3}{#4}{#1}{#2}{#1}{#4}{#3}}
+\word{{#1}{#1}{#2}{#3}{#4}{#2}{#1}{#3}{#4}{#2}{#4}{#3}{#1}{#3}{#4}{#1}{#2}{#4}{#1}{#2}{#3}{#2}{#3}{#4}}
+\word{{#4}{#2}{#1}{#4}{#3}{#3}{#4}{#2}{#1}{#4}{#2}{#1}{#3}{#4}{#3}{#2}{#1}{#2}{#3}{#4}{#1}{#3}{#2}{#1}}
+\else
+\word{{#4}{#3}{#3}{#4}{#2}{#2}{#2}{#4}{#3}{#3}{#4}{#1}{#1}{#1}{#4}{#2}{#2}{#4}{#1}{#1}{#1}{#3}{#3}{#2}}
+\word{{#3}{#2}{#2}{#2}{#3}{#3}{#4}{#3}{#1}{#1}{#1}{#3}{#3}{#4}{#2}{#1}{#1}{#1}{#2}{#2}{#4}{#4}{#4}{#4}}
+\word{{#2}{#1}{#4}{#3}{#1}{#4}{#3}{#1}{#2}{#4}{#3}{#2}{#4}{#3}{#1}{#3}{#4}{#2}{#3}{#4}{#2}{#2}{#1}{#1}}
+\word{{#1}{#4}{#1}{#1}{#4}{#1}{#1}{#2}{#4}{#2}{#2}{#4}{#2}{#2}{#3}{#4}{#3}{#3}{#4}{#3}{#3}{#1}{#2}{#3}}
+\fi
+ \setlength{\labelwidth}{48truept}
+}
+
+ \newcommand{\bonpak}[4]{
+ \examvspace*{-0.8\baselineskip}
+%  \setlength{\labelwidth}{24pt}
+%  #1 #2 #3 #4
+\word{{#1}{#1}{#1}{#1}{#1}{#1}} 
+\word{{#2}{#2}{#2}{#2}{#2}{#2}} 
+\word{{#3}{#3}{#3}{#3}{#3}{#3}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\setlength{\labelwidth}{48truept}
+}
+
+\newcommand{\bonpab}[4]{
+\examvspace*{-0.8\baselineskip}
+%  \setlength{\labelwidth}{24pt}
+% \daopa{\count1}{6}
+%   \ifcase\count1 
+\count1=\value{enumi}
+\count2=\value{enumi}
+ \divide \count1 by 6
+  \ifcase\count1 % select font face
+          \or \advance\count2 by -5
+          \or \advance\count2 by -11
+          \or \advance\count2 by -17
+          \or \advance\count2 by -23
+          \or \advance\count2 by -29
+          \or \advance\count2 by -35
+          \or \advance\count2 by -41
+          \or \advance\count2 by -47
+          \or \advance\count2 by -53
+          \or \advance\count2 by -59
+          \or \advance\count2 by -65
+          \or \advance\count2 by -71
+          \or \advance\count2 by -77
+          \or \advance\count2 by -83
+          \or \advance\count2 by -89
+          \or \advance\count2 by -95
+          \or \advance\count2 by -101
+          \or \advance\count2 by -107
+          \or \advance\count2 by -113
+      \fi
+
+  \ifcase\count2 
+\or
+\word{{#1}{#1}{#2}{#2}{#3}{#3}} 
+\word{{#2}{#3}{#1}{#3}{#1}{#2}} 
+\word{{#3}{#2}{#3}{#1}{#2}{#1}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#2}{#2}{#3}{#3}{#1}{#1}} 
+\word{{#1}{#3}{#1}{#2}{#2}{#3}} 
+\word{{#3}{#1}{#2}{#1}{#3}{#2}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#3}{#3}{#1}{#1}{#2}{#2}} 
+\word{{#1}{#2}{#2}{#3}{#1}{#3}} 
+\word{{#2}{#1}{#3}{#2}{#3}{#1}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#1}{#1}{#2}{#2}{#3}{#3}} 
+\word{{#2}{#3}{#1}{#3}{#1}{#2}} 
+\word{{#3}{#2}{#3}{#1}{#2}{#1}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#2}{#3}{#3}{#1}{#1}{#2}} 
+\word{{#3}{#1}{#2}{#2}{#3}{#1}} 
+\word{{#1}{#2}{#1}{#3}{#2}{#3}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#3}{#1}{#1}{#2}{#2}{#3}} 
+\word{{#2}{#2}{#3}{#1}{#3}{#1}} 
+\word{{#1}{#3}{#2}{#3}{#1}{#2}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#1}{#2}{#2}{#3}{#3}{#1}} 
+\word{{#3}{#1}{#3}{#1}{#2}{#2}} 
+\word{{#2}{#3}{#1}{#2}{#1}{#3}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#2}{#2}{#3}{#3}{#1}{#1}} 
+\word{{#1}{#3}{#1}{#2}{#2}{#3}} 
+\word{{#3}{#1}{#2}{#1}{#3}{#2}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#3}{#1}{#1}{#2}{#2}{#3}} 
+\word{{#2}{#2}{#3}{#1}{#3}{#1}} 
+\word{{#1}{#3}{#2}{#3}{#1}{#2}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#1}{#2}{#2}{#3}{#3}{#1}} 
+\word{{#3}{#1}{#3}{#1}{#2}{#2}} 
+\word{{#2}{#3}{#1}{#2}{#1}{#3}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#2}{#3}{#3}{#1}{#1}{#2}} 
+\word{{#3}{#1}{#2}{#2}{#3}{#1}} 
+\word{{#1}{#2}{#1}{#3}{#2}{#3}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#3}{#3}{#1}{#1}{#2}{#2}} 
+\word{{#1}{#2}{#2}{#3}{#1}{#3}} 
+\word{{#2}{#1}{#3}{#2}{#3}{#1}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#1}{#1}{#2}{#2}{#3}{#3}} 
+\word{{#2}{#3}{#1}{#3}{#1}{#2}} 
+\word{{#3}{#2}{#3}{#1}{#2}{#1}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#2}{#2}{#3}{#3}{#1}{#1}} 
+\word{{#1}{#3}{#1}{#2}{#2}{#3}} 
+\word{{#3}{#1}{#2}{#1}{#3}{#2}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#3}{#3}{#1}{#1}{#2}{#2}} 
+\word{{#1}{#2}{#2}{#3}{#1}{#3}} 
+\word{{#2}{#1}{#3}{#2}{#3}{#1}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#1}{#2}{#2}{#3}{#3}{#1}} 
+\word{{#3}{#1}{#3}{#1}{#2}{#2}} 
+\word{{#2}{#3}{#1}{#2}{#1}{#3}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#2}{#3}{#3}{#1}{#1}{#2}} 
+\word{{#3}{#1}{#2}{#2}{#3}{#1}} 
+\word{{#1}{#2}{#1}{#3}{#2}{#3}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\or
+\word{{#3}{#1}{#1}{#2}{#2}{#3}} 
+\word{{#2}{#2}{#3}{#1}{#3}{#1}} 
+\word{{#1}{#3}{#2}{#3}{#1}{#2}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\else
+\word{{#1}{#1}{#2}{#2}{#3}{#3}} 
+\word{{#2}{#3}{#1}{#3}{#1}{#2}} 
+\word{{#3}{#2}{#3}{#1}{#2}{#1}}
+\word{{#4}{#4}{#4}{#4}{#4}{#4}}
+\fi
+\setlength{\labelwidth}{48truept}
+}                                                 
+
+\newcommand{\bapa}[3]{
+% \count1=\value{enumi}
+% \daopa{\count1}{6}
+%   \ifcase\count1 
+\count1=\value{enumi}
+\count2=\value{enumi}
+ \divide \count1 by 6
+  \ifcase\count1 % select font face
+          \or \advance\count2 by -5
+          \or \advance\count2 by -11
+          \or \advance\count2 by -17
+          \or \advance\count2 by -23
+          \or \advance\count2 by -29
+          \or \advance\count2 by -35
+          \or \advance\count2 by -41
+          \or \advance\count2 by -47
+          \or \advance\count2 by -53
+          \or \advance\count2 by -59
+          \or \advance\count2 by -65
+          \or \advance\count2 by -71
+          \or \advance\count2 by -77
+          \or \advance\count2 by -83
+          \or \advance\count2 by -89
+          \or \advance\count2 by -95
+          \or \advance\count2 by -101
+          \or \advance\count2 by -107
+          \or \advance\count2 by -113
+      \fi
+
+  \ifcase\count2 
+\or
+\word{{#1}{#1}{#2}{#2}{#3}{#3}} 
+\word{{#2}{#3}{#1}{#3}{#1}{#2}} 
+\word{{#3}{#2}{#3}{#1}{#2}{#1}}
+\or
+\word{{#2}{#2}{#3}{#3}{#1}{#1}} 
+\word{{#1}{#3}{#1}{#2}{#2}{#3}} 
+\word{{#3}{#1}{#2}{#1}{#3}{#2}}
+\or
+\word{{#3}{#3}{#1}{#1}{#2}{#2}} 
+\word{{#1}{#2}{#2}{#3}{#1}{#3}} 
+\word{{#2}{#1}{#3}{#2}{#3}{#1}}
+\or
+\word{{#1}{#2}{#2}{#3}{#3}{#1}} 
+\word{{#3}{#1}{#3}{#1}{#2}{#2}} 
+\word{{#2}{#3}{#1}{#2}{#1}{#3}}
+\or
+\word{{#2}{#3}{#3}{#1}{#1}{#2}} 
+\word{{#3}{#1}{#2}{#2}{#3}{#1}} 
+\word{{#1}{#2}{#1}{#3}{#2}{#3}}
+\or
+\word{{#3}{#1}{#1}{#2}{#2}{#3}} 
+\word{{#2}{#2}{#3}{#1}{#3}{#1}} 
+\word{{#1}{#3}{#2}{#3}{#1}{#2}}
+\or
+\word{{#1}{#1}{#2}{#2}{#3}{#3}} 
+\word{{#2}{#3}{#1}{#3}{#1}{#2}} 
+\word{{#3}{#2}{#3}{#1}{#2}{#1}}
+\or
+\word{{#2}{#2}{#3}{#3}{#1}{#1}} 
+\word{{#1}{#3}{#1}{#2}{#2}{#3}} 
+\word{{#3}{#1}{#2}{#1}{#3}{#2}}
+\or
+\word{{#3}{#3}{#1}{#1}{#2}{#2}} 
+\word{{#1}{#2}{#2}{#3}{#1}{#3}} 
+\word{{#2}{#1}{#3}{#2}{#3}{#1}}
+\or
+\word{{#1}{#2}{#2}{#3}{#3}{#1}} 
+\word{{#3}{#1}{#3}{#1}{#2}{#2}} 
+\word{{#2}{#3}{#1}{#2}{#1}{#3}}
+\or
+\word{{#2}{#3}{#3}{#1}{#1}{#2}} 
+\word{{#3}{#1}{#2}{#2}{#3}{#1}} 
+\word{{#1}{#2}{#1}{#3}{#2}{#3}}
+\or
+\word{{#3}{#1}{#1}{#2}{#2}{#3}} 
+\word{{#2}{#2}{#3}{#1}{#3}{#1}} 
+\word{{#1}{#3}{#2}{#3}{#1}{#2}}
+\or
+\word{{#1}{#1}{#2}{#2}{#3}{#3}} 
+\word{{#2}{#3}{#1}{#3}{#1}{#2}} 
+\word{{#3}{#2}{#3}{#1}{#2}{#1}}
+\or
+\word{{#2}{#2}{#3}{#3}{#1}{#1}} 
+\word{{#1}{#3}{#1}{#2}{#2}{#3}} 
+\word{{#3}{#1}{#2}{#1}{#3}{#2}}
+\or
+\word{{#3}{#3}{#1}{#1}{#2}{#2}} 
+\word{{#1}{#2}{#2}{#3}{#1}{#3}} 
+\word{{#2}{#1}{#3}{#2}{#3}{#1}}
+\or
+\word{{#1}{#2}{#2}{#3}{#3}{#1}} 
+\word{{#3}{#1}{#3}{#1}{#2}{#2}} 
+\word{{#2}{#3}{#1}{#2}{#1}{#3}}
+\or
+\word{{#2}{#3}{#3}{#1}{#1}{#2}} 
+\word{{#3}{#1}{#2}{#2}{#3}{#1}} 
+\word{{#1}{#2}{#1}{#3}{#2}{#3}}
+\or
+\word{{#3}{#1}{#1}{#2}{#2}{#3}} 
+\word{{#2}{#2}{#3}{#1}{#3}{#1}} 
+\word{{#1}{#3}{#2}{#3}{#1}{#2}}
+\else
+\word{{#1}{#1}{#2}{#2}{#3}{#3}} 
+\word{{#2}{#3}{#1}{#3}{#1}{#2}} 
+\word{{#3}{#2}{#3}{#1}{#2}{#1}}
+\fi
+\setlength{\labelwidth}{48truept}
+}            
+
+\newcommand{\bapak}[3]{
+%#1#2#3
+\word{{#1}{#1}{#1}{#1}} 
+\word{{#2}{#2}{#2}{#2}}
+\word{{#3}{#3}{#3}{#3}} 
+}
+
+\newcommand{\bapab}[3]{
+ \ifodd\value{enumi} 
+\word{{#1}{#1}{#1}{#1}} 
+\word{{#2}{#2}{#2}{#2}}
+\word{{#3}{#3}{#3}{#3}} 
+\else 
+\word{{#2}{#2}{#2}{#2}} 
+\word{{#1}{#1}{#1}{#1}}
+\word{{#3}{#3}{#3}{#3}} 
+\fi
+}                         
+
+\newcommand{\haipa}[2]{
+ \ifodd\value{enumi}
+\word{{#1}{#1}} 
+\word{{#2}{#2}} 
+\else 
+\word{{#2}{#2}} 
+\word{{#1}{#1}} 
+\fi
+}                      
+
+\newcommand{\haipak}[2]{
+% #1#2
+\word{{#1}{#1}} 
+\word{{#2}{#2}} 
+}                      
+
+\def\@datcotphai{ }
+\def\@datcottrai{\examhspace*{-12pt}}
+
+\newcommand{\datcot}[1][0]{\ifthenelse{#1=0}{
+\renewcommand{\@datcotphai}{ }
+%\renewcommand{\@datcottrai}{\examhspace*{-12pt} }
+}{
+\renewcommand{\@datcotphai}{\parbox[t]{#1\shortitemwidth}}
+%\renewcommand{\@datcottrai}{\examhspace*{-12pt} }
+}}
+                        
+\newcommand{\sai}[1]{\choice{\@datcotphai{#1\@datcottrai}}}
+\newcommand{\dung}[1]{\choice[!]{\@datcotphai{#1\@datcottrai}}}
+%%%
+\def\saih#1{$\underset{\mbox{ \textcolor{\@mauchu}{\@upletter{choice} }}\stepcounter{choice}}{\underline{\mbox{ #1 }}}$}
+\def\dungh#1{\ifanswer $\underset{\mbox{ \textcolor{\@mauchu}{\cboxv{\@upletter{choice}}} }\stepcounter{choice}}{\underline{\mbox{ #1} }}$ \else $\underset{\mbox{ \textcolor{\@mauchu}{\@upletter{choice}} }\stepcounter{choice}}{\underline{\mbox{ #1} }}$\fi }
+% \def\dunghh#1{$\underset{A}{#1}$}
+\newcommand{\false}[1]{\choice{#1}}
+\newcommand{\true}[1]{\choice[!]{#1}}
+\newcommand{\liencau}{\renewcommand{\@tachcau}{\examvspace*{-0.3\baselineskip}}}
+\newcommand{\motcot}[1]{\parbox[t]{\shortitemwidth}{#1\strut}}
+\newcommand{\haicot}[1]{\parbox[t]{2\shortitemwidth}{#1\strut}}
+\newcommand{\bacot}[1]{\parbox[t]{3\shortitemwidth}{#1\strut}}
+\newcommand{\boncot}[1]{\parbox[t]{4.4\shortitemwidth}{#1}}
+\newcommand{\namcot}[1]{\parbox[t]{5\shortitemwidth}{#1\strut}}
+\newcommand{\saucot}[1]{\parbox[t]{6\shortitemwidth}{#1\strut}}
+\makeatother
+  
+\abovedisplayskip=0pt plus 0pt minus 3pt
+\abovedisplayshortskip=0pt plus 0pt minus 3pt
+\belowdisplayskip=\abovedisplayskip
+\belowdisplayshortskip=\abovedisplayshortskip
+\setlength{\afterinstsep}{0truept}
+\setlength{\aftersectsep}{0truept}
+\setlength{\beforeinstsep}{0truept}
+% \setlength{\shortitemwidth}{3.5truecm}
+\setlength{\shortitemwidth}{0.20\textwidth}
+%\setlength{\aftersectsep}{0truept}
+ \setlength{\leftmargin}{0truept}
+\setlength{\rightmargin}{0pc}
+\setlength{\parskip}{0pc}
+\def\ktrang{\makebox[1.5cm]{\hrulefill}}
+%\headheight=2cm
+%\headsep=6mm
+
+\hfuzz=1pt
+%%%%%%%%%%%%%%%%
+\newif\ifcholoigiai \choloigiaifalse
+\newcommand{\loigiai}[1]{%
+\ifcholoigiai
+\vspace*{-1em}
+ \item[]\begin{minipage}[t]{0.99\textwidth}
+\ifanswer
+%  \par
+\hrulefill\par
+\noindent \textbf{Lời giải:}
+#1
+% \par
+\hfill $\square$
+% \hrulefill\par
+\fi
+\end{minipage}
+\else\relax
+\fi
+}
+%%%%%%%%%%%%%%
+\def\coloigiai{
+\choloigiaitrue
+% \ShortKey
+\def\@sophieua{\value{version}<0}
+\NoRearrange
+\NumberOfVersions{1}
+% 
+%  \def\bonpa{\bonpak}
+}
+%%%%%%%%%%%%%%%
+\newcommand{\baitracnghiem}[3]{\newproblem*{#1}{%
+\begin{question}%1
+#2
+#3
+\end{question}
+}
+}
+
+\newcommand{\baitracnghiemt}[2]{\newproblem*{#1}{%
+\begin{question}%1
+#2
+\end{question}
+}
+}
+
+\newcommand{\baitracnghiemba}[3]{\newproblem*{#1}{%
+\begin{question}%1
+#2
+#3
+\end{question}
+}
+}
+
+\newcommand{\baitracnghiemhai}[3]{\newproblem*{#1}{%
+\begin{question}%1
+#2
+#3
+\end{question}
+}
+}
+%%%%%%%%%%%%%%%
+\newif\ifchohienpa \chohienpatrue
+\newcommand{\bonpah}[4]{
+\ifanswer
+\ifchohienpa
+\bonpak{#1}{#2}{#3}{#4}
+\else \relax \fi
+\else \fi
+}
+\newcommand{\baigachduoi}[3]{\newproblem*{#1}{%
+\begin{question}%1
+#2
+#3
+\end{question}
+}
+}
+%%%%%%%%%%%%%%
+\newcommand{\baituluan}[3]{\newproblem*{#1}{%
+\begin{question}%1
+#2
+\begin{answer}
+#3
+\end{answer}
+\end{question}
+}
+}
+%%%%%%%%%%%%%%%%%%
+\newcommand{\daugach}[1]{\underline{\makebox[2cm]{\qquad }}\  }
+\setlength{\baselineskip}{12truept}
+
+\def\baidungsai*#1#2{
+\newproblem*{#1}{
+\begin{question}
+#2
+\end{question}
+}
+}
+%%%%%%%%%%%%%%%%%
+\def\baidienvao*#1#2{
+\newproblem*{#1}{
+\begin{question}
+#2
+\end{question}
+}
+}
+
+%%%%%%%%%%%%%%%%
+\renewcommand{\PSNitem}{}
+\renewcommand{\endPSNitem}{}
+\setlength{\shortitemwidth}{0.20\textwidth}
+%%%%%%%%%%%%%%
+\newcommand{\soanthao}{
+% \def\bonpa{\bonpak}
+\NumberOfVersions{1}
+\NoRearrange
+}
+%\RequirePackage{baithi}
+}{  %%}
+%%%%%%%%%%%%%%%%baitap.tex
+%%%\ifthenelse{\boolean{baitap}}
+  %%%%{
+\newif\ifshowproblems
+\showproblemstrue
+\let\showproblems\showproblemstrue
+\let\hideproblems\showproblemsfalse
+
+%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\baitapmoi}{\@ifstar\@snewproblem\@newproblem}
+\newcommand*{\baidungsai}{\@ifstar\@snewproblem\@newproblem}
+\newcommand*{\baidienvao}{\@ifstar\@snewproblem\@newproblem}
+% \newcommand*{\newproblem}{\@ifstar\@snewproblem\@newproblem}
+\newcommand*{\newproblem}{\@ifstar\@snewproblem\@newproblem}
+
+\newcommand{\@snewproblem}[1][0]{%
+  \def\@newprob@argN{#1}%
+  \@s@newproblem
+}%
+\newcommand{\@s@newproblem}[3][]{%
+  \begin{defproblem}[\@newprob@argN][#1]{#2}%
+    #3%
+  \end{defproblem}%
+}
+
+\newcommand{\@newproblem}[1][0]{%
+  \def\@newprob@argN{#1}%
+  \@ns@newproblem
+}
+
+\newcommand{\@ns@newproblem}[4][]{%
+  \begin{defproblem}[\@newprob@argN][#1]{#2}%
+    #3%
+    \begin{onlysolution}%
+      \begin{solution}%
+        #4%
+      \end{solution}%
+    \end{onlysolution}%
+  \end{defproblem}%
+}
+\newcommand*{\selectallproblems}[1]{{\loadallproblems[#1]{#1}}%
+\foreachproblem[#1]{\PSNitem\thisproblem\endPSNitem}}
+\newcommand*{\selectrandomly}[2]{%
+{\loadrandomproblems[#1]{#2}{#1}}%
+\foreachproblem[#1]{\PSNitem\thisproblem\endPSNitem}%
+}
+\newenvironment{PSNitem}{\item}{}
+\@ifundefined{solution}{%
+  \newenvironment{solution}{\par\noindent\textbf{\solutionname:}\space
+    \ignorespaces}{}%
+}{}
+\newcommand*{\solutionname}{\textbf{ Lời giải. }}
+\newenvironment{textenum}{%
+  \ifnum\@enumdepth>\thr@@
+    \@toodeep
+  \else
+    \advance\@enumdepth by 1\relax
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+    \let\@item\@textitem
+    \def\@itemlabel{%
+      \refstepcounter{\@enumctr}%
+      \csname label\@enumctr\endcsname
+    }%
+    \setcounter{\@enumctr}{0}%
+  \fi
+  \ignorespaces
+}%
+{%
+}
+\def\@textitem[#1]{#1\space\ignorespaces}
+\newcommand*{\correctitemformat}[1]{\fbox{#1}}
+\newcommand*{\incorrectitemformat}[1]{%
+\hspace{\fboxsep}\hspace{\fboxrule}#1}
+\newcommand*{\correctitem}{\@inmatherr\correctitem
+\@ifnextchar[\@correctitem{\@noitemargtrue\@correctitem[\@itemlabel]}}
+\def\@correctitem[#1]{%
+\ifshowanswers
+  \@item[\correctitemformat{#1}]%
+\else
+  \@item[#1]%
+\fi}
+\newcommand*{\incorrectitem}{\@inmatherr\incorrectitem
+\@ifnextchar[\@incorrectitem{\@noitemargtrue\@incorrectitem[\@itemlabel]}}
+\def\@incorrectitem[#1]{%
+\ifshowanswers
+  \@item[\incorrectitemformat{#1}]%
+\else
+  \@item[#1]%
+\fi}
+%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%
+\newcounter{@choice}
+ \newcommand*{\baituluan}{\@ifstar\@snewproblemtl\@newproblemtl}
+ \newcommand*{\baitracnghiem}{\@ifstar\@snewproblemtn\@newproblemtn}
+ \newcommand*{\baitracnghiemh}{\@ifstar\@snewproblemtnh\@newproblemtnh}
+ \newcommand*{\baitracnghiemba}{\@ifstar\@snewproblemtnba\@newproblemtnba}
+ \newcommand*{\baitracnghiemhai}{\@ifstar\@snewproblemtnhai\@newproblemtnhai}
+ \newcommand*{\bangtracnghiem}{\@ifstar\@snewproblembang\@newproblembang}
+ \newcommand*{\baigachduoi}{\@ifstar\@snewproblemtn\@newproblemtngd}
+%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@snewproblemtnba}[3][0]{%
+\begin{defproblem}[#1]{#2}%
+{\ifshowproblems {
+\begin{shortenumerate}
+#3
+\end{shortenumerate}
+\ifthenelse{\value{@choice}=3}{\setcounter{@choice}{0}}{ }
+}\else  \fi}
+\begin{onlysolution}%
+{\ifshowproblems 
+%%bo tróng
+\else
+{  
+\begin{shortenumerate}
+#3
+\end{shortenumerate}
+\ifthenelse{\value{@choice}=3}{\setcounter{@choice}{0}}{ }
+}
+\fi}
+\end{onlysolution}%
+\end{defproblem}}
+
+\newcommand{\@newproblemtnba}[4][0]{%
+\begin{defproblem}[#1]{#2}% 
+{\ifshowproblems { #3 
+\par%\hspace*{-0.07\textwidth}
+\begin{minipage}[t]{\textwidth}%%%16.5truecm}\textwidth}%%%%}8\shortitemwidth
+\begin{shortenumerate}
+#4
+\end{shortenumerate}
+\end{minipage}
+\ifthenelse{\value{@choice}=3}{\setcounter{@choice}{0}}{ }
+}\else  \fi}
+\begin{onlysolution}%
+{\ifshowproblems 
+%%bo tróng
+\relax
+\else
+{ 
+\begin{shortenumerate}
+#4
+\end{shortenumerate}
+\ifthenelse{\value{@choice}=3}{\setcounter{@choice}{0}}{ }
+}
+\fi}
+\end{onlysolution}%
+\end{defproblem}}
+%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@snewproblemtnhai}[3][0]{%
+\begin{defproblem}[#1]{#2}%
+{\ifshowproblems {
+\begin{shortenumerate}
+#3
+\end{shortenumerate}
+\ifthenelse{\value{@choice}=2}{\setcounter{@choice}{0}}{ }
+}\else  \fi}
+\begin{onlysolution}%
+{\ifshowproblems 
+%%bo tróng
+\else
+{  
+\begin{shortenumerate}
+#3
+\end{shortenumerate}
+\ifthenelse{\value{@choice}=2}{\setcounter{@choice}{0}}{ }
+}
+\fi}
+\end{onlysolution}%
+\end{defproblem}}
+
+\newcommand{\@newproblemtnhai}[4][0]{%
+\begin{defproblem}[#1]{#2}% 
+{\ifshowproblems { #3 
+\par%\hspace*{-0.07\textwidth}
+\begin{minipage}[t]{\textwidth}%%%16.5truecm}\textwidth}%%%%}8\shortitemwidth
+\begin{shortenumerate}
+#4
+\end{shortenumerate}
+\end{minipage}
+\ifthenelse{\value{@choice}=2}{\setcounter{@choice}{0}}{ }
+}\else  \fi}
+\begin{onlysolution}%
+{\ifshowproblems 
+%%bo tróng
+\relax
+\else
+{ 
+\begin{shortenumerate}
+#4
+\end{shortenumerate}
+\ifthenelse{\value{@choice}=2}{\setcounter{@choice}{0}}{ }
+}
+\fi}
+\end{onlysolution}%
+\end{defproblem}}
+%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@snewproblemtl}[3][0]{%
+\begin{defproblem}[#1]{#2}%
+{#3}
+\end{defproblem}}
+\newcommand{\@newproblemtl}[4][0]{%
+\begin{defproblem}[#1]{#2}%
+ \ifshowproblems 
+{\ #3} 
+ \fi
+\begin{onlysolution}%
+ \ifshowproblems 
+ \par\medskip
+\fi
+ \solutionname
+#4
+\end{onlysolution}%
+ \par\medskip
+\end{defproblem}}
+%%%%%%%%%%%
+\renewcommand{\solutionname}{\textbf{ Lời giải. }}
+%%%%%%%%%%%%%
+\newcommand{\@newproblemtn}[4][0]{%
+\begin{defproblem}[#1]{#2}% 
+\ifthenelse{\boolean{showproblems}}%
+{
+#3 
+\ifthenelse{\boolean{showanswers}}{}%
+{
+\begin{shortenumerate}
+#4
+\end{shortenumerate}
+}
+}{ }
+\begin{onlysolution}%
+\begin{shortenumerate}
+#4
+\end{shortenumerate}
+\end{onlysolution}%
+ \ifcholoigiai
+\def\paaa{%
+#4
+\ifthenelse{\value{@choice}=4}{\setcounter{@choice}{0}}{ }
+}
+\ifshowanswers 
+\par
+\noindent\dotfill
+\par
+\fi
+\motdatrue\choloigiaifalse
+\paaa
+\choloigiaitrue
+\motdafalse
+\fi
+\end{defproblem}}
+%%%%--------------------------------%%%%%%%%%%%
+\newcommand{\@snewproblemtn}[3][0]{%
+\begin{defproblem}[#1]{#2}%
+{\ifshowproblems {
+\begin{shortenumerate}
+#3
+\end{shortenumerate}
+}\else  \fi}
+\begin{onlysolution}%
+{\ifshowproblems 
+\relax 
+\else
+{\noindent  
+\begin{shortenumerate}
+#3
+\end{shortenumerate}
+}
+\fi}
+\end{onlysolution}%
+\end{defproblem}}
+%%%%%%%%%%%%%
+\newcommand{\@newproblemtnh}[4][0]{%
+\begin{defproblem}[#1]{#2}% 
+\ifthenelse{\boolean{showproblems}}%
+{
+#3 
+\ifthenelse{\boolean{showanswers}}{}%
+{
+\par
+\hspace*{2em}\begin{minipage}[t]{\linewidth/2}
+\setlength{\shortitemwidth}{0.34\linewidth}
+\begin{shortenumerate}
+#4
+\end{shortenumerate}
+\end{minipage}
+}
+}{ }
+\begin{onlysolution}%
+\hspace*{2em}\begin{minipage}[t]{\linewidth/2}
+\setlength{\shortitemwidth}{0.34\linewidth}
+\begin{shortenumerate}
+#4
+\end{shortenumerate}
+\end{minipage}
+\end{onlysolution}%
+ \ifcholoigiai
+\def\paaa{%
+#4
+\ifthenelse{\value{@choice}=4}{\setcounter{@choice}{0}}{ }
+}
+\par
+\noindent\dotfill
+\par
+\motdatrue\choloigiaifalse
+\paaa
+\choloigiaitrue
+\motdafalse
+\fi
+\end{defproblem}}
+%%%%--------------------------------%%%%%%%%%%%
+\newcommand{\@snewproblemtnh}[3][0]{%
+\begin{defproblem}[#1]{#2}%
+{\ifshowproblems {
+\par
+\hspace*{2em}\begin{minipage}[t]{\linewidth/2}
+\setlength{\shortitemwidth}{0.34\linewidth}
+\begin{shortenumerate}
+#3
+\end{shortenumerate}
+\end{minipage}
+%\ifthenelse{\value{@choice}=4}{\setcounter{@choice}{0}}{ }
+}\else  \fi}
+\begin{onlysolution}%
+{\ifshowproblems 
+%\relax %%bo tróng
+\else
+{%\noindent  
+\hspace*{2em}\begin{minipage}[t]{\linewidth/2}
+\setlength{\shortitemwidth}{0.34\linewidth}
+\begin{shortenumerate}
+#3
+\end{shortenumerate}
+\end{minipage}
+%\ifthenelse{\value{@choice}=4}{\setcounter{@choice}{0}}{ }
+}
+\fi}
+\end{onlysolution}%
+\end{defproblem}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@newproblemtngd}[4][0]{%
+\begin{defproblem}[#1]{#2}% 
+{\ifshowproblems 
+#3
+\ifthenelse{\value{@choice}=4}{\setcounter{@choice}{0}}{ }
+\else  \fi}
+\begin{onlysolution}%
+{\ifshowproblems 
+%%bo tróng
+\else
+{ 
+\begin{shortenumerate}
+#4
+\end{shortenumerate}
+\ifthenelse{\value{@choice}=4}{\setcounter{@choice}{0}}{ }
+}
+\fi}
+\end{onlysolution}%
+\end{defproblem}}
+%%%%%%%%%%%%%%%%%%
+\newcommand{\@snewproblembang}[3][0]{%
+\begin{defproblem}[#1]{#2}%
+ #3 
+\end{defproblem}}
+
+\newcommand{\@newproblembang}[4][0]{%
+\begin{defproblem}[#1]{#2}%
+ #3
+&
+\begin{minipage}[t]{0.3\textwidth }
+#4 
+\end{minipage} \\ %
+\hline %
+\begin{onlysolution}%
+% #4 
+\end{onlysolution}%
+\end{defproblem} }
+
+%%%%%%%%%%%%%%%%%%\textcircled{C}
+\def\@rightdot{.}
+\def\@leftdot{}
+\def\@upletter{\small\bfseries\Alph}
+\def\@mauchu{black}
+\def\@madethi{100}
+\newcommand{\cbox}[1]{{\large \textcircled{\raisebox{-0.5pt}{\normalsize #1}}}}
+\def\@khoanh{\cboxv}
+% \newcommand{\khoanh}[1]{\renewcommand{\@khoanh}{ #1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@selected}{\@khoanh{\textcolor{\@mauchu}{\@upletter{@choice}}}}
+\newcommand{\lamdapan}[1]{\renewcommand{\@selected}{\@khoanh{\textcolor{\@mauchu}{#1}}}}
+
+\newcommand{\@notselected}{ \iflietkeda  \else \@khoanh{\textcolor{\@mauchu}{\phantom{A}}}\fi }
+% \newcommand{\lamphieu}{\renewcommand{\@selected}{\fbox{\phantom{A}}}}
+\newcommand{\lamphieu}{
+\renewcommand{\@selected}{\@khoanh{\textcolor{\@mauchu}{\@upletter{@choice}}}}
+\renewcommand{\@notselected}{\@khoanh{\textcolor{\@mauchu}{\@upletter{@choice}}}}
+% \renewcommand{\@selected}{\fbox{\phantom{A}}}
+}
+
+\newcommand{\khonglamphieu}{
+\renewcommand{\@selected}{\@khoanh{\textcolor{\@mauchu}{\@upletter{@choice}}}}
+% \renewcommand{\@noselected}{\textcolor{\@mauchu}{\@khoanh{\phantom{A}}}}
+\renewcommand{\@notselected}{ \iflietkeda  \else \@khoanh{\textcolor{\@mauchu}{\phantom{A}}}\fi }
+% \renewcommand{\@selected}{\@khoanh{\textcolor{\@mauchu}{\@upletter{@choice}}}}
+% \renewcommand{\@notselected}{\@khoanh{\textcolor{\@mauchu}{\@upletter{@choice}}}}
+% \renewcommand{\@selected}{\fbox{\phantom{A}}}
+}
+
+\newcommand{\lamphieuduclo}{
+\renewcommand{\@selected}{\fbox{\textcolor{\@mauchu}{\@upletter{@choice}}}}
+\renewcommand{\@notselected}{\@khoanh{\textcolor{\@mauchu}{\phantom{A}}}}
+% \renewcommand{\@selected}{\fbox{\phantom{A}}}\@khoanh
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifexceldem \exceldemfalse
+% \newcommand{\dapandung}{\@dapandung{##1}}
+\newwrite\tempfile
+\immediate\newwrite\file
+\immediate\openout\file=bangdapan.tex
+\newcommand\writefile{\immediate\write\file}
+\immediate\openout\tempfile=dapan\@madethi.xls
+
+
+\newcounter{@mot}\setcounter{@mot}{0}
+\newcounter{@hai}\setcounter{@hai}{0}
+\newcounter{@ba}\setcounter{@ba}{0}
+\newcounter{@bon}\setcounter{@bon}{0}
+\def\@dempa{%
+\ifnum\value{@choice}=1\addtocounter{@mot}{1}%
+\immediate\write\tempfile{A}%
+\writefile{\string\cboxv{A}&}%
+\fi%
+\ifnum\value{@choice}=2\addtocounter{@hai}{1}%
+\immediate\write\tempfile{B}%
+\writefile{\string\cboxv{B}&}%
+\fi%
+\ifnum\value{@choice}=3\addtocounter{@ba}{1}%
+\immediate\write\tempfile{C}%
+\writefile{\string\cboxv{C}&}%
+\fi%
+\ifnum\value{@choice}=4\addtocounter{@bon}{1}%
+\immediate\write\tempfile{D}%
+\writefile{\string\cboxv{D}&}%
+\fi %
+}
+% \newcounter{socotdapan}
+% \setcounter{socotdapan}{1}
+
+\newcommand{\datcot}[1][0]{
+\ifthenelse{#1=0}{
+\setlength{\shortitemwidth}{\linewidth/4-3em}
+%  \setlength{\shortitemwidth}{\linewidth/4-0.074\linewidth}
+}{
+\ifthenelse{#1=2}{
+%  \setlength{\shortitemwidth}{\linewidth/2-0.085\linewidth}
+\setlength{\shortitemwidth}{\linewidth/2-3.5em}
+}{
+\ifthenelse{#1=4}{
+\setlength{\shortitemwidth}{\linewidth-3em}
+}{
+}}}}
+
+\newif\ifmotda \motdafalse
+\newlength\widthcha
+
+\newcommand{\sai}[1]{\addtocounter{@choice}{1}\ifmotda \else\ifshowproblems \item[\textcolor{\@mauchu}{\@leftdot{\@upletter{@choice}}\@rightdot}]%%
+\parbox[t]{\shortitemwidth}{#1\strut }
+\else \@notselected\fi
+\fi} 
+%%\@rightdot\@leftdot
+% \def\dapandung{B}
+\newcommand{\dung}[1]{\addtocounter{@choice}{1}\ifmotda \noindent\ifshowanswers \else \causo\fi \textbf{ Lời giải.} Đáp án đúng \cboxv{\textcolor{\@mauchu}{\@upletter{@choice}}}.%
+\ifnum\value{@choice}=1%
+\def\dapandung{\cboxv{A}}% 
+\def\dapansai{\cboxx{B},\cboxx{C},\cboxx{D}}% 
+\fi%
+\ifnum\value{@choice}=2%
+\def\dapandung{\cboxv{B}}% 
+\def\dapansai{\cboxx{A},\cboxx{C},\cboxx{D}}% 
+\fi%
+\ifnum\value{@choice}=3%
+\def\dapandung{\cboxv{C}}% 
+\def\dapansai{\cboxx{A},\cboxx{B},\cboxx{D}}% 
+\fi%
+\ifnum\value{@choice}=4%
+\def\dapandung{\cboxv{D}}% 
+\def\dapansai{\cboxx{A},\cboxx{B},\cboxx{C}}% 
+\fi%
+\else%
+ \ifshowproblems \ifshowanswers\item[\cboxv{\textcolor{\@mauchu}{\@upletter{@choice}}}]%
+\parbox[t]{\shortitemwidth}{\textcolor{red}{#1}\strut }%
+\else \item [\textcolor{\@mauchu}{\@leftdot{\@upletter{@choice}}\@rightdot}]%
+\ifexceldem\@dempa\fi%
+\parbox[t]{\shortitemwidth}{#1\strut }
+\fi 
+\else  \@selected \fi 
+\fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+1.4\labelwidth
+\newcommand{\saih}[1]{\addtocounter{@choice}{1}\ifshowproblems $\underset{\mbox{\textcolor{\@mauchu}{\@upletter{@choice}}}}{\underline{\mbox{#1}}}$  \else $\underset{\mbox{\@notselected}}{\underline{\mbox{#1}}}$\fi} 
+
+\newcommand{\dungh}[1]{\addtocounter{@choice}{1}\ifshowproblems \ifshowanswers$\underset{\mbox{\cboxv{\textcolor{\@mauchu}{\@upletter{@choice}}}}}{\underline{\mbox{#1}}}$ \else 
+$\underset{\mbox{\textcolor{\@mauchu}{\@upletter{@choice}}}}{\underline{\mbox{#1}}}$ \fi \else 
+$\underset{\mbox{\cboxv{\textcolor{\@mauchu}{\@upletter{@choice}}}}}{\underline{\mbox{#1}}}$
+ \fi }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% \@selected
+\newcommand{\khong}[1]{ \@notselected\ #1 \\  }
+\newcommand{\chon}[1]{\ifshowanswers  { \@khoanh{$\times$}  #1 \\  } \else  {\@notselected\ #1 \\ } \fi }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%\
+\newcommand{\blank}[1]{\ifshowanswers \underline{\mbox{#1}}\else  \underline{\mbox{ \phantom{#1} }} \fi }
+\newcommand{\answer}[1]{\ifshowanswers \underline{\makebox[2cm]{#1}}\else  \underline{\makebox[2cm]{ \phantom{#1} }} \fi }
+\newcommand{\daugach}[1]{\underline{\makebox[2cm]{\qquad }}\  }
+
+\newcommand{\tieude}[1]{\ifshowproblems \par{\itshape\textbf{#1}} \else \fi }
+\newcommand{\chidan}[1]{\ifshowproblems  {#1} \else \fi }
+\newcommand{\madethi}[1]{\renewcommand{\@madethi}{#1}%
+}
+%%%%%%%%%%%%%%%%
+\newcommand{\@ttruong}{ĐẠI HỌC KHOA HỌC TỰ NHIÊN HÀ NỘI}
+\newcommand{\@tkhoa}{$\overline{\qquad\qquad\qquad}$}
+\newcommand{\@ldethi}{\small ĐỀ CHÍNH THỨC}
+\newcommand{\@tkythi}{ĐỀ THI KIỂM TRA GIỮA KÌ}
+\newcommand{\@tmonhoc}{Đại số tuyến tính}
+\newcommand{\@tenlop}{\ }
+\newcommand{\@tgian}{\  }
+\newcommand{\@tchuy}{\ }
+\newcommand{\@hovaten}{\ }
+\newcommand{\@sobaodanh}{\ }
+% \newcommand{\cotdapan}{3}
+\newcommand{\@ketqua}{{\textbf{Họ tên và chữ kí của hai giám khảo}\hfil  
+\textbf{Số câu trả lời đúng:........., điểm:.........}\hfill}}
+\newcommand{\@giamkhao}{Giám khảo 1: ..............................\\[0.3cm]
+Giám khảo 2: ..............................}
+%%%%%%%%%%%%%%%%%%
+\newcommand{\tentruong}[1]{\renewcommand{\@ttruong}{\small #1}}
+\newcommand{\tenkhoa}[1]{\renewcommand{\@tkhoa}{$\underline{\mbox{#1}}$}}
+\newcommand{\loaidethi}[1]{\renewcommand{\@ldethi}{\small #1}}
+\newcommand{\tenkythi}[1]{\renewcommand{\@tkythi}{\small #1}}
+\newcommand{\tenmonhoc}[1]{\renewcommand{\@tmonhoc}{#1}}
+\newcommand{\tenlop}[1]{\renewcommand{\@tenlop}{\makebox[5cm]{{\bf #1:}\dotfill} }}
+\newcommand{\thoigian}[1]{\renewcommand{\@tgian}{#1}}
+\newcommand{\chuy}[1]{\renewcommand{\@tchuy}{#1}}
+\newcommand{\hovaten}[1]{\renewcommand{\@hovaten}{\makebox[7cm]{{\bf #1:}\dotfill} }}
+\newcommand{\sobaodanh}[1]{\renewcommand{\@sobaodanh}{\makebox[4cm]{{\bf  #1:} \fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}}\\ }}
+% \newcommand{\socauhoi}[1]{\renewcommand{\@scau}{ #1}}
+\newcommand{\khoanh}[1]{\renewcommand{\@khoanh}{ #1}}
+\newcommand{\ketqua}[1]{\renewcommand{\@ketqua}{ #1}}
+\newcommand{\giamkhao}[1]{\renewcommand{\@giamkhao}{ #1}}
+\newcommand{\lamtieude}{
+\begin{minipage}[b]{0.35\textwidth}
+\centering
+\textbf{\@ttruong}\\
+\@tkhoa\\    %\makebox[4cm]{\hrulefill}\\
+\@ldethi
+% {({\it Đề thi \@scau{} câu / \@strang{} trang})}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.65\textwidth}
+\centering
+{\bf \@tkythi}\\
+{\bf  \@tmonhoc}\quad  \fbox{\textbf{Mã đề thi: \@madethi}}\\
+{\it \@tgian}\\
+\end{minipage}
+\par
+\vspace*{0.1cm}
+\vspace*{0.5cm}
+\noindent\@hovaten %%Mã Sinh viên \dotfill\hfill \fbox{\bf Mã đề thi \themadetracnghiem}
+\@tenlop
+\@sobaodanh
+}
+
+\newcommand{\lamphieuthi}{
+ \thispagestyle{empty}
+\begin{minipage}[b]{0.4\textwidth}
+\centering
+\textbf{\@ttruong}\\
+\@tkhoa\\    %\makebox[4cm]{\hrulefill}\\
+\makebox[4cm]{\textbf{Mã đề thi:} \fbox{\phantom{O}}\fbox{\phantom{O}}\fbox{\phantom{O}}}\\ %%\loaidethi\\
+% \quad \\
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.5\textwidth}
+\centering
+{\bf \@tkythi}\\
+{\bf  \@tmonhoc}\\
+%{\it \@tgian}\\
+ \qquad 
+\end{minipage}
+\begin{center}
+\textbf{\large PHIẾU TRẢ LỜI TRẮC NGHIỆM}
+\end{center}
+\vspace*{0.5cm}
+\@hovaten %%Mã Sinh viên \dotfill\hfill \fbox{\bf Mã đề thi \themadetracnghiem}
+\@tenlop
+\@sobaodanh
+
+\noindent
+\textbf{Thí sinh lưu ý:} - Giữ cho phiếu phẳng, không bôi bẩn, làm rách. Phải ghi đầy đủ các mục theo hướng dẫn.\\
+- Dùng bút chì đen tô kín các ô tròn trong mục: Số báo danh, Mã đề thi trước khi làm bài.
+
+\noindent 
+\textbf{Phần trả lời:} Số thứ tự câu trả lời dưới đây ứng với số thứ tự câu trắc nghiệm trong đề thi.
+Đối với mỗi câu trắc nghiệm, thí sinh chọn và tô kín một ô tròn tương ứng với phương án trả lời đúng.\\
+Cách tô đúng là: {\Huge\textbullet} và tô sai là \@khoanh{X}\@khoanh{V}\@khoanh{\LARGE $\bullet$}:
+\vspace*{0.5cm}
+}
+
+
+\newcommand{\mauchu}[1]{\renewcommand{\@mauchu}{#1}}
+\newcommand{\daungoac}[2]{\renewcommand{\@leftdot}{#1}\renewcommand{\@rightdot}{#2}}
+\newcommand{\chuphuongan}[1]{\renewcommand{\@upletter}{#1}} 
+\makeatletter
+\def\@trangcuoi{\pageref{DebaiPage}}
+\newcommand{\trangcuoi}[1]{\renewcommand{\@trangcuoi}{\pageref{#1}}}
+%%%%%%%%%%%%%%%%%%lưláiau
+\newcommand{\tieudeduoi}{
+\renewcommand{\@oddfoot}{%tieudeduoi
+\parbox{\textwidth}{%
+%%%%%%%\vspace{6pt}%
+% {\hfill {\it  Trang\ \thepage/\pageref{LastPage} - \@madethi}}
+{\hfill {\it  Trang\ \thepage/\@trangcuoi\ - \@madethi}}
+}}
+}
+%%%%%%}
+
+%%%%%%%%%%%%
+\makeatother
+%\setlist{topsep=0pt, partopsep=0pt,parsep=0pt,leftmargin=0pt,align=right}
+%%%%%%%%%%%%%%%%
+
+\def\examvspace{\vspace}
+\def\examhspace{\hspace}
+%%%%%%%%%%%%%%
+\newif\ifmoiloigiai \moiloigiaifalse
+
+% \def\dadung{\ifcholoigiai 
+% \vspace*{-1em}
+% \motdatrue\paaa\motdafalse
+% \vspace*{-1em}
+% \noindent\hrulefill
+% \fi}
+\newif\ifcholoigiai \choloigiaifalse
+\def\loigiai#1{ 
+% \ifcholoigiai
+%%%\par
+\ifcholoigiai
+ %%\newline\hfill $\square$
+% \ifcholo
+
+\else
+
+\ifmoiloigiai
+\noindent
+\begin{minipage}[t]{\linewidth}
+%%%\par
+% \textbf{Lời giải:}
+%\dadung\par
+ #1 \hfill$\square$
+\par
+\noindent\hrulefill
+\end{minipage}
+\fi
+ \fi}
+
+% 
+\def\coloigiai{\choloigiaitrue\moiloigiaitrue}           %In ra đáp án có lời giải
+\def\khongloigiai{\choloigiaifalse\moiloigiaifalse}           %In ra đáp án có lời giải
+% \newcommand{\bonpa}[4]{#1 #2 #3 #4}
+\newcommand{\bonpak}[4]{#1 #2 #3 #4}
+\newcommand{\bonpah}[4]{#1 #2 #3 #4}
+
+% \makeatletter 
+  
+
+\newcommand{\bonpa}[4]{
+\count1=\value{enumi}
+\count2=\value{enumi}
+%  \divide \count1 by 24
+ \divide \count1 by 61
+\ifcase\count1 % select font face
+%          \or \advance\count2 by -23
+          \or \advance\count2 by -60
+%          \or \advance\count2 by -71
+          \or \advance\count2 by -120
+          \or \advance\count2 by -180
+          \or \advance\count2 by -240
+          \or \advance\count2 by -300
+          \or \advance\count2 by -360
+          \or \advance\count2 by -420
+          \or \advance\count2 by -480
+          \or \advance\count2 by -540
+          \or \advance\count2 by -600
+      \fi
+
+  \ifcase\count2 
+
+\or #3#4#1#2 %1
+\or #4#3#2#1 %2
+\or #1#2#3#4 %3
+\or #2#1#4#3 %4
+\or #1#4#2#3 %5
+\or #2#3#1#4 %6
+\or #4#1#3#2 %7
+\or #3#2#4#1 %8
+\or #1#3#2#4 %9
+\or #3#1#4#2 %10
+\or #2#4#3#1 %11
+\or #4#2#1#3 %12
+\or #2#1#3#4 %13
+\or #1#2#4#3 %14
+\or #4#3#1#2 %15
+\or #3#4#2#1 %16
+\or #1#3#4#2 %17
+\or #2#4#1#3 %18
+\or #3#1#2#4 %19
+\or #4#2#3#1 %20
+\or #4#1#2#3 %21
+\or #1#4#3#2 %22
+\or #2#3#4#1 %23
+\or #3#2#1#4 %24
+%%%%%%%%%%%
+\or #2#4#1#3 %18
+\or #3#1#2#4 %19
+\or #4#2#3#1 %20
+\or #4#1#2#3 %21
+\or #1#4#3#2 %22
+\or #1#4#2#3 %5
+\or #2#3#1#4 %6
+\or #3#4#1#2 %1
+\or #4#3#2#1 %2
+\or #1#2#3#4 %3
+\or #2#1#4#3 %4
+\or #4#1#3#2 %7
+\or #3#2#4#1 %8
+\or #2#3#4#1 %23
+\or #3#2#1#4 %24
+\or #4#3#1#2 %15
+\or #3#4#2#1 %16
+\or #1#3#4#2 %17
+\or #3#1#4#2 %10
+\or #2#4#3#1 %11
+\or #4#2#1#3 %12
+\or #2#1#3#4 %13
+\or #1#2#4#3 %14
+\or #1#3#2#4 %9
+%%%%%%%%
+\or #3#4#2#1 %16
+\or #1#3#4#2 %17
+\or #3#1#4#2 %10
+\or #2#4#3#1 %11
+\or #1#2#3#4 %3
+\or #2#1#4#3 %4
+\or #4#1#3#2 %7
+\or #3#2#4#1 %8
+\or #3#1#2#4 %19
+\or #4#2#3#1 %20
+\or #3#2#1#4 %24
+\or #4#3#1#2 %15
+\else
+#4#3#2#1
+\fi
+}
+% \makeatother %  \settowidth{\widthcha}{A.#1}
+%\settowidth{\widthcha}{#1}
+%%%%%%%%%%%%
+\newcommand{\bonpat}[4]{
+ \vspace*{-0.1\baselineskip}
+%  \hspace*{-0.5\baselineskip}
+
+\count1=\value{enumi}
+\count2=\value{enumi}
+ \divide \count1 by 24
+  \ifcase\count1 % select font face
+          \or \advance\count2 by -23
+          \or \advance\count2 by -47
+          \or \advance\count2 by -71
+          \or \advance\count2 by -95
+          \or \advance\count2 by -119
+      \fi
+
+  \ifcase\count2 
+\or #3#4#1#2
+\or #4#3#2#1
+\or #1#2#3#4
+\or #2#1#4#3
+\or #1#4#2#3
+\or #2#3#1#4
+\or #4#1#3#2
+\or #3#2#4#1
+\or #1#3#2#4
+\or #3#1#4#2
+\or #2#4#3#1
+\or #4#2#1#3
+\or #2#1#3#4
+\or #1#2#4#3
+\or #4#3#1#2
+\or #3#4#2#1
+\or #1#3#4#2
+\or #2#4#1#3
+\or #3#1#2#4
+\or #4#2#3#1
+\or #4#1#2#3
+\or #1#4#3#2
+\or #2#3#4#1
+\or #3#2#1#4
+\else
+#4#3#2#1
+\fi
+}
+%%%%%%%%%%%%
+\newcommand{\bonpab}[4]{
+% \daopa{\count1}{6}
+%   \ifcase\count1 
+\count1=\value{enumi}
+\count2=\value{enumi}
+ \divide \count1 by 6
+  \ifcase\count1 % select font face
+          \or \advance\count2 by -5
+          \or \advance\count2 by -11
+          \or \advance\count2 by -17
+          \or \advance\count2 by -23
+          \or \advance\count2 by -29
+          \or \advance\count2 by -35
+          \or \advance\count2 by -41
+          \or \advance\count2 by -47
+          \or \advance\count2 by -53
+          \or \advance\count2 by -59
+          \or \advance\count2 by -65
+          \or \advance\count2 by -71
+          \or \advance\count2 by -77
+          \or \advance\count2 by -83
+          \or \advance\count2 by -89
+          \or \advance\count2 by -95
+          \or \advance\count2 by -101
+          \or \advance\count2 by -107
+          \or \advance\count2 by -113
+      \fi
+
+  \ifcase\count2 
+\or #1#2#3#4
+\or #1#3#2#4
+\or #2#1#3#4
+\or #2#3#1#4
+\or #3#1#2#4
+\or #3#2#1#4
+\or #1#2#3#4
+\or #1#3#2#4
+\or #2#1#3#4
+\or #2#3#1#4
+\or #3#1#2#4
+\or #3#2#1#4
+\or #1#2#3#4
+\or #1#3#2#4
+\or #2#1#3#4
+\or #2#3#1#4
+\or #3#1#2#4
+\or #3#2#1#4
+\or #3#2#1#4
+\else
+#1#2#3#4
+\fi
+}                                                 
+%%%%%%%%%%%%%%%%%
+% \newcommand{\bapa}[3]{#1#2#3}
+\newcommand{\bapa}[3]{ 
+% \daopa{\count1}{6}
+%   \ifcase\count1
+\count1=\value{enumi}
+\count2=\value{enumi}
+ \divide \count1 by 6
+  \ifcase\count1 % select font face
+          \or \advance\count2 by -5
+          \or \advance\count2 by -11
+          \or \advance\count2 by -17
+          \or \advance\count2 by -23
+          \or \advance\count2 by -29
+          \or \advance\count2 by -35
+          \or \advance\count2 by -41
+          \or \advance\count2 by -47
+          \or \advance\count2 by -53
+          \or \advance\count2 by -59
+          \or \advance\count2 by -65
+          \or \advance\count2 by -71
+          \or \advance\count2 by -77
+          \or \advance\count2 by -83
+          \or \advance\count2 by -89
+          \or \advance\count2 by -95
+          \or \advance\count2 by -101
+          \or \advance\count2 by -107
+          \or \advance\count2 by -113
+      \fi
+
+  \ifcase\count2 
+\or #1#2#3
+\or #1#3#2
+\or #2#1#3
+\or #2#3#1
+\or #3#1#2
+\or #3#2#1
+\or #1#2#3
+\or #1#3#2
+\or #2#1#3
+\or #2#3#1
+\or #3#1#2
+\or #3#2#1
+\or #1#2#3
+\or #1#3#2
+\or #2#1#3
+\or #2#3#1
+\or #3#1#2
+\or #3#2#1
+\else 
+#1#2#3
+\fi
+}            
+
+\newcommand{\bapak}[3]{
+#1#2#3
+}
+
+\newcommand{\bapab}[3]{
+ \ifodd\value{enumi} #1#2#3 \else #2#1#3 \fi
+}                         
+
+\newcommand{\haipa}[2]{
+ \ifodd\value{enumi} #1#2 \else #2#1 \fi
+}                      
+
+\newcommand{\haipak}[2]{ #1#2 }                      
+
+%%%%%%%%%%%%%%%%%%%
+\AtBeginEnvironment{shortenumerate}{
+\setlength{\itemindent}{0em}
+\setlength{\parsep}{0pt}
+\setlength{\itemsep}{0pt}
+\setlength{\topsep}{0pt}
+\setlength{\parskip}{-1ex}
+\setlength{\partopsep}{0pt}
+ \setlength{\runitemsep}{1ex}
+ \setlength{\labelsep}{4pt}
+}
+\AtEndEnvironment{shortenumerate}{
+\ifnum\value{@choice}=4
+\setcounter{@choice}{0}
+\fi
+}
+
+\AtBeginEnvironment{enumerate}{
+\setlength{\itemindent}{0em}
+\setlength{\parsep}{0cm}
+\setlength{\itemsep}{1ex}
+\setlength{\topsep}{0pt}
+\setlength{\parskip}{0pt}
+}
+
+\BeforeBeginEnvironment{window}{
+\newline\begin{minipage}[h]{\linewidth}
+}
+\AfterEndEnvironment{window}{
+\end{minipage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%beamer
+\newcounter{socauhoi}
+\setcounter{socauhoi}{0}
+
+\def\@chucauhoi{\textcolor{\@mauchu}{\textbf{Câu }}}
+\newcommand{\chucauhoi}[1]{\renewcommand{\@chucauhoi}{\textcolor{\@mauchu}{\textbf{#1}}}}
+\def\causo{\@chucauhoi \@causo}
+\def\socau{\@causo}
+\def\@causo{\textcolor{\@mauchu}{\stepcounter{socauhoi}\textbf{\ifthenelse{\value{socauhoi}<10}{0\thesocauhoi}{\thesocauhoi}.}}}
+\newcommand{\sotheo}[1]{
+\renewcommand{\@causo}{\textcolor{\@mauchu}{\stepcounter{socauhoi}\textbf{\ifthenelse{\value{socauhoi}<10}{#10\thesocauhoi}{#1\thesocauhoi}.}}}
+}
+
+
+%%%%%%%%%%%%%
+\def\indebai{
+\setcounter{socauhoi}{0}
+\showproblems
+\hideanswers
+\khongloigiai
+}
+\def\indebaidapan{
+\setcounter{socauhoi}{0}
+\showanswers
+\showproblems
+\khongloigiai
+}
+\def\indebailoigiai{
+\setcounter{socauhoi}{0}
+\showanswers
+\showproblems
+\coloigiai
+}
+\def\indapanrutgon{
+\setcounter{socauhoi}{-1}
+\khongloigiai
+\hideproblems
+\showanswers
+\lietkedafalse
+\khoanh{\cboxv}
+\khonglamphieu
+}
+
+\def\indapanlietke{
+\setcounter{socauhoi}{-1}
+\khongloigiai
+\hideproblems
+\showanswers
+\lietkedatrue
+\khoanh{\cboxv}
+\khonglamphieu
+}
+
+\def\indapanso{
+\setcounter{socauhoi}{-1}
+\hideproblems
+\showanswers
+\khongloigiai
+\lietkedatrue
+\khoanh{\cboxv}
+\khonglamphieu
+}
+\def\indapanchu{
+\setcounter{socauhoi}{-1}
+\khongloigiai
+\hideproblems
+\showanswers
+\lietkedatrue
+\khoanh{}
+\khonglamphieu
+}
+\def\indapanloigiaio{
+\setcounter{socauhoi}{-1}
+\hideproblems
+\showanswers
+\coloigiai
+\khonglamphieu
+\lietkedafalse
+\khoanh{\cboxv}
+}
+
+\def\indapanloigiai{
+\setcounter{socauhoi}{0}
+\showanswers
+\khongloigiai
+\hideproblems
+\coloigiai
+\lietkedatrue
+}
+\def\inloigiai{
+\setcounter{socauhoi}{0}
+\hideanswers
+\khongloigiai
+\hideproblems
+\coloigiai
+\lietkedatrue
+}
+\def\inphieuduclo{
+\setcounter{socauhoi}{-1}
+\hideproblems
+\showanswers
+\lamphieuduclo
+\khongloigiai
+\khoanh{\cboxx}
+\lietkedafalse
+}
+\def\inphieuthi{
+\khoanh{\cboxx}
+\setcounter{socauhoi}{-1}
+\hideproblems
+ \showanswers
+ \lamphieu
+\khongloigiai
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\soanma{
+\makeatletter
+\theoremstyle{definition}
+\newtheorem{question}{Câu}
+\renewcommand{\bonpa}[4]{
+\begin{shortenumerate}##1##2##3##4\end{shortenumerate}
+\setcounter{@choice}{0}}
+\renewcommand{\baitracnghiem}[3]{
+\begin{question}\textcolor{red}{\textbf{##1}}\addcontentsline{toc}{section}{##1} 
+##2
+##3
+\end{question}
+}
+\makeatother
+\newcommand{\dapan}[1]{\textbf{Đáp án ##1.}}
+
+ \setlength{\shortitemwidth}{\textwidth/4-1.2em}
+ \setlength{\runitemsep}{0pt}
+ \setlength{\labelsep}{4pt}
+\renewcommand{\contentsname}{ }
+\titlecontents{section}
+[3.5em]{}
+{\contentslabel{2.5em}}
+{}{}
+\titlecontents{subsection}
+[5.5em]{}
+{\contentslabel{3.5em}}
+{}{}
+\begin{multicols}{4}
+\tableofcontents
+\end{multicols}
+}
+%%%%%%%%%%%%%%%%%%%%%
+  \def\soanthao{
+ \makeatletter
+ \newcommand{\dapan}[1]{\textbf{Đáp án ##1.}}
+\theoremstyle{definition}
+\newtheorem{question}{Câu}
+\renewcommand{\bonpa}[4]{
+\begin{shortenumerate}##1##2##3##4\end{shortenumerate}
+\setcounter{@choice}{0}}
+\renewcommand{\baitracnghiem}[3]{
+\begin{question}\label{##1}
+\ifshowproblems ##2 \fi
+##3
+\end{question}
+\ifcholoigiai
+\def\paaa{
+ ##3
+\ifthenelse{\value{@choice}=4}{\setcounter{@choice}{0}}{ }
+}
+\par
+\noindent\dotfill
+\par
+\motdatrue\choloigiaifalse
+\paaa
+\choloigiaitrue
+\motdafalse
+\fi
+}
+
+\renewcommand{\baituluan}[3]{
+\begin{question}\label{##1}
+\medskip
+\ifshowproblems 
+##2 
+\fi
+\begin{onlysolution}%
+ \par\medskip
+ \noindent \solutionname
+##3
+\end{onlysolution}%
+\end{question}
+}
+
+\newcommand{\baitracnghiemt}[2]{
+\begin{question}\label{##1}
+##2
+\ifcholoigiai
+\def\paaa{
+ ##2
+\ifthenelse{\value{@choice}=4}{\setcounter{@choice}{0}}{ }
+}
+\par
+\noindent\dotfill
+\par
+\motdatrue\choloigiaifalse
+\paaa
+\choloigiaitrue
+\motdafalse
+\fi
+\end{question}
+}
+
+% \def\loigiai##1{\ifcholoigiai
+%  \item[]\begin{minipage}[t]{\linewidth}
+% \noindent\dotfill\par
+% \noindent\textbf{Lời giải: } ##1
+% \hfill $\square$\par
+% \noindent\hrulefill\par
+% \end{minipage}
+% \else\relax \fi
+% }
+\makeatother
+ \setlength{\shortitemwidth}{\textwidth/4-1.3em}
+ \setlength{\runitemsep}{0pt}
+ \setlength{\labelsep}{4pt}
+}
+
+%%%%%%%%%%%%%
+\def\soanquestion{
+\def\loigiai##1{\ifcholoigiai
+ \item[]\begin{minipage}[t]{\linewidth}
+\noindent\dotfill\par
+\noindent\textbf{Lời giải: }  ##1
+\hfill $\square$\par
+\noindent\hrulefill\par
+\end{minipage}
+\else\relax \fi}
+}
+%%%%%%%%%%
+\def\dempa{
+\makeatletter
+\begin{center}
+\textbf{THỐNG KÊ ĐÁP ÁN ĐÚNG MỖI LOẠI}\\[0.3cm]
+\begin{tabular}{| l | l | l | l | l |}
+\hline
+\textbf{Phương án}&\cboxv{\textbf{A}}&\cboxv{\textbf{B}}&\cboxv{\textbf{C}}&\cboxv{\textbf{D}}\\ 
+\hline
+\textbf{Số đúng}&\the\value{@mot}&\the\value{@hai}&\the\value{@ba}&\the\value{@bon}\\ 
+\hline
+\end{tabular}
+\end{center}
+\setcounter{@mot}{0}
+\setcounter{@hai}{0}
+\setcounter{@ba}{0}
+\setcounter{@bon}{0}
+\makeatother
+\exceldemfalse
+}
+
+\newcommand{\dapanexcel}{
+\immediate\closeout\tempfile
+\begin{center}
+\textbf{ĐÁP ÁN TRONG TỆP EXCEL}\\[0.3cm]
+ \input{dapan\@madethi.xls}
+\end{center}
+\exceldemfalse
+}
+
+\newcommand{\dapanlietke}[1]{
+\begin{center}
+\textbf{ĐÁP ÁN LIỆT KÊ}
+\indapanlietke
+\begin{multicols}{10}
+\begin{enumerate}[\socau]
+\foreachproblem[#1]{\item\thisproblem}
+ \end{enumerate}
+\end{multicols}
+\end{center}
+}
+
+\newcommand{\dapanma}[1]{
+\indapanlietke
+\begin{center}
+\textbf{SỐ VÀ MÃ CÂU HỎI}
+\begin{multicols}{5}
+\begin{enumerate}[\socau]
+\foreachproblem[#1]{\item\thisproblemlabel}
+ \end{enumerate}
+\end{multicols}
+\end{center}
+}
+
+\newcounter{ct}
+\newcommand{\dienbang}[1][25]{
+\ifnum\value{socauhoi}=#1  
+\writefile{\string\\ }
+\writefile{\string\cline{1-#1}}
+\ifthenelse{#1=25}{
+ \writefile{\string\forloop{ct}{26}{\string\value{ct}<51}{\string\arabic{ct}&} }
+}{
+\ifthenelse{#1=20}{
+\writefile{21&22&23&24&25&26&27&28&29&30&31&32&33&34&35&36&37&38&39&40&}%
+}{
+\ifthenelse{#1=10}{
+\writefile{11&12&13&14&15&16&17&18&19&20&}%
+}{
+}
+}
+}
+\writefile{\string\\ }
+\writefile{\string\cline{1-#1}}
+\fi
+}
+
+
+\newcommand{\lapbang}[1][25]{
+\begin{center}
+\textbf{ĐÁP ÁN THEO BẢNG}\\[0.5cm]
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{*{#1}{|c}|c} 
+\cline{1-#1}
+\ifthenelse{#1=25}{
+ \forloop{ct}{1}{\value{ct}<26}{\arabic{ct}&}\\
+}{
+\ifthenelse{#1=20}{
+ \forloop{ct}{1}{\value{ct}<21}{\arabic{ct}&}\\
+% 
+}{
+\ifthenelse{#1=10}{
+ \forloop{ct}{1}{\value{ct}<11}{\arabic{ct}&}\\
+}{
+}
+}
+}
+\cline{1-#1}
+\input bangdapan.tex \\
+\cline{1-#1}
+\end{tabular}
+\end{center}
+}
+
+\newcommand{\lapcauhoi}[1]{
+\begin{enumerate}[]
+\foreachproblem[#1]{\item\causo\addcontentsline{toc}{subsubsection}{Câu \thesocauhoi.\thisproblemlabel}\thisproblem\dienbang[20]}
+ \end{enumerate}
+}
+
+\def\demexcel{
+\exceldemtrue
+\immediate\openout\tempfile=dapan\@madethi.xls
+}
+%%%%%%%%%%%%%%%%%%%%%
+ \setlength{\shortitemwidth}{\textwidth/4-3em}
+ \setlength{\runitemsep}{1ex}
+ \setlength{\labelsep}{4pt}
+%%%%%%%%%%%%%%%%%%%%
+
+} %%%%Hêtbaitap{ }
+
+\newcommand\fboxv[1]{\tikz[baseline=(char.base)]{
+             \node[shape=rectangle,draw,inner sep=4pt, fill=yellow!40] (char) {\color{red}\bf#1};}}
+\newcommand\cboxx[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt, fill=green!10] (char) {#1};}}
+\newcommand\cboxv[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw=blue,inner sep=1pt,fill=yellow!40] (char) {\color{red}\bf #1};}}
+
+\endinput

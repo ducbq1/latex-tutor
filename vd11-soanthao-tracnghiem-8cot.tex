@@ -1,0 +1,228 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{shortlst}
+\usepackage{enumerate}
+\usepackage{color}
+%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mathpazo} 
+\usepackage[baitap]{dethi}
+% \usepackage{mathpazo} 
+\voffset=-3.5cm
+% \hoffset=-2cm
+\textheight 25.5truecm 
+\textwidth 20truecm 
+
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+% \tieudeduoi
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+% \hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+% \sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+% \setlength{\shortitemwidth}{0.12\textwidth}
+ \usepackage{fancybox}
+\cornersize*{5mm}
+
+\usepackage{tikz}
+% \newcommand*\tikzcircled[1]{\tikz[baseline=(char.base)]{
+%             \node[shape=circle,draw,inner sep=1pt] (char) {\small #1};}}
+% \khoanh{\tikzcircled}
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+% \khoanh{\Ovalbox}
+% \khoanh{\ovalbox}
+%\daungoac{(}{)}%%{[}{]}%Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+% \coloigiai
+\usepackage{centerpage}
+\usepackage{lastpage}
+% \setlength{\shortitemwidth}{0.16\textwidth}
+% \setlength{\shortitemwidth}{0.18\textwidth}
+% \parindent 10pt
+% \usepackage{enumerate}
+% \usepackage{enumitem}
+\graphicspath{{hinh-cauhoi/}{hinh/}} 
+\def\lamtieude{
+\begin{center}\large\bf ĐỀ ÔN THI TỐT NGHIỆP THPT QG 2017 LÊ PHÚC LỮ lần 2\end{center}
+}
+\begin{document}
+\setlength{\columnsep}{10pt}
+% \setlength{\shortitemwidth}{\textwidth/4 -0.5\labelwidth-0.5\runitemsep-\columnsep}
+\setlength{\columnseprule}{0.5pt}
+%\setlength{\shortitemwidth}{\textwidth/4-4.5em--\columnsep}
+\setlength{\shortitemwidth}{\textwidth/8-\columnsep/8-1.4em}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+
+
+
+\loadrandomproblems[bttracnghiem]{50}{2017-cauhoi-toan-2cot}
+% %%%%%%%\loadrandomproblems[bttracnghiem]{50}{vd12-cauhoi-lephulu}
+% \setcounter{page}{1}
+% \indapanloigiaio
+% \lamtieude
+% \begin{center}
+% {\bf ĐÁP ÁN VÀ LỜI GIẢI 4 PHƯƠNG ÁN}
+% \end{center}
+% \begin{multicols}{2}
+% \foreachproblem[bttracnghiem]{\cauhoitn[2]}
+% \end{multicols}
+%%%%%%%%%%%%%%%%%%%%%
+% \end{document}
+
+
+\indebai
+\lamtieude
+\begin{multicols}{2}
+\foreachproblem[bttracnghiem]{\cauhoitn}
+% \input{vd12-cauhoi-lephulu}
+\end{multicols}
+% 
+\end{document}
+
+\newpage
+\setcounter{page}{1}
+\indebaidapan
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+\end{center}
+\begin{multicols}{2}
+\foreachproblem[bttracnghiem]{\cauhoitn}
+\end{multicols}
+
+\newpage
+\setcounter{page}{1}
+\indebailoigiai
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI - ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+\begin{multicols}{2}
+\foreachproblem[bttracnghiem]{\cauhoitn}
+\end{multicols}
+
+\setlength{\columnseprule}{0pt}
+\newpage
+% \setcounter{page}{1}
+\indapanrutgon
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+% \centering
+\begin{multicols}{3}
+\foreachproblem[bttracnghiem]{\cauhoitn[2]}
+\end{multicols}
+% \end{minipage}
+
+% \addtocounter{page}{-2}
+% \end{document}
+
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\indapanlietke
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ}
+\end{center}
+\hspace*{3cm}\begin{minipage}[t]{16truecm}
+\centering
+\begin{multicols}{5}
+\foreachproblem[bttracnghiem]{\cauhoitn[2]}
+\end{multicols}
+\end{minipage}
+
+\newpage
+\setcounter{page}{1}
+\indapanso
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ THEO SỐ}
+\end{center}
+\begin{center}
+\begin{multicols}{6}
+\foreachproblem[bttracnghiem]{\cauhoitn[3]}
+\end{multicols}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\indapanchu
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ THEO CHỮ}
+\end{center}
+\begin{center}
+\begin{multicols}{10}
+\foreachproblem[bttracnghiem]{\cauhoitn[0]}
+\end{multicols}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\columnseprule}{0.5pt}
+\newpage
+\setcounter{page}{1}
+\indapanloigiaio
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN VÀ LỜI GIẢI 4 PHƯƠNG ÁN}
+\end{center}
+\begin{multicols}{2}
+\foreachproblem[bttracnghiem]{\cauhoitn[2]}
+\end{multicols}
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\setcounter{page}{1}
+\indapanloigiai
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN LỜI GIẢI}
+\end{center}
+\begin{multicols}{2}
+\foreachproblem[bttracnghiem]{\cauhoitn[2]}
+\end{multicols}
+%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\columnseprule}{0pt}
+\newpage
+\setcounter{page}{1}
+\inphieuduclo
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\foreachproblem[bttracnghiem]{\cauhoitn[2]}
+\end{multicols}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\inphieuthi
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\foreachproblem[bttracnghiem]{\cauhoitn[2]}
+\end{multicols}
+\end{center}
+ 
+
+\end{document}
+

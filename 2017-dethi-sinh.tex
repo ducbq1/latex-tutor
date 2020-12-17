@@ -1,0 +1,475 @@
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.0
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+
+\usepackage{color}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{mathptmx} 
+% \usepackage{mathpazo} 
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+% \usepackage{fancybox}
+% \cornersize*{3.6mm}
+\Fullpages %Định dạng trang đề thi
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{3} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+\tieudetracnghiem
+%\tieudethiviet
+\tieudedapan
+%\tieudetren
+\tieudeduoi
+\daungoac{}{.}                  %Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+%\chuphuongan{\alph}    %Ký tự cho các phương án
+%\chuphuongan{\arabic} %\Roman%\roman%kể cả số cho các phương án
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+\mauchu{red}                     %Mầu số câu hỏi và phương án
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}} %Đường dẫn của nơi để hình
+\khoanh{\cbox}         %Khoanh các phương án: \cbox, \fbox
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+%\NoRearrange  %Lệnh không trộn đề
+% \motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+%\nhieuphieuthi   %In ra mỗi đề một phiếu thi
+%\coloigiai           %In ra đáp án có lời giải
+\ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+%\OneKey            %Lệnh chỉ in ra 1 bản đáp án
+%\NoKey               %Lệnh không in ra phần đáp án
+
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ MINH HỌA}
+\loaidethi{Đề gồm có 04 trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}
+\tenmonhoc{Bài thi: Khoa học tự nhiên;  Môn: SINH HỌC}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 50 phút, không kể thời gian phát đề}}
+
+\begin{document}
+
+\setlength{\baselineskip}{12truept}
+ \begin{vnmultiplechoice}[ rearrange=yes, keycolumns=3]%
+
+\begin{question} %%01
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%02
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%03
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%04
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%05
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%06
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%07
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%08
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%09
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%10
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{question} %%11
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%12
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%13
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%14
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%15
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%16
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%17
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%18
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%19
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%20
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{question} %%21
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%22
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%23
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%24
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%25
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%26
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%27
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%28
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%29
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%30
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{question} %%31
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%32
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%33
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%34
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%35
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%36
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%37
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%38
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%39
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%40
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{examclosing}
+\centerline{-- HẾT --}
+\end{examclosing}
+ \end{vnmultiplechoice}
+\end{document}
+[scribd id=327589426 key=key-oJpAkf8g7Gy0j9JNOeAs mode=scroll]

@@ -1,0 +1,263 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh dethi.sty 3.2
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt,openany]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{color}
+ \usepackage{shortlst}
+\usepackage{mathpazo} 
+\usepackage[bookmarksnumbered, colorlinks,hyperindex, unicode]{hyperref}%
+\usepackage{titledot}
+\voffset=-2cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 18truecm 
+\usepackage[baitap]{dethi}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]%
+           {\markright{\it \thesection\ #1}}
+\lhead[\fancyplain{}{
+     \footnotesize{Page \thepage\ of \pageref{LastPage}}}]
+{\fancyplain{}{ https://nhdien.wordpress.com - {\it Nguyễn Hữu Điển}}}
+\rhead[\fancyplain{}{\leftmark}]%
+   {\fancyplain{}{\footnotesize{Trang số \thepage\ trong \pageref{LastPage}}}}
+\cfoot{\footnotesize{\thepage/\pageref{LastPage}}}
+\sloppy
+
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+
+\usepackage{fancybox}
+\cornersize*{5mm}
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\usepackage{lastpage}
+\graphicspath{{hinh-cauhoi/}} 
+\parindent 20pt
+\graphicspath{{images/}{hinh-cauhoi/}}
+\def\v#1{\overrightarrow{#1}}
+%%%%%%%%%%%%%
+\usepackage{verbatimbox}
+\usepackage{framed}
+\definecolor{shadecolor}{rgb}{1.0,0.8,1.0}
+\newenvironment{khung}{%
+  \def\FrameCommand{\fcolorbox{black}{shadecolor}}%
+  \MakeFramed {\advance\hsize-\width \FrameRestore}%
+  }%
+{\endMakeFramed}
+
+\def\dkhung{
+\begin{khung}
+\noindent\theverbbox[t]
+\end{khung}
+}
+
+%%%%%%%%%%%%%
+\begin{document}
+\soanthao
+
+\title{\bf TÙY CHỌN [SOANTHAO] TRONG DETHI.STY 3.3} % Ten bai
+\author{{\bf Nguyễn Hữu Điển}\\
+Khoa Toán - Cơ - Tin học\\
+ĐHKHTN Hà Nội, ĐHQGHN
+} % Tac gia
+\date{} % Ngay
+
+\maketitle
+\vspace*{1cm}
+
+\tableofcontents
+
+\newpage
+ \setlength{\shortitemwidth}{\textwidth/4-1.3em}
+ \setlength{\runitemsep}{0pt}
+ \setlength{\labelsep}{4pt}
+\section{Phần đầu của soạn thảo}
+ \begin{verbbox}  \documentclass[11pt,openany]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{color}
+ \usepackage{shortlst}
+\usepackage{mathpazo} 
+\usepackage[bookmarksnumbered, colorlinks,hyperindex, unicode]{hyperref}%
+\usepackage{titledot}
+\voffset=-2cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 18truecm 
+\usepackage[baitap]{dethi}
+\usepackage{fancybox}
+\cornersize*{5mm}
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\usepackage{lastpage}
+\graphicspath{{hinh-cauhoi/}} 
+\parindent 20pt
+\graphicspath{{images/}{hinh-cauhoi/}}
+\def\v#1{\overrightarrow{#1}}
+\begin{document}
+\soanthao\end{verbbox} \dkhung  
+
+\newpage
+\section{Soạn đề bài từ một tệp ngoài}
+\subsection{In đề bài}
+\begin{verbbox} 
+ \indebai
+ \input{vd13-cauhoi-soanthao}
+\end{verbbox} 
+\dkhung
+\indebai
+ \input{vd13-cauhoi-soanthao}
+\subsection{Xem đề bài và đáp án}
+\begin{verbbox}  \indebaidapan
+ \input{vd13-cauhoi-soanthao}\end{verbbox} \dkhung
+\indebaidapan
+ \input{vd13-cauhoi-soanthao}
+\setcounter{question}{0}
+\subsection{Đề bài, đánh dấu đáp án và lời giải }
+\begin{verbbox} 
+ \indebailoigiai
+ \input{vd13-cauhoi-soanthao}
+\end{verbbox} 
+\dkhung
+\indebailoigiai
+ \input{vd13-cauhoi-soanthao}
+%  \input{vd08-cauhoi20170120}
+% \end{document}
+
+\section{Soạn đề bài trực tiếp}
+\setcounter{question}{0}
+\subsection{Xem đề bài và đáp án}
+\begin{verbbox} 
+\indebaidapan
+
+\baitracnghiem{abc:b06}{%
+Tìm giá trị nhỏ nhất của hàm số $y=\dfrac{x^2+3}{x-1}$ trên đoạn $[2;4]$.
+}{
+\datcot
+\bonpa
+{\dung{$\min_{[2;4]} y=6$.}}
+{\sai{$\min_{[2;4]} y=-2$.}}
+{\sai{$\min_{[2;4]} y=-3$.}}
+{\sai {$\min_{[2;4]} y=\dfrac{19}{3}$.}}
+\loigiai{
+ $y=\dfrac{x^2+3}{x-1}$.\\
+$y'=\dfrac{2x(x-1)-x^2-3}{(x-1)^2}=\dfrac{x^2-2x-3}{(x-1)^2}$.\\
+$y'=0\Leftrightarrow\left[\begin{matrix}
+x=-1\quad \mbox{ loại }\\ 
+x=3\quad \mbox{ thỏa mãn }\\ 
+\end{matrix}\right.$.\\
+Có $y(2)=7; y(3)=6; y(4)=\dfrac{19}{3} \Rightarrow \min\limits_{[2;4]} y=6$.
+}
+}
+\end{verbbox} 
+\dkhung
+
+\indebaidapan
+\baitracnghiem{abc:b06}{%
+Tìm giá trị nhỏ nhất của hàm số $y=\dfrac{x^2+3}{x-1}$ trên đoạn $[2;4]$.
+}{
+\datcot
+\bonpa
+{\dung{$\min_{[2;4]} y=6$.}}
+{\sai{$\min_{[2;4]} y=-2$.}}
+{\sai{$\min_{[2;4]} y=-3$.}}
+{\sai {$\min_{[2;4]} y=\dfrac{19}{3}$.}}
+\loigiai{
+ $y=\dfrac{x^2+3}{x-1}$.\\
+$y'=\dfrac{2x(x-1)-x^2-3}{(x-1)^2}=\dfrac{x^2-2x-3}{(x-1)^2}$.\\
+$y'=0\Leftrightarrow\left[\begin{matrix}
+x=-1\quad \mbox{ loại }\\ 
+x=3\quad \mbox{ thỏa mãn }\\ 
+\end{matrix}\right.$.\\
+Có $y(2)=7; y(3)=6; y(4)=\dfrac{19}{3} \Rightarrow \min\limits_{[2;4]} y=6$.
+}
+}
+
+
+\setcounter{question}{0}
+\subsection{Xem đề bài, đáp án và lời giải}
+\begin{verbbox} 
+\indebailoigiai
+
+\baitracnghiem{abc:b06}{%
+Tìm giá trị nhỏ nhất của hàm số $y=\dfrac{x^2+3}{x-1}$ trên đoạn $[2;4]$.
+}{
+\datcot
+\bonpa
+{\dung{$\min_{[2;4]} y=6$.}}
+{\sai{$\min_{[2;4]} y=-2$.}}
+{\sai{$\min_{[2;4]} y=-3$.}}
+{\sai {$\min_{[2;4]} y=\dfrac{19}{3}$.}}
+\loigiai{
+ $y=\dfrac{x^2+3}{x-1}$.\\
+$y'=\dfrac{2x(x-1)-x^2-3}{(x-1)^2}=\dfrac{x^2-2x-3}{(x-1)^2}$.\\
+$y'=0\Leftrightarrow\left[\begin{matrix}
+x=-1\quad \mbox{ loại }\\ 
+x=3\quad \mbox{ thỏa mãn }\\ 
+\end{matrix}\right.$.\\
+Có $y(2)=7; y(3)=6; y(4)=\dfrac{19}{3} \Rightarrow \min\limits_{[2;4]} y=6$.
+}
+}
+\end{verbbox} 
+\dkhung
+\indebailoigiai
+\baitracnghiem{abc:b06}{%
+Tìm giá trị nhỏ nhất của hàm số $y=\dfrac{x^2+3}{x-1}$ trên đoạn $[2;4]$.
+}{
+\datcot
+\bonpa
+{\dung{$\min_{[2;4]} y=6$.}}
+{\sai{$\min_{[2;4]} y=-2$.}}
+{\sai{$\min_{[2;4]} y=-3$.}}
+{\sai {$\min_{[2;4]} y=\dfrac{19}{3}$.}}
+\loigiai{
+ $y=\dfrac{x^2+3}{x-1}$.\\
+$y'=\dfrac{2x(x-1)-x^2-3}{(x-1)^2}=\dfrac{x^2-2x-3}{(x-1)^2}$.\\
+$y'=0\Leftrightarrow\left[\begin{matrix}
+x=-1\quad \mbox{ loại }\\ 
+x=3\quad \mbox{ thỏa mãn }\\ 
+\end{matrix}\right.$.\\
+Có $y(2)=7; y(3)=6; y(4)=\dfrac{19}{3} \Rightarrow \min\limits_{[2;4]} y=6$.
+}
+}
+
+
+\end{document}
+

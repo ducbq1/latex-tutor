@@ -1,0 +1,97 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{mathptmx} 
+% \usepackage{mathpazo} 
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 19truecm 
+\usepackage[baitap]{dethi}
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{dbPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\tieudeduoi
+\daungoac{\cboxx}{}
+\khoanh{\cboxv}
+%\daungoac{(}{)}%%{[}{]}%Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+% \coloigiai
+%%%%%%%%%%%%
+\usepackage{centerpage}
+\graphicspath{{hinh-cauhoi/}} 
+ \SetStartYear{2013}
+ \PSNrandseed{\GetStartYear}
+ \ExcludePreviousFile[3]{dadung-f2.tex}
+% \ExcludePreviousFile[2013]{dadung-f2.tex}
+% \SetUsedFileName{previous}
+%  \selectrandomly{cauhoi02-dtracnghiem}{10}
+\loadrandomproblems[bttracnghiem]{20}{vd02-cauhoi-dtracnghiem}
+\begin{document}
+% \hovaten{Họ và tên}
+% \sobaodanh{Số báo danh}
+\setlength{\baselineskip}{12truept}
+\trangcuoi{dbPage}
+\lamtieude
+\indebai
+% \loadrandomproblems[bttracnghiem]{50}{cauhoi-toan-2017}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\label{dbPage}
+\newpage
+\setcounter{page}{1}
+\loaidethi{Đề gồm có \pageref{dbdaPage} trang}
+\lamtieude
+\indebaidapan
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN }
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\label{dbdaPage}
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\indapanrutgon
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+% \setcounter{page}{1}
+\lamphieuthi
+\inphieuthi
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+ \foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\addtocounter{page}{-2}
+\end{document}
+
+

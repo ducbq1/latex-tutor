@@ -1,0 +1,113 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{shortlst}
+% \usepackage{enumitem}
+\usepackage{color}
+%%%%%%%%%%%%%%%%%%%%%
+% \usepackage{mathptmx} 
+\usepackage{mathpazo} 
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 18truecm 
+\usepackage[baitap]{dethi}
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+ \usepackage{fancybox}
+\cornersize*{5mm}
+% \daungoac{\Ovalbox}{}
+% \khoanh{\Ovalbox}
+% \khoanh{\ovalbox}
+\usepackage{tikz}
+\newcommand*\tikzcircled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {\small #1};}}
+% \khoanh{\tikzcircled}
+\khoanh{\cbox}
+
+%\daungoac{(}{)}%%{[}{]}%Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+% \coloigiai
+\usepackage{centerpage}
+\usepackage{lastpage}
+\graphicspath{{hinh-cauhoi/}} 
+\parindent 20pt
+
+\begin{document}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+
+\lamtieude
+\showanswers
+\loadrandomproblems[bttracnghiem]{50}{2017-cauhoi-toan}
+\hideanswers
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+\setcounter{page}{1}
+\setcounter{socauhoi}{0}
+\lamtieude
+
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN }
+\end{center}
+\showanswers
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\setcounter{socauhoi}{0}
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\indapanrutgon
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+
+\newpage
+% \setcounter{page}{1}
+\lamphieuthi
+\hideproblems
+\showanswers
+ \lamphieu
+\setcounter{socauhoi}{-1}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+ \foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\end{document}

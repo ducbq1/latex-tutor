@@ -1,0 +1,54 @@
+%\title{DeThuNghiem2017}
+\documentclass[12pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd,txfonts}
+\usepackage[utf8]{vietnam}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+\usepackage{picinpar}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi}
+\usepackage{lastpage}
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ MINH HỌA}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}
+\tenmonhoc{Môn: Toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}
+\Fullpages
+\ContinuousNumbering
+\NumberOfVersions{1}
+\SectionPrefix{\relax }
+\tieudetracnghiem
+\tieudedapan
+\daungoac{}{.}
+\chucauhoi{Câu}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}}
+\graphicspath{{images/}}
+\khoanh{\cbox}
+% \soanthao % không xáo thứ tự phương án
+% \NoRearrange % không xáo thứ tự câu
+%\coloigiai % đáp án có lời giải chi tiết [keycolumns=1]
+%%%%%%%%%%%%
+%%Mẫu in ra đề thi - Đáp án - Phiếu thi
+%%Tùy chọn câu hỏi[keycolumns=3]
+ \tieudeduoi %để in ra số thứ tự trang bình thường.
+\ShortKey
+% \motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+ \nhieuphieuthi   %In ra mỗi đề một phiếu thi
+
+%%%%%%%%%%%%
+\begin{document}
+\setlength{\baselineskip}{12truept}
+\begin{vnmultiplechoice}[keycolumns=3]
+\selectallproblems{vd08-cauhoi20170120}
+\begin{examclosing}
+\centerline{------------------ HẾT ------------------}
+\end{examclosing}
+ \end{vnmultiplechoice}
+\end{document}

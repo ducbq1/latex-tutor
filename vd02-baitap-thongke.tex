@@ -1,0 +1,316 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+% \usepackage{picinpar}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage[colorlinks,hyperindex,plainpages=false,unicode]{hyperref}
+\usepackage{titledot}
+% \usepackage{multicol}%
+% \usepackage{shortlst}
+% \usepackage{color}
+% \usepackage{enumerate}
+\usepackage{mathpazo} 
+% \usepackage{balance} 
+
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 25truecm 
+\textwidth 19truecm 
+\usepackage[baitap]{dethi}
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ THAM KHẢO}
+\loaidethi{(Đề gồm  \pageref{dbPage} trang)}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KỲ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA 2017}
+\tenmonhoc{Bài thi: TOÁN}
+\madethi{100}
+\tieudeduoi
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+% \hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+% \sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\usepackage{lastpage}
+\graphicspath{{hinh-tracnghiem/}{hinh/}{hinh-cauhoi/}{images/}{dethamkhao/}} 
+\parindent 10pt
+% \renewcommand{\bonpa}[4]{#1#2#3#4}
+\begin{document}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+
+%  \setlength{\shortitemwidth}{\textwidth/4-1em}
+%  \setlength{\runitemsep}{1ex}
+%  \setlength{\labelsep}{4pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \sotheo{\thesection.}
+% \loadrandomproblems[bttracnghiem]{50}{2017-cauhoi-toan}
+% \input{vd13-cauhoi-detk2017-toan}
+% \loadrandomproblems[lephutu]{10}{vd12-cauhoi-lephulu}
+
+\loadrandomproblems[ma100]{50}{vd13-cauhoi-detk2017-toan}
+\demexcel
+\trangcuoi{dbPage}
+\lamtieude
+\indebai
+\lapcauhoi{ma100}
+\label{dbPage}
+\newpage
+\lamtieude
+\dempa
+\dapanexcel
+\dapanma{ma100}
+% \end{document}
+%%%%%%%%%%%%%%%
+\newpage
+\setcounter{page}{1}
+\loadrandomproblems[ma150]{50}{vd13-cauhoi-detk2017-toan}
+\madethi{150}
+\demexcel
+\lamtieude
+\indebai
+\lapcauhoi{ma150}
+\newpage
+\lamtieude
+\dempa
+\dapanexcel
+\dapanma{ma150}
+%%%%%%%%%%%%%%%
+\newpage
+\setcounter{page}{1}
+\loadrandomproblems[ma200]{50}{vd13-cauhoi-detk2017-toan}
+\madethi{200}
+\demexcel
+\lamtieude
+\indebai
+\lapcauhoi{ma200}
+\newpage
+\lamtieude
+\dempa
+\dapanexcel
+\dapanma{ma200}
+%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\setcounter{page}{1}
+\loadrandomproblems[ma250]{50}{vd13-cauhoi-detk2017-toan}
+\madethi{250}
+\demexcel
+\lamtieude
+\indebai
+\lapcauhoi{ma250}
+\newpage
+\lamtieude
+\dempa
+\dapanexcel
+\dapanma{ma250}
+%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\textheight 25truecm 
+\renewcommand{\bonpa}[4]{#1#2#3#4}
+\setcounter{page}{1}
+% \loadselectedproblems[ma003]{\bai003}{vd13-cauhoi-detk2017-toan}
+\input{vd13-cauhoi-detk2017-toan}
+\madethi{003}
+\demexcel
+\lamtieude
+\indebai
+\lapcauhoi{default}
+\newpage
+\lamtieude
+\dempa
+\dapanexcel
+\dapanma{default}
+
+\addtocounter{page}{-1}
+\end{document}
+
+
+
+
+
+
+
+\begin{center}
+\dempa
+\end{center}
+\immediate\closeout\tempfile
+\makeatletter
+\input{dapan@madethi.xls}
+\makeatother
+% 
+
+\begin{center}
+\textbf{SỐ CÂU HỎI VÀ ĐÁP ÁN}
+\indapanlietke
+\setcounter{socauhoi}{-1}
+\begin{multicols}{5}
+\begin{enumerate}[\socau]
+\foreachproblem[ma150]{\item\thisproblem}
+ \end{enumerate}
+\end{multicols}
+\end{center}
+
+\begin{center}
+\setcounter{socauhoi}{-1}
+\textbf{MÃ CÂU HỎI}
+\begin{multicols}{5}
+\begin{enumerate}[\socau]
+\foreachproblem[ma150]{\item\thisproblemlabel}
+ \end{enumerate}
+\end{multicols}
+\end{center}
+\end{document}
+% \setcounter{socauhoi}{0}
+% \indebaidapan
+% \begin{enumerate}[]
+% \foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+%  \end{enumerate}
+
+\newpage
+
+\setcounter{socauhoi}{0}
+\indebailoigiai
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+% \end{document}
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indebaidapan
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+% 
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indebailoigiai
+\begin{center}
+{\bf ĐỀ BÀI - ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+
+
+
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\indapanrutgon
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{enumerate}[\causo]
+% \begin{multicols}[2]
+ \foreachproblem[bttracnghiem]{\item\thisproblem}
+% \end{multicols}
+\end{enumerate}
+
+
+
+\newpage
+% \setcounter{page}{1}
+\indapanlietke
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ THEO SỐ}
+\end{center}
+\chucauhoi{ }
+\begin{enumerate}[\causo]
+\begin{multicols}{5}
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{multicols}
+\end{enumerate}
+\chucauhoi{Câu }
+
+
+
+\vspace*{1cm}
+\lamtieude
+\indapanso
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ THEO CHỮ PHƯƠNG ÁN}
+\end{center}
+\begin{center}
+\begin{enumerate}[]
+\begin{multicols}{6}
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{multicols}
+\end{enumerate}
+\end{center}
+
+
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN VÀ LỜI GIẢI}
+\end{center}
+\indapanloigiai
+\begin{enumerate}[\causo]
+\setlength{\itemindent}{3em}
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indapanloigiaio
+\begin{center}
+{\bf ĐÁP ÁN LỜI GIẢI O}
+\end{center}
+\begin{enumerate}[\causo]
+\setlength{\itemindent}{3em}
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+
+\newpage
+\setcounter{page}{1}
+\inphieuduclo
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+\newpage
+ 
+\inphieuthi
+\lamphieuthi
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+
+\addtocounter{page}{-2}
+
+
+\end{document}
+https://drive.google.com/open?id=0B6t6keI_Xwz5SGsyMF9QVUs3dE0

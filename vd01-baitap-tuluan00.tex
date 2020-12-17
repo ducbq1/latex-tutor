@@ -1,0 +1,184 @@
+\documentclass[12pt,a4letter]{article}
+%Các gói lệnh cơ bản
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{indentfirst}
+\usepackage[mathscr]{eucal}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{makecell}
+\usepackage{longtable}
+\usepackage[utf8]{vietnam}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{shortlst}
+%Kích thước của trang đề thi
+\voffset=-1.5cm
+% \hoffset=-2cm
+% \textheight 23truecm 
+% \textwidth 17truecm 
+\textheight 23truecm 
+\textwidth 16truecm 
+\parskip 3pt
+\headsep=12pt
+
+\usepackage[baitap]{dethi}
+%Định nghĩa tiêu đề
+\def\tendhqg{\small \textbf{ĐH QUỐC GIA HÀ NỘI}}
+\def\tentruong{\small \textbf{ĐH KHTN}}
+\def\tenkythi{ĐỀ THI KẾT THÚC HỌC KÌ I}
+\def\namhoc{NĂM HỌC 2011-2012}
+\def\tenmonhoc{Toán Lô gic}
+\def\mamonhoc{49ABCD}
+\def\sotinchi{2}
+\def\svkhoa{Lớp K52A2}
+\def\nganhhoc{Toán - Tin ứng dụng}
+\def\thoigian{90 phút }
+\def\deso{1 }
+\def\dapan{ĐÁP ÁN VÀ THANG ĐIỂM}
+\def\nguoilamdapan{PGS.TS. Nguyễn Hữu Điển}
+\def\ngaylam{Hà nội, ngày 15 tháng 12 năm 2011}
+
+\usepackage{mathpazo}
+\usepackage{centerpage}
+
+\begin{document}
+\setlength{\baselineskip}{16truept}
+\renewcommand{\solutionname}{\textbf{Lời giải.}}
+%Phần tiêu đề của đề thi
+\thispagestyle{empty}
+\begin{minipage}[b]{0.4\textwidth}
+\centering
+{\bf \tendhqg}\\
+{\bf \tentruong}\\ 
+-------------\\
+\quad \\
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.6\textwidth}
+\centering
+{\bf \tenkythi}\\
+{\bf  \namhoc}\\
+------oOo-------\\ 
+\qquad 
+\end{minipage}
+
+\centerline{\textbf{Môn thi:} \textbf{\tenmonhoc}}
+\leftline{Mã môn học: \textbf{\mamonhoc}\ \hfil Số tín chỉ:  \textbf{\sotinchi} \hfil Đề số: \textbf{\deso} \hfil }
+\leftline{Dành cho sinh viên khoá: \textbf{\svkhoa} \hfil Ngành học: \textbf{\nganhhoc}\hfil }
+\centerline{Thời gian làm bài \textbf{\thoigian} (không kể thời gian phát đề)}
+\noindent \hrulefill
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\PSNitem}{}
+\renewcommand{\endPSNitem}{}
+%  \selectrandomly{cauhoi01-tuluan}{3} %P(2)
+\loadrandomproblems[dttuluan]{3}{vd01-cauhoi-tuluan}
+% 
+% \foreachproblem[dttuluan]{\thisproblem}
+% \loadrandomproblems[dttuluan]{5}{cauhoi01-tuluan}
+% \hideanswers
+\begin{enumerate}[]
+\foreachproblem[dttuluan]{\item\causo\thisproblem}
+\end{enumerate}
+\vfill
+\noindent \hrulefill
+
+{\bf Chú ý:} Cán bộ coi thi không giải thích gì thêm.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Phần đóng tệp đáp án và in ra
+\newpage
+\setcounter{socauhoi}{0}
+\begin{center}
+\textbf{\tendhqg} \\
+\textbf{ \tentruong} \\                
+ -----------------------\\
+\textbf{\dapan}\\
+\textbf{\tenkythi, \namhoc}\\
+\centerline{\textbf{Môn thi:} \textbf{\tenmonhoc}}
+\end{center}
+
+\leftline{Mã môn học: \textbf{\mamonhoc}\ \hfil Số tín chỉ:  \textbf{\sotinchi} \hfil Đề số: \textbf{\deso} \hfil }
+\leftline{Dành cho sinh viên khoá: \textbf{\svkhoa} \hfil Ngành học: \textbf{\nganhhoc}\hfil }
+\hideproblems
+\showanswers
+\begin{enumerate}[]
+\foreachproblem[dttuluan]{\item\causo \thisproblem}
+\end{enumerate}
+
+\begin{flushright}
+\parbox[c]{8cm}{\centering
+\ngaylam\\
+NGƯỜI LÀM ĐÁP ÁN\\
+(ký và ghi rõ họ tên)\\
+
+\vspace*{1.5cm}
+\nguoilamdapan
+}
+\end{flushright}
+\end{document}
+ \begin{enumerate}%1
+(2 điểm) Cho hai tập lồi $X, Y$ và 
+
+(i) $X\cap Y$;
+
+(ii) $\alpha X=\{\alpha x | x\in X\}$;
+
+(iii) $\alpha X + \beta Y=\{\alpha x+\beta y| x\in X, y\in Y\}$.
+
+\begin{traloi}(2 điểm)
+ (i) Cho $x, y\in X\cap Y$ 
+
+(ii) Giả sử ta có
+
+(iii) Chứng minh tương tự phần trên.
+\end{traloi}
+\end{enumerate}
+
+
+\begin{enumerate}%2
+(4 điểm)  
+
+i) Đưa về dạng chính tắc;
+
+ii) Giải bài toán trên bằng phương pháp đơn hình;
+
+\begin{traloi}(4 điểm) 
+
+i) Dạng chính tắc: 	
+
+ii) Giải bằng phương pháp đơn hình: 
+
+Vấn đề là
+
+ Do còn tồn tại giá trị $\Delta$ lớn hơn 0 
+
+Giá trị hàm mục tiêu đạt được là : $F(x) = 5$
+ \end{traloi}
+\end{enumerate}
+
+
+\begin{enumerate}%3
+ (4 điểm) Trong vụ bão lụt vừa qua có 4 điểm 
+
+1. Thiết lập bảng vận tải với phương án cơ sở theo phương pháp góc tây bắc.
+
+2. Giải bài toán bằng phương pháp thế vị.
+\begin{traloi}
+\noindent 1. Đây là bài toán vận tải dạng $\min$.
+
+2.  Phương án cơ sở theo phương pháp góc tây bắc trong  bảng 
+
+\noindent  2. Vòng lặp thứ nhất:
+
+Tính $\Delta_{ij}$ như bảng~2
+
+Ô vi phạm dấu hiệu tối ưu (2,3) là ô đưa vào.
+
+Tìm các thế vị 
+
+Tính $\Delta_{ij}$ như bảng~3
+
+Chi phí tối ưu là $F(x)=350$.
+\end{traloi}
+\end{enumerate}
+
+

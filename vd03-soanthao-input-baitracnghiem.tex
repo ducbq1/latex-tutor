@@ -1,0 +1,74 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh dethi.sty 3.2
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,openany]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{color}
+ \usepackage{shortlst}
+% \usepackage{enumitem}
+%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mathpazo} 
+
+\voffset=-2cm
+% \hoffset=-2cm
+% \textheight 21truecm %%16.2truecm
+% \textwidth 14truecm %11.3truecm
+\textheight 24truecm 
+\textwidth 18truecm 
+\usepackage[baitap]{dethi}
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+% \setlength{\shortitemwidth}{0.12\textwidth}
+ \usepackage{fancybox}
+\cornersize*{5mm}
+%\daungoac{\Ovalbox}{}
+% \daungoac{\cbox}{}
+% \khoanh{\cbox}
+% \khoanh{\ovalbox}
+
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+% \khoanh{\cbox}
+%\daungoac{(}{)}%%{[}{]}%Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+% \coloigiai
+\usepackage{centerpage}
+\usepackage{lastpage}
+\parindent 20pt
+\graphicspath{{hinh-cauhoi/}{images/}} 
+\def\v#1{\overrightarrow{#1}}
+\begin{document}
+\soanthao
+\lamtieude
+\indebaidapan
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{2017-cauhoi-toan}
+
+
+\end{document}
+

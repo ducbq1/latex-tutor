@@ -1,0 +1,232 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mathpazo} 
+\voffset=-2cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 18truecm 
+\usepackage{centerpage}
+\usepackage[baitap]{dethi}
+\usepackage[bookmarksnumbered, colorlinks,hyperindex, unicode]{hyperref}%
+\usepackage{titledot}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]%
+           {\markright{\it \thesection\ #1}}
+\lhead[\fancyplain{}{
+     \footnotesize{Page \thepage}}]
+{\fancyplain{}{ https://nhdien.wordpress.com - {\it Nguyễn Hữu Điển}}}
+\rhead[\fancyplain{}{\leftmark}]%
+   {\fancyplain{}{\footnotesize{Trang số \thepage}}}
+\cfoot{}
+\sloppy
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{debaiPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\tieudeduoi
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+% \khoanh{\cbox}
+%\daungoac{(}{)}%%{[}{]}%Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\graphicspath{{hinh-cauhoi/}} 
+
+\begin{document}
+\title{\bf PHIẾU CHẤM ĐỤC LỖ TRONG DETHI.STY 3.3} % Ten bai
+\author{{\bf Nguyễn Hữu Điển}\\
+Khoa Toán - Cơ - Tin học\\
+ĐHKHTN Hà Nội, ĐHQGHN
+} % Tac gia
+\date{} % Ngay
+
+\maketitle
+\vspace*{1cm}
+
+\tableofcontents
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+
+ \setlength{\shortitemwidth}{\textwidth/4-3em}
+ \setlength{\runitemsep}{1ex}
+ \setlength{\labelsep}{4pt}
+
+\loadrandomproblems[bttracnghiem]{5}{2017-cauhoi-toan}
+
+% \indebai
+% \indebaidapan
+% \indebailoigiai
+% \indapanrutgon
+% \indapanlietke
+% \indapanso
+% \indapanchu
+% \indapanloigiaio
+% \indapanloigiai
+% \inphieuduclo
+% \inphieuthi
+%%%---------
+\newpage
+\section{Đề bài}
+\indebai
+\trangcuoi{debaiPage}
+\lamtieude
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\label{debaiPage}
+
+\newpage
+\section{Đề bài đáp án đánh dấu}
+\setcounter{page}{1}
+\indebaidapan
+\loaidethi{Đề gồm có \pageref{danhdauPage} trang}
+\trangcuoi{danhdauPage}
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\label{danhdauPage}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Đề bài đáp án lời giải}
+\setcounter{page}{1}
+\indebailoigiai
+\loaidethi{Đề gồm có \pageref{dblgPage} trang}
+\trangcuoi{dblgPage}
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI - ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\label{dblgPage}
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Đáp án rút gọn}
+\thispagestyle{empty}
+\indapanrutgon
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Đáp án lời giải liệt kê}
+\thispagestyle{empty}
+\setcounter{page}{1}
+\indapanlietke
+\lamtieude
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ}
+\end{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Đáp án theo số}
+\thispagestyle{empty}
+\setcounter{page}{1}
+\khoanh{\cboxv}
+\indapanso
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN THEO SỐ}
+\end{center}
+\chucauhoi{ }
+\begin{center}
+\begin{multicols}{6}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+\chucauhoi{Câu }
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Đáp án theo chứ}
+\thispagestyle{empty}
+\indapanchu
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN  THEO CHỮ}
+\end{center}
+\begin{center}
+\begin{multicols}{10}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Lời giải}
+\setcounter{page}{1}
+\inloigiai
+\lamtieude
+\begin{center}
+{\bf LỜI GIẢI}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\newpage
+\section{Làm phiếu đục lỗ}
+\setcounter{page}{1}
+\inphieuduclo
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Làm phiếu phiếu thi}
+\inphieuthi
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+ 
+
+\end{document}

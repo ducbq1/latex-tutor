@@ -1,0 +1,495 @@
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.0
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{mathptmx} 
+% \usepackage{mathpazo} 
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+% \usepackage{fancybox}
+% \cornersize*{3.6mm}
+\Fullpages %Định dạng trang đề thi
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{3} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+\tieudetracnghiem
+\tieudedapan
+%\tieudetren
+\tieudeduoi
+\daungoac{}{.}                  %Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+%\chuphuongan{\alph}    %Ký tự cho các phương án
+%\chuphuongan{\arabic} %\Roman%\roman%kể cả số cho các phương án
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+\mauchu{red}                     %Mầu số câu hỏi và phương án
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}} %Đường dẫn của nơi để hình
+\khoanh{\cbox}         %Khoanh các phương án: \cbox, \fbox
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+%\NoRearrange  %Lệnh không trộn đề
+% \motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+%\nhieuphieuthi   %In ra mỗi đề một phiếu thi
+%\coloigiai           %In ra đáp án có lời giải
+\ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+%\OneKey            %Lệnh chỉ in ra 1 bản đáp án
+%\NoKey               %Lệnh không in ra phần đáp án
+\soanthao %Lệnh dùng khi soạn cauu hỏi, khi dịch 1 bản và không đảo
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ MINH HỌA}
+\loaidethi{Đề gồm có 04 trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}
+\tenmonhoc{Bài thi: Khoa học tự nhiên;  Môn: VẬT LÍ}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 50 phút, không kể thời gian phát đề}}
+\begin{document}
+
+\setlength{\baselineskip}{12truept}
+ \begin{vnmultiplechoice}[ rearrange=yes, keycolumns=3]%
+
+\begin{question} %%01
+Một con lắc lò xo gồm một vật nhỏ khối lượng m và lò xo có độ cứng k. Con lắc dao
+động điều hòa với tần số góc là
+\datcot
+\bonpa
+{\sai{$2\pi\sqrt{\dfrac{m}{k}}$.}}
+{\sai{$2\pi\sqrt{\dfrac{k}{m}}$.}}
+{\sai {$\sqrt{\dfrac{m}{k}}$.}}
+{\dung{$\sqrt{\dfrac{k}{m}}$.}}
+\end{question}
+
+\begin{question} %%02
+Một chất điểm dao động điều hòa với phương trình $x=A\cos(\omega t+\varphi)$; trong đó $A, \omega$ là
+các hằng số dương. Pha của dao động ở thời điểm $t$ là
+\datcot
+\bonpa
+{\dung{$(\omega t+\varphi)$.}}
+{\sai{$\omega$.}}
+{\sai{$\varphi$.}}
+{\sai {$\omega t$.}}
+\end{question}
+
+
+\begin{question} %%03
+Hai dao động có phương trình lần lượt là: $x_1=5\cos(2\pi t+0,75\pi)$ (cm) và $x_2=10\cos(2\pi t+0,5\pi)$ (cm).
+Độ lệch pha của hai dao động này có độ lớn bằng
+\datcot
+\bonpa
+{\dung{$0,25\pi$.}}
+{\sai{$1,25\pi$.}}
+{\sai{$0,50\pi$.}}
+{\sai {$0,75\pi$.}}
+\end{question}
+
+\begin{question} %%04
+Một sóng cơ truyền dọc theo trục Ox với phương trình $u = 2cos(40\pi t - \pi x)$ (mm). Biên
+độ của sóng này là
+\datcot
+\bonpa
+{\dung{2 mm.}}
+{\sai{4 mm.}}
+{\sai{$\pi$ mm.}}
+{\sai {$40\pi$ mm.}}
+\end{question}
+
+\begin{question} %%05
+ Khi nói về sóng cơ, phát biểu nào sau đây \textbf{sai}?
+\datcot[2]
+\bonpa
+{\dung{Sóng cơ lan truyền được trong chân không.}}
+{\sai{Sóng cơ lan truyền được trong chất rắn.}}
+{\sai{Sóng cơ lan truyền được trong chất khí.}}
+{\sai {Sóng cơ lan truyền được trong chất lỏng.}}
+\end{question}
+
+\begin{question} %%06
+Một sóng cơ truyền dọc theo trục Ox có phương trình $u = A\cos(20\pi t - \pi x)$, với t tính bằng s.
+Tần số của sóng này bằng
+\datcot
+\bonpa
+{\sai{10$\pi$Hz.}}
+{\dung{10Hz.}}
+{\sai{20Hz.}}
+{\sai {20$\pi$Hz.}}
+\end{question}
+
+\begin{question} %%07
+Suất điện động cảm ứng do máy phát điện xoay chiều một pha tạo ra có biểu thức
+$e=220\sqrt2\cos(100\pi t+0,5\pi)$ (V). Giá trị hiệu dụng của suất điện động này là
+\datcot
+\bonpa
+{\sai{$220\sqrt2$ V.}}
+{\sai{$110\sqrt2$ V.}}
+{\sai {100 V.}}
+{\dung{220 V.}}
+\end{question}
+
+\begin{question} %%08
+Đặt điện áp $u =U_0\cos\omega t$ (với $U_0$ không đổi,  $\omega$ thay đổi được) vào hai đầu đoạn mạch mắc
+nối tiếp gồm điện trở R, cuộn cảm thuần có độ tự cảm L và tụ điện có điện dung C. Khi  $\omega =  \omega_0$ thì
+trong mạch có cộng hưởng. Tần số góc  $\omega_0$ là
+\datcot
+\bonpa
+{\sai{$2\sqrt{LC}$.}}
+{\sai{$\dfrac{2}{\sqrt{LC}}$.}}
+{\dung{$\dfrac{1}{\sqrt{LC}}$.}}
+{\sai {$\sqrt{LC}$.}}
+\end{question}
+
+\begin{question} %%09
+ Đặt điện áp $u=U_0\cos 100 \pi t$ ($t$ tính bằng $s$) vào hai đầu một tụ điện có điện dung
+$\dfrac{10^{-4}}{\pi}$ (F).
+Dung kháng của tụ điện là
+\datcot
+\bonpa
+{\sai{150 $\Omega$.}}
+{\sai{250 $\Omega$.}}
+{\sai {50 $\Omega$.}}
+{\dung{100 $\Omega$.}}
+\end{question}
+
+
+
+\begin{question} %%10
+Sóng điện từ
+\datcot[4]
+\bonpa
+{\sai{ là sóng dọc và truyền được trong chân không.}}
+{\dung{ là sóng ngang và truyền được trong chân không.}}
+{\sai{ là sóng dọc và không truyền được trong chân không.}}
+{\sai {là sóng ngang và không truyền được trong chân không.}}
+\end{question}
+
+
+
+\begin{question} %%11
+Để xem các chương trình truyền hình phát sóng qua vệ tinh, người ta dùng anten thu
+sóng trực tiếp từ vệ tinh, qua bộ xử lí tín hiệu rồi đưa đến màn hình. Sóng điện từ mà anten thu
+trực tiếp từ vệ tinh thuộc loại
+\datcot
+\bonpa
+{\sai{ sóng trung.}}
+{\sai{ sóng ngắn.}}
+{\sai {sóng dài.}}
+{\dung{sóng cực ngắn.}}
+\end{question}
+
+\begin{question} %%12
+Một mạch dao động điện từ gồm cuộn cảm thuần có độ tự cảm $10^{-5}$ H và tụ điện có điện
+dung $2,5.10^{-6} $ F. Lấy $\pi = 3,14$. Chu kì dao động riêng của mạch là
+\datcot
+\bonpa
+{\sai{$1,57.10^{-5}$ s.}}
+{\sai{$1,57.10^{-10}$ s.}}
+{\sai {$6,28.10^{-10}$ s.}}
+{\dung{$3,14.10^{-5}$ s.}}
+\end{question}
+
+\begin{question} %%13
+ Tia X \textbf{không} có ứng dụng nào sau đây?
+\datcot[2]
+\bonpa
+{\sai{Chữa bệnh ung thư.}}
+{\sai{Tìm bọt khí bên trong các vật bằng kim loại.}}
+{\sai {Chiếu điện, chụp điện.}}
+{\dung{Sấy khô, sưởi ấm.}}
+\end{question}
+
+\begin{question} %%14
+Trong máy quang phổ lăng kính, lăng kính có tác dụng
+\datcot[2]
+\bonpa
+{\sai{nhiễu xạ ánh sáng.}}
+{\dung{tán sắc ánh sáng.}}
+{\sai{giao thoa ánh sáng.}}
+{\sai {tăng cường độ chùm sáng.}}
+\end{question}
+
+
+\begin{question} %%15
+Một bức xạ khi truyền trong chân không có bước sóng là 0,60 $\mu$m, khi truyền trong thủy
+tinh có bước sóng là  $\lambda$ . Biết chiết suất của thủy tinh đối với bức xạ là 1,5. Giá trị của  $\lambda$ là
+\datcot
+\bonpa
+{\sai{900 nm.}}
+{\sai{380 nm.}}
+{\dung{400 nm.}}
+{\sai {600 nm.}}
+\end{question}
+
+\begin{question} %%16
+Theo thuyết lượng tử ánh sáng, phát biểu nào sau đây đúng?
+\datcot[4]
+\bonpa
+{\dung{Ánh sáng đơn sắc có tần số càng lớn thì phôtôn ứng với ánh sáng đó có năng lượng càng lớn..}}
+{\sai{Năng lượng của phôtôn giảm dần khi phôtôn ra xa dần nguồn sáng.}}
+{\sai{Phôtôn tồn tại trong cả trạng thái đứng yên và trạng thái chuyển động.}}
+{\sai {Năng lượng của các loại phôtôn đều bằng nhau.}}
+\end{question}
+
+\begin{question} %%17
+Quang điện trở có nguyên tắc hoạt động dựa trên hiện tượng
+\datcot
+\bonpa
+{\sai{quang - phát quang.}}
+{\sai{quang điện ngoài.}}
+{\dung{quang điện trong.}}
+{\sai {nhiệt điện.}}
+\end{question}
+\end{vnmultiplechoice}
+\end{document}
+
+\begin{question} %%18
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%19
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%20
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{question} %%21
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%22
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%23
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%24
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%25
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%26
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%27
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%28
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%29
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%30
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{question} %%31
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%32
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%33
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%34
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%35
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%36
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%37
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%38
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%39
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+\begin{question} %%40
+
+\datcot
+\bonpa
+{\sai{}}
+{\sai{}}
+{\sai{}}
+{\dung{}}
+\end{question}
+
+
+\begin{examclosing}
+\centerline{-- HẾT --}
+\end{examclosing}
+ \end{vnmultiplechoice}
+\end{document}
+[scribd id=327589426 key=key-oJpAkf8g7Gy0j9JNOeAs mode=scroll]

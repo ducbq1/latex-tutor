@@ -1,0 +1,251 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{shortlst}
+\usepackage{enumerate}
+\usepackage{color}
+%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mathptmx} 
+
+% \usepackage{mathpazo} 
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 25truecm 
+\textwidth 20truecm 
+\usepackage[baitap]{dethi}
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+% \hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+% \sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+% \setlength{\shortitemwidth}{0.12\textwidth}
+ \usepackage{fancybox}
+\cornersize*{5mm}
+% \daungoac{\tikzcircled}{}
+% \khoanh{\Ovalbox}
+% \khoanh{\ovalbox}
+\usepackage{tikz}
+% \newcommand*\tikzcircled[1]{\tikz[baseline=(char.base)]{
+%             \node[shape=circle,draw,inner sep=1pt,thick] (char) {\small #1};}}
+\khoanh{\cboxv}
+% \khoanh{\cbox}
+\daungoac{\cboxx}{}%%{[}{]}%Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\usepackage{lastpage}
+\graphicspath{{hinh-cauhoi/}{hinh/}} 
+\begin{document}
+\setlength{\columnseprule}{0.5pt}
+\setlength{\columnsep}{10pt}
+% \setlength{\runitemsep}{1ex}
+\setlength{\shortitemwidth}{\textwidth/4-\columnsep/4-3.2em}
+% \setlength{\shortitemwidth}{\textwidth/8-\columnsep/8-3em}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+
+% \loadrandomproblems[bttracnghiem]{10}{2017-cauhoi-toan-2cot}
+\loadrandomproblems[lephu]{50}{vd12-cauhoi-lephulu}
+\lamtieude%]
+\indebai
+\begin{multicols}{2}
+\begin{enumerate}[]
+%  \foreachproblem[bttracnghiem]{\cauhoitnn}
+\foreachproblem[lephu]{\item\causo\thisproblem}
+\end{enumerate}
+\end{multicols}
+% \setcounter{enumi}{0
+\begin{multicols}{2}
+\begin{enumerate}[]
+%  \foreachproblem[bttracnghiem]{\cauhoitnn}
+\foreachproblem[lephu]{\item\causo\thisproblem}
+\end{enumerate}
+%  \foreachproblem[lephu]{\cauhoitnn}
+\end{multicols}
+
+\end{document}
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+\end{center}
+% \hideproblems
+\showanswers
+\begin{multicols}{2}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI - ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+% \hideproblems
+\showanswers
+\coloigiai
+\begin{multicols}{2}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\khongloigiai
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\hideproblems
+\showanswers
+\hspace*{3cm}\begin{minipage}[t]{16truecm}
+\centering
+\begin{multicols}{3}
+\begin{enumerate}[label=\textcolor{blue}{\bf Câu \arabic*.}]
+% \tightlist
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{minipage}
+
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\khongloigiai
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ}
+\end{center}
+\hideproblems
+\showanswers
+\lietkedatrue
+\khoanh{ }
+{\setlength{\columnsep}{5pt}
+\hspace*{3cm}\begin{minipage}[t]{16truecm}
+\centering
+\begin{multicols}{5}
+\begin{enumerate}[label=\textcolor{blue}{\bf Câu \arabic*.}]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{minipage}
+}
+
+\vspace*{1cm}
+\lamtieude
+\setlist{labelwidth=20pt}
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ THEO SỐ}
+\end{center}
+{\setlength{\columnsep}{5pt}
+\begin{multicols}{10}
+\begin{enumerate}[label=\textcolor{blue}{\bf  \arabic*.}]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+}
+
+ \setlist{labelwidth=40pt}
+\lietkedafalse
+\khoanh{\tikzcircled}
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN VÀ LỜI GIẢI}
+\end{center}
+\hideproblems
+\showanswers
+\coloigiai
+\begin{multicols}{2}
+\begin{enumerate}[label=\textcolor{blue}{\bf  Câu \arabic*.}]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\lietkedatrue
+\khoanh{ }
+\begin{center}
+{\bf LỜI GIẢI}
+\end{center}
+ \hideproblems
+ \showanswers
+\coloigiai
+\begin{multicols}{2}
+\begin{enumerate}[label=\textcolor{blue}{\bf  Câu \arabic*.}]
+\foreachsolution[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\lietkedafalse
+
+\newpage
+% \setcounter{page}{1}
+\khoanh{\tikzcircled}
+\lamphieuthi
+\hideproblems
+\showanswers
+\khongloigiai
+
+\hspace*{2cm}\begin{minipage}[t]{16truecm}
+\begin{multicols}{3}
+\begin{enumerate}[label=\textcolor{blue}{\bf Câu \arabic*.}]
+ \foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{minipage}
+
+\newpage
+% \setcounter{page}{1}
+% \lamtieude
+\lamphieuthi
+ \lamphieu
+\khongloigiai
+\thispagestyle{empty}
+% \begin{center}
+% {\bf ĐÁP ÁN RÚT GỌN}
+% \end{center}
+\hideproblems
+\showanswers
+
+\hspace*{2cm}\begin{minipage}[t]{16truecm}
+\centering
+\begin{multicols}{3}
+\begin{enumerate}[label=\textcolor{blue}{\bf Câu \arabic*.}]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{minipage}
+
+\addtocounter{page}{-2}
+
+
+\end{document}

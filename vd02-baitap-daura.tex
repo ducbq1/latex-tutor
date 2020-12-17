@@ -1,0 +1,162 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{mathptmx} 
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 18.5truecm 
+\usepackage[baitap]{dethi}
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{dbPage} trang}%
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\tieudeduoi
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\graphicspath{{hinh-cauhoi/}} 
+\parindent 10pt
+\begin{document}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+\lamtieude
+\loadrandomproblems[bttracnghiem]{50}{2017-cauhoi-toan}
+\trangcuoi{dbPage}
+\indebai
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\label{dbPage}
+
+\newpage
+\setcounter{page}{1}
+\loaidethi{Đề gồm có \pageref{dbdaPage} trang}%
+\trangcuoi{dbdaPage}
+\lamtieude
+\indebaidapan
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\label{dbdaPage}
+
+\newpage
+\setcounter{page}{1}
+\loaidethi{Đề gồm có \pageref{dblgPage} trang}%
+\trangcuoi{dblgPage}
+\lamtieude
+\indebailoigiai
+\begin{center}
+{\bf ĐỀ BÀI - ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+\label{dblgPage}
+
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\indapanrutgon
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\indapanlietke
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ}
+\end{center}
+
+\begin{multicols}{5}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+
+\vspace*{1cm}
+\lamtieude
+\indapanso
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ THEO SỐ}
+\end{center}
+\begin{center}
+\chucauhoi{ }
+\begin{multicols}{10}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\chucauhoi{Câu }
+\end{center}
+
+
+
+
+\newpage
+\setcounter{page}{1}
+\loaidethi{Đề gồm có \pageref{lgPage} trang}%
+\trangcuoi{lgPage}
+\lamtieude
+\inloigiai
+\begin{center}
+{\bf LỜI GIẢI}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\label{lgPage}
+
+
+
+
+\newpage
+% \setcounter{page}{1}
+\lamphieuthi
+ \inphieuthi
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+ \foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+
+% \addtocounter{page}{-2}
+
+
+\end{document}
+https://drive.google.com/open?id=0B6t6keI_Xwz5dmtjbHlIbjIyc0k
+%%14:19:44 5/5/2017Last Modification of contents

@@ -1,0 +1,162 @@
+%MẪU LÀM CÂU HỎI TỰ LUẬN
+%Dùng với gói lệnh lamdethi.sty
+%Dùng Vietex 2.8. với phông mã Unicode
+%Người soạn : Nguyễn Hữu Điển, ĐHKHTN, ĐHQG HN
+%Mail: huudien@vnu.edu.vn, CQ: (84 - 4) 557 2869
+%NR: (84 - 4) 641 8848, DĐ: 0989061951
+%Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\baituluan{logic:1}{%Câu hỏi 1
+a) Cho $P_1, P_2$ và $Q$ là những mệnh đề. Hãy chỉ ra sự tương đương sau đây
+$$(P_1\vee P_2)\rightarrow Q \equiv (P_1\rightarrow Q)\wedge (P_1\rightarrow Q).$$
+
+b) Sử dụng sự tương đương trên chứng minh mệnh đề sau đây: " Nếu $n$ không chia hết cho 3 thì $n^2$ không chia hết cho 3".
+}{%Trả lời
+a) Chứng minh bằng lập bảng giá trị.
+
+b) Gọi $P$ là mệnh đề "$n$ không chia hết cho 3" và $Q$ là mệnh đề "$n^2$
+không chia hết cho 3". Khi đó, $P$ tương đương với $P_1 \vee P_2$. Trong đó:
+
+$P_1 =$ " $n$ mod $3 =1$"
+
+$P_2 =$ " $n$ mod $3 =2$"
+
+Vậy, để chứng minh $P \rightarrow  Q$ là đúng, có thể chứng minh rằng:
+$(P_1 \vee P_2) \rightarrow  Q$ hay là $(P_1 \rightarrow  Q ) \wedge ( P_2\rightarrow  Q)$
+Giả sử $P_1$ là đúng. Ta có, $n$ mod $3 = 1$. Đặt $n = 3k + 1$
+( $k$ là số nguyên nào đó).
+
+Suy ra
+$n^2 = ( 3k+1)^2 = 9k^2 + 6k + 1 = 3(3k^2 + 2k) + 1$ không chia chẳn cho 3.
+
+Do đó, $P_1 \rightarrow  Q$ là đúng.
+
+Tương tự, giả sử $P_2$ là đúng. Ta có, $n$ mod $3 = 2$. Đặt $n = 3k + 2$ ( $k$ là số
+nguyên nào đó).
+
+Suy ra $n^2 = ( 3k+2)^2 = 9k^2 + 12k + 4 = 3(3k^2 + 4k + 1) + 1$ không chia chẳn
+cho 3.
+
+Do đó, $P2 \rightarrow  Q$ là đúng.
+
+Do $P_1 \rightarrow  Q$ là đúng và $P_2 \rightarrow  Q$ là đúng, hay là $(P_1 \rightarrow  Q ) \wedge ( P_2\rightarrow  Q)$.
+
+Vậy $(P_1 \vee P_2) \rightarrow  Q$.
+}%Hết câu hỏi 1
+
+
+\baituluan{logic:2}{%Câu hỏi 2
+a) Phát biểu định nghĩa 4 phần của lý thuyết tiên đề $L$.
+
+b) Cho công thức $A, B, C$ tùy ý. Chứng minh rằng
+$$((A\rightarrow B)\wedge (B\rightarrow C))\vdash A\rightarrow C. $$
+}{%Trả lời
+a) Định nghĩa: Lý thuyết tiên đề $L$ bao gồm:
+
+(1) Các ký hiệu của $L$:
+\begin{itemize}
+\item $\neg, \rightarrow$ được gọi là hai phép toán nguyên thủy
+\item Các dấu ngoặc (,)
+\item Các chữ cái Latinh $A, B, C$, ... và các chữ cái la tinh có chỉ số $A_1, B_1, C_1, $ ... các ký hiệu này được gọi là các mệnh đề.
+\end{itemize}
+
+(2) Công thức được xây dựng bằng đệ quy:
+\begin{description}
+\item{(a)} Tất cả các biến mệnh đề là công thức. 
+\item{(b)} Nếu $A$ và $B$ là công thức thì $(\neg A)$, $(A\rightarrow B)$ cũng là công thức. 
+\item{(c)} Một biểu thức được lập nên từ cơ sở (a) và (b) cũng là một công thức.
+\end{description}
+
+(3) Các tiên đề: Đối với các công thức $A, B, C$ tùy ý
+
+A1. $(A\rightarrow(B\rightarrow A))$;
+
+A2. $(A\rightarrow (B\rightarrow C))\rightarrow ((A\rightarrow B)\rightarrow (A\rightarrow C))$;
+
+A3. $(\neg B\rightarrow\neg A)\rightarrow((\neg B\rightarrow A)\rightarrow B)$.
+
+(4) Quy tắc dẫn xuất Modus Ponens: Nếu $A$ và $A\rightarrow B$ thì $B$.
+
+b) Ta xây dựng dẫn xuất sau đây:
+
+1. $A\rightarrow B$ đúng (giả thiết)
+
+2. $B\rightarrow C$ đúng (giả thiết)
+
+3. $A$ đúng (giả thiết)
+
+4. $B$ đúng (1, 3, MP)
+
+5. $C$ đúng (2, 4, MP)
+
+Từ 1 - 5 ta có
+$$A\rightarrow B, B\rightarrow C, A\vdash C.$$
+
+Theo định lý suy diễn ta có
+$$A\rightarrow B, B\rightarrow C \vdash A\rightarrow C.$$
+}%Hết câu hỏi 2
+
+\baituluan{logic:3}{%Câu hỏi 3
+Cho công thức
+$$(A\rightarrow B)\rightarrow ((B\rightarrow C)\rightarrow((A\vee B)\rightarrow C)).$$
+Hãy thực hiện
+
+a) Đưa công thức về dạng chuẩn tắc hội.
+
+b) Chỉ ra công thức là hằng đúng.
+}{%Trả lời
+a) Dạng chuẩn tắc hội
+\begin{align*}
+&(A\rightarrow B)\rightarrow ((B\rightarrow C)\rightarrow((A\vee B)\rightarrow C))\\ 
+\equiv&\overline{\bar A \vee C}\vee\overline{\bar B \vee C}\vee\overline{A \vee B}\vee C\\ 
+\equiv&(A\wedge \bar C)\vee(B\wedge \bar C)\vee(\bar A\wedge \bar B)\vee C\\ 
+\equiv&(A\vee(B\wedge \bar C)\vee (\bar A \wedge \bar B)\vee C)
+\wedge (\bar C\vee(B\wedge \bar C)\vee (\bar A \wedge \bar B)\vee C)\\ 
+\equiv&(A\vee(B\wedge \bar C)\vee C) \vee (\bar A \wedge \bar B)\\ 
+\equiv&(A\vee(B\wedge \bar C)\vee C\vee \bar A)\wedge(A\vee(B\wedge \bar C)\vee C\vee \bar B)\\ 
+\equiv&(A\vee C\vee \bar B \vee (B\wedge \bar C))\\ 
+\equiv&(A\vee C\vee \bar B \vee B)\wedge (A\vee C\vee \bar B \vee\bar C)\\
+\equiv &1. 
+\end{align*}
+
+b) Với luật kết hợp suy ra công thức là hằng đúng.
+}%Hết câu hỏi 3
+
+\baituluan{logic:4}{%Câu hỏi 4
+a) Phát biểu định nghĩa thế nào là hạng từ và công thức tân từ trong lý thuyết hệ tân từ.
+
+b) Cho vị từ ba biến $P(x, y, z)\equiv "x.y=z"$ trên trường số thực. Xác định giá trị chân lý của mệnh đề:
+$(\forall x) (\forall y) (\exists z) P(x, y, z)$ và 
+$(\exists z) (\forall x) (\forall y)  P(x, y, z)$. Diễn giải mệnh đề thành câu nói thông thường.
+}{%Trả lời
+a) Định nghĩa 1. (a) Tất cả các biến và hằng các thể đều là lượng tử.
+
+(b) Nếu $f_{i}^n$ là một biến hàm và $t_1, i_2, ...t_n$ là các hạng tử, thì $f_i^n(t_1, t_2, ...,t_n)$ là một hạng tử.
+
+(c) Một biểu thức là một hạng tử nếu nó được lập nên bởi (a) và (b).
+
+Định nghĩa 2. (a) Mỗi công thức sơ cấp là một công thức
+
+(b) Nếu $A$ và $B$ là công thức, và $y$ là một biến thì $(\neg A)$, $(A\rightarrow B)$, $(\forall y A)$ là công thức.
+
+(c) Nếu biểu thức được lập nên bởi (a) và (b) ở trên thì nó cũng là công thức.
+
+b) $(\forall x) (\forall y) (\exists z) P(x, y, z)$ là mệnh đề đúng vì khi đó đặt $z=(x.y)$.
+ 
+$(\exists z) (\forall x) (\forall y)  P(x, y, z)$ là mệnh đề sai vì không thể có một $z$ mà với mọi $x, y$ đều có $z=x.y$  
+}%Hết câu hỏi 4
+
+\baituluan{logic:5}{%Câu hỏi 5
+Trong môn học giải tích toán học người ta định nghĩa hàm liên tục như sau:
+"Hàm $f(x)$ được gọi là hàm liên tục tại $x_0\in D$ nếu cho trước một số $\epsilon>0$ tùy ý thì ta có được một số $\delta>0$ tương ứng sao cho với mọi $x\in D$ thỏa mãn $|x-x_0|<\delta$ thì $|f(x)-f(x_0)|<\epsilon$".
+
+a) Hãy viết lại định nghĩa theo các ký hiệu của hệ toán tân từ.
+
+b) Hãy lập mệnh đề phủ định cho định nghĩa trên (nghĩa là hàm không liên tục tại điểm $x_0$)
+}{%Trả lời
+a) $(\forall \epsilon)(\exists \delta) (\forall x\in D): |x-x_0|<\delta \rightarrow |f(x)-f(x_0)|<\epsilon$.
+
+b) $(\exists \epsilon) (\forall \delta) (\exists x\in D) : |x-x_0|<\delta \rightarrow |f(x)-f(x_0)|>\epsilon$
+}%Hết câu hỏi 5
+

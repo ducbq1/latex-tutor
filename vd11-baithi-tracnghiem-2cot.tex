@@ -1,0 +1,101 @@
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.0
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.twocolumn
+% \documentclass[11pt,twocolumn]{vieexamdesign}
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{tikz} 
+\usepackage{mathpazo} 
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+\usepackage{lastpage}
+% \usepackage{fancybox}
+% \cornersize*{3.6mm}
+\Fullpages %Định dạng trang đề thi
+\textwidth 19cm
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{1} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+ \tieudetracnghiem
+\tieudedapan
+%\tieudetren
+% \tieudeduoi
+\daungoac{\cboxx}{}                  %Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\bfseries\Alph}    %Ký tự cho các phương án
+%\chuphuongan{\arabic} %\Roman%\roman%kể cả số cho các phương án
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+% \chucauhoi{ }                %Chữ trước các số câu hỏi
+\mauchu{blue}                     %Mầu số câu hỏi và phương án
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}} %Đường dẫn của nơi để hình
+\khoanh{\cboxx}         %Khoanh các phương án: \cbox, \fbox
+%\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+%\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+%\NoRearrange  %Lệnh không trộn đề
+% \motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+%  \nhieuphieuthi   %In ra mỗi đề một phiếu thi
+% \coloigiai           %In ra đáp án có lời giải
+\lietkedatrue
+ \ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+% \OneKey            %Lệnh chỉ in ra 1 bản đáp án
+% \NoKey               %Lệnh không in ra phần đáp án
+
+% \tentruong{ }
+% \tenkhoa{ }
+% \loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC} 
+% \tenkythi{ }
+% \tenmonhoc{Môn: Toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}
+
+\begin{examtop}
+ \twocolumn[\begin{center}
+\textbf{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}\\
+\textbf{Môn: Toán}\\
+\textit{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}
+\end{center}
+ ]
+\examvspace*{-1.2\baselineskip}
+\end{examtop}
+\begin{keytop}
+ \twocolumn[\begin{center}
+\textbf{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}\\
+\textbf{\large ĐÁP ÁN}
+                         \end{center} ]
+\end{keytop}
+\usepackage{centerpage}
+\usepackage{balance}
+\begin{document}
+\setlength{\columnsep}{1cm}
+\setlength{\baselineskip}{12truept}
+% \setlength{\shortitemwidth}{0.20\textwidth}
+% \loadrandomproblems[tracnghiem]{12}{cauhoi-toan-2017} %PA(1)
+% \loadselectedproblems[bttn]{t2017:b10}{01cauhoi-toan-2017}
+
+ \begin{vnmultiplechoice}[keycolumns=3]%
+% \foreachproblem[tracnghiem]{\thisproblem} %P(1)
+%  \selectrandomly{01cauhoi-toan-2017}{55} %P(2)
+\begin{multicols}{2}
+ \selectallproblems{2017-cauhoi-toan-2cot} %P(3)
+\end{multicols}
+\begin{examclosing}
+\centerline{-- HẾT --}
+\end{examclosing}
+ \end{vnmultiplechoice}
+\end{document}
+

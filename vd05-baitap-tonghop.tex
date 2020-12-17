@@ -1,0 +1,485 @@
+%MẪU CUỐN SÁCH TRONG VieTeX
+%Dùng với gói lệnh lamdethi.sty
+%Dùng Vietex 2.8. với phông Unicode
+%Người soạn : Nguyễn Hữu Điển, ĐHKHTN, ĐHQG HN
+%Mail: huudien@vnu.edu.vn, CQ: (84 - 4) 557 2869
+%NR: (84 - 4) 641 8848, DĐ: 0989061951
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%-[Phần khai báo
+\documentclass[11pt,openany]{book} 
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\pagestyle{fancy}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{fancybox}
+\usepackage[utf8]{vietnam}
+\usepackage{color, graphicx}
+\usepackage[chapter]{algorithm}
+\usepackage{algorithmic}
+\floatname{algorithm}{\hfil Thuật toán}
+\usepackage{titledot}
+\usepackage{mathpazo}
+
+
+%Chiều dài và rộng của trang sách
+\voffset-2cm
+\textheight 24truecm %%16.2truecm
+\textwidth 16.5truecm %11.3truecm
+\parskip 3pt
+\headsep=12pt
+\usepackage[baitap]{dethi}
+\renewcommand{\headwidth}{16.5truecm}
+\renewcommand{\chaptermark}[1]%
+              {\markboth{\it #1}{}}
+\renewcommand{\sectionmark}[1]%
+           {\markright{\it \thesection\ #1}}
+\lhead[\fancyplain{}{\thepage}]%
+{\fancyplain{}{\rightmark}}
+\rhead[\fancyplain{}{\leftmark}]%
+   {\fancyplain{}{\thepage}}
+\cfoot{}
+\sloppy
+
+\renewcommand{\binom}[2]{C_{#1}^{#2}} 
+\def\cung#1{\buildrel \frown \over{#1}}
+\def\g.#1.{\widehat{#1}}
+\newcommand{\chia}{\;\vdots\;} 
+\newcommand{\kchia}{\not\vdots\;\;} 
+\makeindex
+\theoremstyle{definition}
+\newtheorem{definition}{Định nghĩa}[chapter]
+\theoremstyle{plain}
+\newtheorem{theorem}{Định lý}[chapter]
+\newtheorem{proposition}{Mệnh đề}[chapter]
+\newtheorem{lemma}{Bổ đề}[chapter]
+\usepackage[tight,vietnam]{minitoc}%
+\renewcommand{\mtctitle}{Nội dung của chương} %dinh nghia lai ten
+\setcounter{minitocdepth}{1}
+% \khoanh{\cbox}
+\renewcommand{\solutionname}{\textbf{Lời giải}}
+\PSNrandseed{\time}
+\usepackage[colorlinks,hyperindex,unicode]{hyperref}
+\graphicspath{{hinh-cauhoi/}} 
+% \newcommand*\tikzcircled[1]{\tikz[baseline=(char.base)]{
+%             \node[shape=circle,draw,inner sep=1pt] (char) {\small #1};}}
+
+\khoanh{\cboxx}
+\daungoac{\cboxx}{}
+% \chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\usepackage{centerpage}
+\begin{document}
+% \setlength{\shortitemwidth}{0.15\textwidth}
+% \setlength{\runitemsep}{1em plus .5em minus .5em}.
+% \setlength{\shortitemwidth}{\textwidth/4-1.8\labelwidth}
+\dominitoc
+\begin{titlepage}
+ \centerline{\bf Nguyễn Hữu Điển}
+\vspace*{5cm}
+ \centerline{\Huge\bf LÀM SÁCH BÀI TẬP TOÁN}
+\vspace*{0.5cm}
+
+\vfill
+ \centerline{\bf NHÀ XUẤT BẢN GIÁO DỤC}
+\end{titlepage}
+\newpage
+\vspace*{5cm}
+\vfill
+\hrule
+
+$\dfrac{\mbox{51}}{\mbox{GD-05}}$89/176-05\hfill Mã số: 8I092M5
+\thispagestyle{empty}
+
+\newpage
+\markboth{{\it Mục lục}}{{\it Mục lục}}
+\addcontentsline{toc}{section}{{\bf Mục lục\rm }}
+\tableofcontents
+
+\hideanswers
+% \setlist{noitemsep}
+% \setlist{nolistsep}
+%%%%%%%%%%%%%%%%
+%  \setcounter{chapter}{13}
+\chapter{Bài tập tự luận}
+\minitoc %
+\thispagestyle{empty}
+
+\section{Giới thiệu}
+
+\subsection{Giới thiệu}
+
+\section{Nguyên lý cơ bản}
+  %\renewcommand{\labelenumi}{$\triangleright$\textbf{\thechapter.\arabic{enumi}}}%%%\textcolor{blue}{\bf Câu \ifnum\value{enumi}<10 \thechapter.\arabic{enumi}.\else \thechapter.\arabic{enumi}.\fi}}
+\section{Bài tập}
+\loadrandomproblems[bttuluan]{5}{vd01-cauhoi-tuluan}
+
+ % \renewcommand{\thesocauhoi}{$\triangleright$\textbf{\thechapter.\arabic{socauhoi}}}
+\chucauhoi{Bài }
+\sotheo{\thechapter.}
+\begin{enumerate}[]
+\foreachproblem[bttuluan]{\item\causo \thisproblem}
+\end{enumerate}
+
+\section{Lời giải}
+\indapanloigiai
+\begin{enumerate}[]
+% \setlength{\itemindent}{3.5em}
+\foreachproblem[bttuluan]{\item\causo\thisproblem}
+\end{enumerate}
+
+\section{Đề bài và lời giải}
+\indebailoigiai
+\begin{enumerate}[]
+\foreachproblem[bttuluan]{\item\causo\thisproblem}
+\end{enumerate}
+
+% \end{document}
+%%%%%%%%%%%%%%%%
+\chapter{Câu hỏi trắc nghiệm}
+\minitoc %
+\thispagestyle{empty}
+
+
+\section{Giới thiệu}
+
+\section{Nguyên lý cơ bản}
+
+\section{Bài tập}
+
+\loadrandomproblems[bttracnghiem]{50}{vd03-cauhoi-toan-baitracnghiem}
+\indebai
+% \renewcommand{\theenumi}{$\triangleright$\textbf{\thechapter.\arabic{enumi}}}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+
+\section{Lời giải}
+
+\indapanlietke
+%\renewcommand{\theenumi}{\thechapter.\arabic{enumi}}
+\begin{multicols}{5}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+% \end{document}
+
+%%%%%%%%%%%%%%%%
+\chapter{Điền vào chỗ trống}
+\minitoc %
+\thispagestyle{empty}
+
+\section{Giới thiệu}
+
+\section{Nguyên lý cơ bản}
+
+\section{Bài tập}
+
+\loadrandomproblems[btdiencho]{6}{vd04-cauhoi-dienvao}
+
+\indebai
+% \renewcommand{\theenumi}{$\triangleright$\textbf{\thechapter.\arabic{enumi}}}
+\begin{enumerate}[]
+\foreachproblem[btdiencho]{\item\causo\thisproblem}
+\end{enumerate}
+
+\section{Lời giải}
+
+\indebailoigiai
+
+\begin{enumerate}[]
+\foreachproblem[btdiencho]{\item\causo\thisproblem}
+\end{enumerate}
+% \end{document}
+%%%%%%%%%%%%%%%%
+\chapter{Câu hỏi đúng sai}
+\minitoc %
+\thispagestyle{empty}
+
+\section{Giới thiệu}
+
+\section{Nguyên lý cơ bản}
+
+\section{Bài tập}
+
+\loadrandomproblems[btdungsai]{5}{vd04-cauhoi-dungsai}
+
+% \renewcommand{\theenumi}{\thechapter.\arabic{enumi}}
+% \renewcommand{\theenumi}{$\triangleright$\textbf{\thechapter.\arabic{enumi}}}
+\indebai
+\begin{enumerate}[]
+\foreachproblem[btdungsai]{\item\causo\thisproblem}
+\end{enumerate}
+
+\section{Lời giải}
+
+\indebailoigiai
+\begin{enumerate}[]
+\foreachproblem[btdungsai]{\item\causo\thisproblem}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%
+
+
+\chapter{Câu hỏi thiết kế}
+\minitoc %
+\thispagestyle{empty}
+
+\section{Giới thiệu}
+
+\section{Nguyên lý cơ bản}
+
+\section{Bài tập}
+
+% \renewcommand{\PSNitem}{\refstepcounter{problem}%
+% \theproblem. }
+% \renewcommand{\endPSNitem}{\\}
+% 
+% \renewenvironment{solution}{}{}
+\newcommand{\selected}{\fbox{$\times$}}
+\newcommand{\notselected}{\fbox{\phantom{$\times$}}}
+
+\loadrandomproblems[thietke]{2}{vd04-cauhoi-baithietke}
+\newcounter{sobai}
+\setcounter{sobai}{0}
+\hideanswers
+\begin{longtable}{lrrrl}
+\bfseries Câu hỏi & \bfseries A & \bfseries B & 
+\bfseries C & \ifshowanswers \bfseries Reason\fi\\
+\foreachproblem[thietke]{\addtocounter{sobai}{1}\thesobai.\ \thisproblem \\ }
+%\selectrandomly{cauhoithietke}{2}
+\end{longtable}
+
+
+
+\section{Lời giải}
+
+\showanswers
+\begin{longtable}{lrrrl}
+\bfseries Câu hỏi & \bfseries A & \bfseries B & 
+\bfseries C & \ifshowanswers \bfseries Lý giải\fi\\
+% \selectrandomly{cauhoi07-baithietke}{2}
+\foreachproblem[thietke]{\addtocounter{sobai}{1}\thesobai.\ \thisproblem \\ }
+\end{longtable}
+
+%%%%%%%%%%%%%%%%%%
+% \end{document}
+
+\chapter{Trắc nghiệm theo bảng}
+\minitoc %
+\thispagestyle{empty}
+
+\section{Giới thiệu}
+
+\section{Nguyên lý cơ bản}
+
+\section{Bài tập}
+\newcounter{problem}
+\renewcommand{\PSNitem}{\refstepcounter{problem}%
+\theproblem. }
+\renewcommand{\endPSNitem}{  }
+
+\loadrandomproblems[btbangtn]{11}{vd04-cauhoi-tracnghiem-bang}
+
+\setcounter{problem}{0}
+\indebai
+
+ \renewcommand{\arraystretch}{1.5}
+
+\begin{longtable}{| p{0.6\textwidth} |c|}
+\hline
+\centering \textbf{Câu hỏi} & \textbf{Trả lời}\\ 
+\hline %
+\foreachproblem[btbangtn]{\addtocounter{problem}{1}\theproblem.\thisproblem}
+&\\
+\hline
+\end{longtable}
+
+
+\section{Lời giải}
+
+
+\setcounter{problem}{0}
+
+\indapanloigiai
+\begin{longtable}{| p{0.6\textwidth} |c|}
+\hline
+\centering \textbf{Câu hỏi} & \textbf{Trả lời}\\ 
+\hline %
+\foreachproblem[btbangtn]{\addtocounter{problem}{1}\theproblem.\thisproblem}
+&\\
+\hline
+\end{longtable}
+%%%%%%%%%%%%%%%%%%
+
+% \end{document}
+\chapter{Câu hỏi gạch dưới}
+\minitoc %
+\thispagestyle{empty}
+
+\section{Giới thiệu}
+
+\section{Nguyên lý cơ bản}
+
+\section{Bài tập}
+
+ \def\dssuatu{suatu:1,suatu:2,suatu:3,suatu:4,suatu:5}
+ \loadselectedproblems[btsuatu]{\dssuatu}{vd04-cauhoi-gachduoi}
+
+\indebai
+\tieude{Chọn phương án (A hoặc B, C, D) ứng với từ/ cụm từ có gạch dưới cần phải sửa để các câu sau trở thành chính xác.}
+\begin{enumerate}[] 
+\foreachproblem[btsuatu]{\item\causo\thisproblem}
+\end{enumerate}
+
+\section{Lời giải}
+\indebailoigiai
+\tieude{Chọn phương án (A hoặc B, C, D) ứng với từ/ cụm từ có gạch dưới cần phải sửa để các câu sau trở thành chính xác.}
+\begin{enumerate}[]
+\foreachproblem[btsuatu]{\item\causo\thisproblem}
+\end{enumerate}
+
+\indapanrutgon
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[btsuatu]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+%%%%%%%%%%%%%%%%%%
+
+
+%\appendix
+\chapter{Đề bài và lời giai}
+\minitoc %
+\thispagestyle{empty}
+
+
+\indebailoigiai
+\section{Bài tập chương 1}
+\setcounter{chapter}{1}
+\begin{enumerate}[]
+\foreachproblem[bttuluan]{\item\causo\thisproblem}
+\end{enumerate}
+
+\indebailoigiai
+\section{Bài tập chương 2}
+\setcounter{chapter}{2}
+% \begin{multicols}{3}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+% \end{multicols}
+%  \end{document}
+
+\indebailoigiai
+\section{Bài tập chương 3}
+\setcounter{chapter}{3}
+\begin{enumerate}[]
+\foreachproblem[btdiencho]{\item\causo\thisproblem}
+\end{enumerate}
+
+\indebailoigiai
+\section{Bài tập chương 4}
+\setcounter{chapter}{4}
+\begin{enumerate}[]
+\foreachproblem[btdungsai]{\item\causo\thisproblem}
+\end{enumerate}
+
+\indebailoigiai
+\section{Bài tập chương 6}
+\setcounter{chapter}{6}
+\setcounter{problem}{0}
+
+\showanswers
+\begin{longtable}{| p{0.6\textwidth} |c|}
+\hline
+\centering \textbf{Câu hỏi} & \textbf{Trả lời}\\ 
+\hline %
+\foreachproblem[btbangtn]{\addtocounter{problem}{1}\theproblem.\thisproblem}
+&\\
+\hline
+\end{longtable}
+%%%%%%%%%%%%%%%%%%
+\indebailoigiai
+\section{Bài tập chương 7}
+\setcounter{chapter}{7}
+\tieude{Chọn phương án (A hoặc B, C, D) ứng với từ/ cụm từ có gạch dưới cần phải sửa để các câu sau trở thành chính xác.}
+\begin{enumerate}[]
+\foreachproblem[btsuatu]{\item\causo\thisproblem}
+\end{enumerate}
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{{\bf Tài liệu tham khảo}\rm }%
+\bibitem{rade}
+H. Rademacher,
+{\it Higher Mathematics from an Elementary point of view},
+Birkhauser, 1983.
+\bibitem{aigner}
+Martin Aigner  and Gunter M. Ziegler,
+{\it Proofs from the book},
+Springer, 1999.
+\bibitem{titu} 
+T. Andreescu, R. Gelca,
+{\it Mathematical olympiad challenges},  Birkhauser, 2002. 
+\bibitem{Larson}
+Loren C. Larson,
+{\it Problem-Solving through problems},
+Springer-Verlag, 1983.
+\bibitem{dickson}
+L. E. Dickson,
+{\it New first course in the theory of equations}
+John Wiley \& Sons, 1946.
+\bibitem{cofman}
+Judita Cofman,
+{\it What to solve? Problems and Suggestions for Young Mathematicians},
+Clarendon Press-Oxford, 1989.
+\bibitem{nhddl}
+Nguyễn Hữu Điển,
+{\it Phương pháp Đirichle và ứng dụng},
+NXBKHKT, 1999.
+\bibitem{nhdqn}
+Nguyễn Hữu  Điển,
+{\it Phương pháp Quy nạp toán học},
+NXBGD, 2000.
+%\bibitem{nhdsp}
+%Nguyễn Hữu  Điển,
+%{\it Phương pháp Số phức với hình học phẳng},
+%NXB ĐHQG, 2000.
+\bibitem{nhdpc}
+Nguyễn Hữu  Điển,
+{\it Những phương pháp điển hình trong giải toán phổ thông},
+NXBGD, 2001.
+\bibitem{nhdct}
+Nguyễn Hữu  Điển,
+{\it Những phương pháp giải bài toán cực trị trong hình học},
+NXBKHKT, 2001.
+\bibitem{nhdst}
+Nguyễn Hữu  Điển,
+{\it Sáng tạo trong giải toán phổ thông},
+NXBGD, 2002.
+\bibitem{nhddt}
+Nguyễn Hữu  Điển,
+{\it Đa thức và ứng dụng},
+NXBGD, 2003.
+
+\bibitem{nhdptvd}
+Nguyễn Hữu  Điển,
+{\it Giải phương trình vô định nghiệm nguyên},
+NXBĐHQG, 2004.
+
+\bibitem{nhdinvar}
+Nguyễn Hữu  Điển,
+{\it Giải toán bằng phương pháp đại lượng bất biến},
+NXBGD, 2004.
+
+
+\end{thebibliography}
+
+\end{document}
+
+%%23:7:45 30/4/2017Last Modification of contents

@@ -1,0 +1,83 @@
+%%15:13:5 25/10/2016 -VieTeX creates E:\vietex\sty\L\lamdethi\vidu02-tracnghiem-b.tex
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage[baitap]{dethi}
+ \usepackage{charter}
+\voffset=-0.7in
+% \hoffset=-2.3cm
+\textheight 25truecm 
+\textwidth 17.5truecm 
+\parskip=0pt
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\renewcommand{\solutionname}{Lời giải}
+\PSNrandseed{\time}
+\parindent=0pt
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\usepackage{lastpage}
+\usepackage{centerpage}
+\begin{document}
+\lamtieude
+\madethi{378}
+% \hovaten{Họ và tên}
+% \sobaodanh{Số báo danh}
+\setlength{\baselineskip}{12truept}
+
+
+ \def\dssuatu{suatu:1,suatu:2,suatu:3,suatu:4,suatu:5}
+ \loadselectedproblems[btsuatu]{\dssuatu}{vd04-cauhoi-gachduoi}
+%  \loadselectedproblems[btsuatu]{\dssuatu}{2009-cauhoi-tienganh}
+% 
+% \indebai
+\tieude{Chọn phương án (A hoặc B, C, D) ứng với từ/ cụm từ có gạch dưới cần phải sửa để các câu sau trở thành chính xác.}
+\begin{enumerate}[] 
+\foreachproblem[btsuatu]{\item\causo\thisproblem}
+\end{enumerate}
+\newpage
+
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN }
+\end{center}
+\indebailoigiai
+\tieude{Chọn phương án (A hoặc B, C, D) ứng với từ/ cụm từ có gạch dưới cần phải sửa để các câu sau trở thành chính xác.}
+\begin{enumerate}[]
+\foreachproblem[btsuatu]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+\setcounter{page}{1}
+\setcounter{socauhoi}{0}
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\indapanrutgon
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[btsuatu]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{document}
+
+

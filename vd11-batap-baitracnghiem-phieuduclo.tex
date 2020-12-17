@@ -1,0 +1,238 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{shortlst}
+\usepackage{enumerate}
+\usepackage{color}
+%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mathpazo} 
+\usepackage[bookmarksnumbered, colorlinks,hyperindex, unicode]{hyperref}%
+\usepackage{titledot}
+% \usepackage{enumerate} 
+\voffset=-2cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 18.5truecm 
+\usepackage[baitap]{dethi}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]%
+           {\markright{\it \thesection\ #1}}
+\lhead[\fancyplain{}{
+     \footnotesize{Page \thepage\ of \pageref{LastPage}}}]
+{\fancyplain{}{ https://nhdien.wordpress.com - {\it Nguyễn Hữu Điển}}}
+\rhead[\fancyplain{}{\leftmark}]%
+   {\fancyplain{}{\footnotesize{Trang số \thepage\ trong \pageref{LastPage}}}}
+\cfoot{\footnotesize{\thepage/\pageref{LastPage}}}
+\sloppy
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+% \setlength{\shortitemwidth}{0.12\textwidth}
+% \ifnum\value{socotdapan}>1 \advance\shortitemwidth by \labelwidth\fi
+
+ \usepackage{fancybox}
+\cornersize*{5mm}
+% \khoanh{\Ovalbox}
+% \khoanh{\ovalbox}
+\usepackage{tikz}
+% \newcommand*\tikzcircled[1]{\tikz[baseline=(char.base)]{
+%             \node[shape=circle,draw,inner sep=1pt, thick] (char) {#1};}}
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+% \khoanh{\cbox}
+%\daungoac{(}{)}%%{[}{]}%Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+% \coloigiai
+\usepackage{centerpage}
+\usepackage{lastpage}
+% \usepackage{calc}
+\graphicspath{{hinh-cauhoi/}} 
+
+\parindent 10pt
+% \usepackage{enumerate}
+% \usepackage{enumitem}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\begin{document}
+\title{\bf PHIẾU CHẤM ĐỤC LỖ TRONG DETHI.STY 3.3} % Ten bai
+\author{{\bf Nguyễn Hữu Điển}\\
+Khoa Toán - Cơ - Tin học\\
+ĐHKHTN Hà Nội, ĐHQGHN
+} % Tac gia
+\date{} % Ngay
+
+\maketitle
+\vspace*{1cm}
+
+\tableofcontents
+% 
+\vspace*{1cm}
+Không phải lúc nào cũng chấm máy (tuy có phương án chấm máy trong chương trình), có thể chấm bằng cách so sánh phiếu thi trắc nghiệm với đáp án. Nhưng chấm nhiều người cách đó cũng mất công, có khi tôi phải chấm 70 đến 100 sinh viên, đếm cũng lâu và rất buồn chán. Tôi lấy đúng phiếu trả lời trắc nghiệm đục lỗ phương án đúng, khi chấm chỉ đè nên nhau và đếm ô đen là xong. nên tôi thiết kế thếm phiếu đục lỗ giống hệt phiều trả lời. Có đánh dấu phương án đúng để đục lỗ một lần, chấm nhiều lần. Các tiêu đề phiếu đục lỗ và phiếu thi có thể thay đổi, nhưng phải giống nhau về số dòng chiếm chữ. (Có thể phiếu thi và phiếu đục lỗ làm trong nửa trang a4 nếu số câu hỏi ít)
+
+Kinh nghiệm dùng lại đề trắc nghiệm nhiều lần là lưu trữ các bản như sau:
+
+1. Đề thi : Có thể chụp lại nhiều lần
+
+2. Đáp án đúng làm căn cứ.
+
+3. Phiếu thi : Chụp nhiều lần để thi.
+
+4. Bản đục lỗ đáp án 
+ \setlength{\shortitemwidth}{\textwidth/4-3.5em}
+\loadrandomproblems[bttracnghiem]{5}{2017-cauhoi-toan}
+\newpage
+\section{Đề bài}
+
+\indebai
+
+\lamtieude
+
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Đề bài đáp án đánh dấu}
+% \setcounter{page}{1}
+\indebaidapan
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Đề bài đáp án lời giải}
+\setcounter{page}{1}
+\indebailoigiai
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI - ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Đề bài đáp án lời giải}
+\setcounter{page}{1}
+\inloigiai
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\newpage
+\section{Đáp án rút gọn}
+\indapanrutgon
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Đáp án lời giải liệt kê}
+\setcounter{page}{1}
+\indapanlietke
+\lamtieude
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ}
+\end{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Đáp án theo số}
+\setcounter{page}{1}
+\indapanso
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN THEO SỐ}
+\end{center}
+\begin{center}
+\begin{multicols}{6}
+\begin{enumerate}[\socau]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Đáp án theo chứ}
+\indapanchu
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN  THEO CHỮ}
+\end{center}
+\begin{center}
+\begin{multicols}{10}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Làm phiếu đục lỗ}
+\setcounter{page}{1}
+\inphieuduclo
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Làm phiếu phiếu thi}
+\inphieuthi
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+ 
+
+\end{document}

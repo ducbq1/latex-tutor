@@ -1,0 +1,197 @@
+%%21:17:45 21/10/2016 -VieTeX creates E:\tex\book-mau\mau-dethi30\vidu05-ftruefalse.tex
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.0
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+% \usepackage{color}
+\usepackage{graphicx}
+% \usepackage{picinpar}
+\usepackage{mathptmx} 
+% \usepackage{mathpazo} 
+% \usepackage{enumerate}
+% \usepackage{multicol}
+% \usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+% \usepackage{lastpage}
+% \usepackage{fancybox}
+% \cornersize*{3.6mm}
+% \usepackage{tikz}
+\Fullpages %Định dạng trang đề thi
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{1} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+ \tieudetracnghiem
+\tieudedapan
+%\tieudetren
+\tieudeduoi
+\daungoac{\cboxx}{}                  %Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+\chuphuongan{\bf\Alph}    %Ký tự cho các phương án
+%\chuphuongan{\arabic} %\Roman%\roman%kể cả số cho các phương án
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+\mauchu{blue}                     %Mầu số câu hỏi và phương án
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}{hinh-vidu/}} %Đường dẫn của nơi để hình
+\khoanh{\cboxx}         %Khoanh các phương án: \cbox, \fbox
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+%\NoRearrange  %Lệnh không trộn đề
+%\socotdapan{2} %số cột đáp án và phiếu thi
+%\motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+%\nhieuphieuthi   %In ra mỗi đề một phiếu thi
+% \coloigiai           %In ra đáp án có lời giải
+\ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+%\OneKey            %Lệnh chỉ in ra 1 bản đáp án
+%\NoKey               %Lệnh không in ra phần đáp án
+
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ MINH HỌA}
+\loaidethi{Đề gồm có 06 trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}
+\tenmonhoc{Môn: Toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}
+
+\begin{document}
+
+\setlength{\baselineskip}{12truept}
+
+  \begin{multiplechoice}[title={\bf I. Các câu hỏi trắc nghiệm} , rearrange=yes, keycolumns=3]%
+\begin{question}
+Hệ số của số hạng không chứa $x$ trong khai triển $(\dfrac{1}{2}\sqrt x+\dfrac{2}{\sqrt[3]{x}})^{10}$ là:
+\datcot
+\bonpa
+{\sai{Không có}}
+{\sai{$210$}}
+{\dung{$840$}}
+{\sai{$120$}}
+\end{question}
+%%%%%%%%%%%%%
+\begin{question}
+Cho $A=\{ 0,1,2,3,4,5,6\}$. Số các số chẵn có 4 chữ số đôi một khác nhau được lập từ $A$ là:
+\datcot
+\bonpa
+{\dung{$420$}}
+{\sai{$360$}}
+{\sai{$15$}}
+{\sai{$400$}}
+\end{question}
+
+ \end{multiplechoice}
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{shortanswer}[title={\textbf{II. Câu hỏi tự luận}}, rearrange=no ]
+\begin{question}
+  And as in uffish thought he stood, the Jabberwock, with eyes of flame,
+  came whiffling through the tulgey wood, and burbled as it came!
+  \begin{answer}
+    Ask Lewis Carroll.
+  \end{answer}
+\end{question}
+
+\begin{question}
+  One, two! One, two! And through and through the vorpal blade went snicker-snack!
+  He left it dead, and with its head he went galumphing back.
+  \begin{answer}
+    Ask Lewis Carroll.
+  \end{answer}
+\end{question}
+\end{shortanswer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{fillin}[title={\bf III. Câu hỏi điền từ vào chỗ trống}, resetcounter=yes,keycolumns=2]
+
+  \begin{question}
+\examvspace*{0.7\baselineskip}
+  Nhất trí How much \blank{wood} would a \blank{woodchuck} chuck, if a \blank{woodchuck}
+  would \blank{chuck}, wood?
+\end{question}
+\begin{question}
+\examvspace*{0.7\baselineskip}
+  \blank{Wittgenstein}'s first work was the \textsl{Tractatus-\blank{Logico}
+  Philosophicus}.
+\end{question}
+ \begin{block}
+   I don't know why you'd need this, but here is a block of fill-in-the-blank
+   questions. 
+  \begin{question}
+\examvspace*{0.7\baselineskip}
+    \blank{Hobbes} thought that without a strong, \blank{centralized},
+    effective government, chaos would reign in the state of nature.
+  \end{question}
+  \begin{question}
+\examvspace*{0.7\baselineskip}
+    One main component of Nietzche's moral philosophy is the \blank{will to
+      power}.
+  \end{question}
+\end{block}
+
+\begin{question}
+\examvspace*{0.7\baselineskip}
+  Mill's theory of morality is known as \blank{Utilitarianism}
+\end{question}
+
+\begin{question}
+\examvspace*{0.7\baselineskip}
+  According to Kant, we should always always always follow the
+  \blank{categorical} imperative.
+\end{question}
+\end{fillin}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{matching}[title={\bf IV. Câu hỏi ghép nối}]
+  \pair{Elvis Costello}{Spike}
+  \pair{Nirvana}{Nevermind}
+  \pair{Love and Rockets}{Earth, Sun, Moon}
+  \pair{The Jesus and Mary Chain}{Automatic}
+  \pair{The Dave Matthews Band}{Under the Table and Dreaming}
+\end{matching}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{truefalse}[title={\bf  V. Câu hỏi đúng sai}]
+
+\begin{question}
+\examvspace*{0.7\baselineskip}
+  \answer{Đúng} This sentence is notfalse.
+\end{question}
+
+\begin{block}
+  I don't know why you'd need this, but here is a block of true/false
+  questions. 
+  \begin{question}
+\examvspace*{-0.7\baselineskip}
+    \answer{Đúng} `Roger \& Trường Me' chronicles one man's attempt to get into
+    Disneyland so that he can visit Toontown.
+  \end{question}
+  
+  \begin{question}
+\examvspace*{-0.7\baselineskip}
+    \answer{Sai} Laden swallows fly faster than unladen swallows, unless
+    they carry coconuts.
+  \end{question}
+\end{block}
+
+\begin{question}
+\examvspace*{0.7\baselineskip}
+  \answer{Đúng} `Monty Python and the Holy Grail' is a very funny movie.
+\end{question}
+
+\begin{question}
+\examvspace*{0.7\baselineskip}
+  \answer{Sai} All animals are created equal, but some animals are more
+  equal than others.
+\end{question}
+\begin{examclosing}
+\centerline{-- HẾT --}
+\end{examclosing}
+\end{truefalse}
+
+\end{document}

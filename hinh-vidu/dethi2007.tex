@@ -1,0 +1,186 @@
+
+%Tệp mẫu làm đề thi trắc nghiệm
+%Tác giả Nguyễn Hữu Điển
+% ĐHKHTN, Hà Nội
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh tracnghiem.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được xắp sếp ngẫu nhiên.
+%Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+\documentclass[11pt]{examdesign}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+\usepackage{graphicx} 
+\usepackage{wrapfig} 
+\usepackage{ifthen} 
+\usepackage{tracnghiem} 
+\usepackage{mathptmx,courier}
+\usepackage{indentfirst}
+\usepackage[mathscr]{eucal}
+
+\usepackage{picinpar}
+\usepackage{floatflt}
+
+\usepackage{epic}
+\usepackage{curves}
+\usepackage{makeidx}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{\bf Chương trình}
+
+\newcommand{\vd}[1]{\par\medskip\noindent{\large\bf #1}}
+\newcommand{\chuong}[1]{\par\bigskip\noindent{\large\bfh #1}}
+\renewcommand{\figurename}{{Hình}}
+
+\Fullpages
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\ShortKey 
+%\OneKey %Lệnh chỉ in ra 1 bản đáp án
+\NoKey %Lệnh không in ra phần đáp án
+\NumberOfVersions{20} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+
+\renewcommand{\tentruong}{ĐẠI HỌC BÁCH KHOA HÀ NỘI}
+\renewcommand{\tenkhoa}{Khoa Toán  - Tin học ứng dụng}
+\renewcommand{\tenkythi}{ĐỀ KIỂM TRA GIỮA KÌ I}
+\renewcommand{\tenmonhoc}{Giải tích số}
+\renewcommand{\tenlop}{SP/2007-2008}
+\renewcommand{\thoigian}{60 phút}
+\renewcommand{\chuy}{Được mở vở, cán bộ coi thi không giải thích gì thêm}
+%\tieudetracnghiem
+\tieudethi
+\tieudedapan
+%\tieudetren
+%\tieudeduoi
+%Lệnh đường dẫn đến các câu hỏi
+\newcommand{\cauhoichoice}[1]{\input{c:/vietex/thitracnghiem/multiplechoice/#1}}
+\newcommand{\cauhoifillin}[1]{\input{c:/vietex/thitracnghiem/fillin/#1}}
+\newcommand{\cauhoitruefalse}[1]{\input{c:/vietex/thitracnghiem/truefalse/#1}}
+\newcommand{\cauhoimatching}[1]{\input{c:/vietex/thitracnghiem/matching/#1}}
+%\UnderlineCorrectMultipleChoiceAnswer
+\BoldfaceCorrectMultipleChoiceAnswer
+\def\v#1{\overrightarrow{#1}}
+\begin{document}
+
+
+
+%\usepackage{program}
+
+\begin{document}
+\setlength{\baselineskip}{14truept}
+
+\centerline{\bf Đề thi 1:  Lí thuyết đồ thị và ứng dụng}    
+\medskip     
+\centerline{\bf (K49-2007: Thời gian 90 phút)}
+\vspace*{.2cm}
+\noindent{\bf Câu 1.}  Phát biểu các quy tắc tìm chu trình Hamilton. Hãy chứng minh rằng đồ thị trong hình ~\ref{fig:hinh1} có chu trình Hamilton.
+\begin{figure}[!ht]
+\begin{minipage}[b]{5cm}
+\centering
+\input hamilton.tex
+\caption{}\label{fig:hinh1}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{9cm}
+\begin{tabular}{ l  l }
+ Tên sinh viên & Môn đã chọn học \\
+\hline
+ An & Vật lí, Toán, Tiếng Anh \\
+Vân& Vật lí, Khoa học trái đất, Kinh tế\\
+Lan & Khoa học trái đất, Kinh doanh\\
+Hào &Thống kê, Kinh tế\\
+Hùng&Toán, Kinh doanh\\
+Bảo&Vật lí, Khoa học trái đất\\
+Hồng& Kinh doanh, Thống kê\\
+Điền &Toán, Khoa học trái đất\\
+Cường&Vật lí, Môi trường, Thống kê\\
+Quý&Vật lí, Kinh tế, Môi trường.
+\end{tabular}
+\caption{}\label{fig:hinh00}
+\end{minipage}
+\end{figure}
+
+\noindent{\bf Câu 2.} Có 10 sinh viên trong một học kì học các môn tùy chọn và các môn bắt buộc theo bảng ở hình ~\ref{fig:hinh00}. Hãy thiết lập lịch thi có ít đợt nhất   sao cho  các sinh viên này không bị nhỡ thi một môn đã học nào.
+
+
+\noindent{\bf Câu 3.} Hãy phát biểu định nghĩa và các tính chất của đồ thị Kuratowski. Chứng minh rằng đồ thị  hình ~\ref{fig:hinh5} là không phẳng.
+
+\begin{figure}[!ht]
+\begin{minipage}[b]{5cm}
+\centering
+\input dothiphang1.tex
+\caption{}\label{fig:hinh5}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{9cm}
+\centering
+\input thuattoan1.tex
+\caption{}\label{fig:hinh7}
+\end{minipage}
+\end{figure}
+
+
+\noindent{\bf Câu 4.} Trình bày thuật toán Prime. Dùng thuật toán Prime tìm cây bao trùm có trọng số nhỏ nhất trong đồ thị trong hình ~\ref{fig:hinh7}, bắt đầu từ đỉnh $S$.
+
+
+
+
+\noindent{\bf Câu 5.} Cho chương trình nguồn sau đây bằng ngôn ngữ C. 
+ Hãy giải thích các dòng lệnh của chương trình có ý nghĩa gì.
+ Hãy vẽ lại đồ thị mà dữ liệu đã cho trong chương trình.
+ Dựa vào đồ thị  và chương trình nguồn để tìm ra kết quả chạy chương trình. 
+\lstset{language=C++,emph={printf,*},emphstyle=\bf,numbers=left, xleftmargin=16pt, numberblanklines=false, numberstyle=\footnotesize, numbersep=5pt, tabsize=4}
+\lstset{emph={printf,fprintf,scanf,fscanf,fclose,fopen,gotoxy,clrscr},emphstyle=\bf}
+\setlength{\columnseprule}{1pt}
+\setlength{\columnsep}{10pt}
+{\small
+\begin{multicols}{2}
+\begin{lstlisting}[caption={\bf Nội dung}, label={ct:dfs}]
+#include <stdio.h>
+#define MAXN 200
+const unsigned n = 14;
+const unsigned v = 5;
+const char A[MAXN][MAXN] = {
+{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+{1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+{0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+{0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+{0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+{0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1},
+{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+{0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0}
+};
+
+char used[MAXN];
+
+void DFS(unsigned i)
+{ 
+  unsigned k;
+  used[i] = 1;
+  printf("%u ", i+1);
+  for (k = 0; k < n; k++)
+    if (A[i][k] && !used[k]) DFS(k);
+}
+
+int main(void) {
+  unsigned k;
+  for (k = 1; k < n; k++) used[k] = 0;
+  printf("Duyet tu dinh %u: \n", v);
+  DFS(v-1);
+  printf("\n");
+  return 0;
+}
+\end{lstlisting}
+\end{multicols}
+}
+
+\end{document}

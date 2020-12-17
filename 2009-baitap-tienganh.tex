@@ -1,0 +1,237 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{multicol}%
+  \usepackage{tikz}
+  \usepackage{shortlst}
+  \usepackage{enumerate}
+\usepackage[baitap]{dethi}
+
+\usepackage{mathptmx}
+\usepackage{color}
+
+\voffset=-3cm
+% \hoffset=-2.3cm
+\textheight 25truecm 
+\textwidth 17.5truecm 
+\parskip=0pt
+\def\tentruong{\small BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\def\tenkhoa{\small ĐỀ THI CHÍNH THỨC}
+\def\loaidethi{Đề thi có 03 trang}
+\def\tenkythi{\small KỲ THI TỐT NGHIỆP THPT NĂM 2009}
+\def\tenmonhoc{Môn thi: TIẾNG ANH - Hệ 3 năm}
+\def\thoigian{Thời gian làm bài: 60 phút}
+\renewcommand{\solutionname}{Lời giải}
+\setlength{\shortitemwidth}{0.15\textwidth}
+
+\PSNrandseed{\time}
+\parindent=0pt
+\usepackage{fancybox}
+\cornersize*{3.6mm}
+\chuphuongan{\small\bfseries\Alph}
+\daungoac{\cboxx}{}%%{[}{]}%Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+%]-\daungoac{\Ovalbox}{}
+\mauchu{blue}
+% \sotrang{3}
+\usepackage{centerpage}
+\usepackage{lastpage}
+ \renewcommand{\labelenumi}{{\bf Câu \arabic{enumi}.}}
+\begin{document}
+\lamtieude
+\madethi{378}
+% \hovaten{Họ và tên}
+% \sobaodanh{Số báo danh}
+\setlength{\baselineskip}{14truept}
+
+\def\dssuatu{suatu:1,suatu:2,suatu:3,suatu:4,suatu:5}
+ \loadselectedproblems[btsuatu]{\dssuatu}{2009-cauhoi-tienganh}
+% \def\dssuatu{suatu:1,suatu:2,suatu:3,suatu:4,suatu:5}
+%  \loadselectedproblems[btsuatu]{\dssuatu}{cauhoi02-tracnghiem-b}
+
+\def\dschontu{chontu:1,chontu:2,chontu:3,chontu:4,chontu:5}
+\loadselectedproblems[btchontu]{\dschontu}{2009-cauhoi-tienganh}
+
+\def\ds{cumtu:1,cumtu:2,cumtu:3,cumtu:4,cumtu:5,cumtu:6,cumtu:7,cumtu:8,cumtu:9,cumtu:10}
+\loadselectedproblems[btcumtu]{\ds}{2009-cauhoi-tienganh}
+
+\def\dss{cumtu:11,cumtu:12,cumtu:13,cumtu:14,cumtu:15,cumtu:16,cumtu:17,cumtu:18,cumtu:19,cumtu:20,cumtu:21,cumtu:22,cumtu:23,cumtu:24,cumtu:25}
+\loadselectedproblems[btcumtu]{\dss}{2009-cauhoi-tienganh}
+
+\def\dsss{dientu:2,dientu:1,dientu:3,dientu:4,dientu:5}
+\loadselectedproblems[btcumtus]{\dsss}{2009-cauhoi-tienganh}
+
+\def\dshoanthanh{hoanthanh:1,hoanthanh:2,hoanthanh:3,hoanthanh:4,hoanthanh:5}
+\loadselectedproblems[bthoanthanh]{\dshoanthanh}{2009-cauhoi-tienganh}
+
+\def\dsdungtu{dungtu:1,dungtu:2,dungtu:3,dungtu:4,dungtu:5}
+\loadselectedproblems[btdungtu]{\dsdungtu}{2009-cauhoi-tienganh}
+
+% \setlist{noitemsep}
+% \setlist{nolistsep}
+%\hideproblems
+\hideanswers
+
+
+\tieude{Chọn phương án (A hoặc B, C, D) ứng với từ/ cụm từ có gạch dưới cần phải sửa để các câu sau trở thành chính xác.}
+\begin{enumerate}[]
+\foreachproblem[btsuatu]{\item\causo\thisproblem}
+\end{enumerate}
+
+\tieude{Chọn từ (ứng với A hoặc B, C, D) có phần gạch dưới được phát âm khác với những từ còn lại trong mỗi câu sau.}
+\begin{enumerate}[\causo]
+\foreachproblem[btchontu]{\item\thisproblem}
+\end{enumerate}
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi câu từ 11 đến 15.}
+
+\chidan{George Washington was born on February 22nd, 1732 in Virginia. His parents were Augustine and Mary Washington. George grew up on a farm in Virginia. Little is known of his early childhood. He attended school irregularly from his 7th to his 15th year. His favorite subject was mathematics. He learned to be a surveyor of land when he grew up. He joined the army and was a leader during the American Revolution. He later became the first President of the United States. George Washington is called by his people the "Father of our country". The Americans celebrate his birthday on Presidents' Day in February. His picture is on the one-dollar bill.}
+\begin{enumerate}[]
+\foreachproblem[btdungtu]{\item\causo\thisproblem}
+\end{enumerate}
+\tieude{Chọn từ/ cụm từ thích hợp (ứng với A hoặc B, C, D) để hoàn thành mỗi câu sau.}
+\begin{enumerate}[]
+\foreachproblem[btcumtu]{\item\causo\thisproblem}
+\end{enumerate}
+\tieude{Chọn phương án đúng (ứng với A hoặc B, C, D) để hoàn thành mỗi câu sau.}
+\begin{enumerate}[]
+\foreachproblem[bthoanthanh]{\item\causo\thisproblem}
+\end{enumerate}
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi chỗ trống từ 46 đến 50.}
+\chidan{I had a terrible time last Saturday. It (46)\daugach\  cold, but quite sunny, so after lunch I walked into town. I wanted to buy a pullover. I was looking in the window of a clothes (47)\daugach\ when someone stole my wallet. While I was walking home, it started (48)\daugach\ and I arrived home cold and miserable. I decided to have a hot bath. I was getting ready to have my bath (49)\daugach\ the doorbell rang. It was a flower seller and it took me several minutes to make him go away. Unfortunately, all the time he was talking (50)\daugach\ me, the water was running. You can imagine how the kitchen was!}
+
+\begin{enumerate}[\causo]
+\foreachproblem[btcumtus]{\item\thisproblem}
+\end{enumerate}
+% \end{document}
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN }
+\end{center}
+% \hideproblems
+\showanswers
+\setcounter{socauhoi}{0}
+\tieude{Chọn phương án (A hoặc B, C, D) ứng với từ/ cụm từ có gạch dưới cần phải sửa để các câu sau trở thành chính xác.}
+\begin{enumerate}[]
+\foreachproblem[btsuatu]{\item\causo\thisproblem}
+\end{enumerate}
+
+\tieude{Chọn từ (ứng với A hoặc B, C, D) có phần gạch dưới được phát âm khác với những từ còn lại trong mỗi câu sau.}
+\begin{enumerate}[\causo]
+\foreachproblem[btchontu]{\item\thisproblem}
+\end{enumerate}
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi câu từ 11 đến 15.}
+
+George Washington was born on February 22nd, 1732 in Virginia. His parents were Augustine and Mary Washington. George grew up on a farm in Virginia. Little is known of his early childhood. He attended school irregularly from his 7th to his 15th year. His favorite subject was mathematics. He learned to be a surveyor of land when he grew up. He joined the army and was a leader during the American Revolution. He later became the first President of the United States. George Washington is called by his people the "Father of our country". The Americans celebrate his birthday on Presidents' Day in February. His picture is on the one-dollar bill.
+
+\foreachproblem[btdungtu]{
+\begin{enumerate}[]
+\item\causo\thisproblem
+\end{enumerate}
+}
+
+\tieude{Chọn từ/ cụm từ thích hợp (ứng với A hoặc B, C, D) để hoàn thành mỗi câu sau.}
+\begin{enumerate}[]
+\foreachproblem[btcumtu]{\item\causo\thisproblem}
+\end{enumerate}
+
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi chỗ trống từ 46 đến 50.}
+\begin{enumerate}[]
+\foreachproblem[bthoanthanh]{\item\causo\thisproblem}
+\end{enumerate}
+
+\tieude{Đọc kỹ đoạn văn sau và chọn phương án đúng (ứng với A hoặc B, C, D) cho mỗi chỗ trống từ 46 đến 50.}
+
+I had a terrible time last Saturday. It (46)\daugach\  cold, but quite sunny, so after lunch I walked into town. I wanted to buy a pullover. I was looking in the window of a clothes (47)\daugach\ when someone stole my wallet. While I was walking home, it started (48)\daugach\ and I arrived home cold and miserable. I decided to have a hot bath. I was getting ready to have my bath (49)\daugach\ the doorbell rang. It was a flower seller and it took me several minutes to make him go away. Unfortunately, all the time he was talking (50)\daugach\ me, the water was running. You can imagine how the kitchen was!
+
+\begin{enumerate}[\causo]
+\foreachproblem[btcumtus]{\item\thisproblem}
+\end{enumerate}
+
+
+\newpage
+\setlength{\labelsep}{0.5pt}
+% \setcounter{page}{1}
+\thispagestyle{empty}
+\lamtieude
+\setcounter{socauhoi}{0}
+\indapanrutgon
+
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[btsuatu]{\item\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[btchontu]{\item\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[btdungtu]{\item\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[btcumtu]{\item\thisproblem}
+%\foreachproblem[btcumtus]{\item\label{prob:\thisproblemlabel}\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[bthoanthanh]{\item\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[btcumtus]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+\setcounter{socauhoi}{0}
+\thispagestyle{empty}
+\inphieuthi
+\lamphieuthi
+\begin{center}
+{\bf PHIẾU KIỂM TRA TRẮC NGHIỆM}
+\end{center}
+Họ và tên \dotfill Lớp \dotfill 
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[btsuatu]{\item\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[btchontu]{\item\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[btdungtu]{\item\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[btcumtu]{\item\thisproblem}
+%\foreachproblem[btcumtus]{\item\label{prob:\thisproblemlabel}\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[bthoanthanh]{\item\thisproblem}
+\end{enumerate}
+
+\begin{enumerate}[\causo]
+\foreachproblem[btcumtus]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+\end{document}
+ 

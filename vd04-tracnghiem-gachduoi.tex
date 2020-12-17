@@ -1,0 +1,119 @@
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.0
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{mathptmx} 
+% \usepackage{mathpazo} 
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+% \usepackage{fancybox}
+% \cornersize*{3.6mm}
+\Fullpages %Định dạng trang đề thi
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{1} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+\tieudetracnghiem
+\tieudedapan
+\tieudeduoi
+\daungoac{}{.}                  %Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+%\chuphuongan{\alph}    %Ký tự cho các phương án
+%\chuphuongan{\arabic} %\Roman%\roman%kể cả số cho các phương án
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+\mauchu{red}                     %Mầu số câu hỏi và phương án
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}{hinh-vidu/}} %Đường dẫn của nơi để hình
+\khoanh{\cbox}         %Khoanh các phương án: \cbox, \fbox
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+%\NoRearrange  %Lệnh không trộn đề
+%\motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+%\nhieuphieuthi   %In ra mỗi đề một phiếu thi
+% \coloigiai           %In ra đáp án có lời giải
+\ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+%\OneKey            %Lệnh chỉ in ra 1 bản đáp án
+%\NoKey               %Lệnh không in ra phần đáp án
+
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ MINH HỌA}
+\loaidethi{Đề gồm có 06 trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}
+\tenmonhoc{Môn: Toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}
+
+\begin{document}
+\begin{vnmultiplechoice}[title={\bf  Câu hỏi gạch dưới},  keycolumns=3]
+\begin{question}
+\saih{That} is \saih{the} man \dungh{which} told me \saih{the} bad news.
+\datcot
+\bonpah
+{\sai{That}}
+{\sai{the}} 
+{\dung{which}} 
+{\sai{the}}
+\end{question}
+
+
+\begin{question}
+ My \saih{younger} brother \saih{has} worked in \saih{a} bank \dungh{since} a long time.
+\datcot
+\bonpah
+{\sai{younger}}
+{\sai{has}}
+{\sai{a}}
+{\dung{since}}
+\end{question}
+
+\begin{question}
+\saih{It is} \saih{the English} pronunciation that \dungh{cause} me \saih{a lot of} difficulties.
+\datcot
+\bonpah
+{\sai{It is}} 
+{\sai{the English}}
+{\dung{cause}} 
+{\sai{a lot of}}
+\end{question}
+
+\begin{question}
+ I \dungh{go} to Mexico \saih{with} my girlfriend in \saih{the} summer \saih{of} 2006.
+\datcot
+\bonpah
+{\dung{go}}
+{\sai{with}}
+{\sai{the}}
+{\sai{of}}
+\end{question}
+
+\begin{question}
+He was \dungh{angrily} \saih{when} he \saih{saw} what \saih{was happening}.
+\datcot
+\bonpah
+{\dung{angrily}} 
+{\sai{when}}
+{\sai{saw}} 
+{\sai{was happening}}
+\end{question}
+
+\begin{examclosing}
+\centerline{-- HẾT --}
+\end{examclosing}
+\end{vnmultiplechoice}
+\end{document}
+%%12:52:31 26/10/2016Last Modification of contents

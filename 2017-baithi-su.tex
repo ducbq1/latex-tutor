@@ -1,0 +1,506 @@
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.0
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{lastpage}
+
+\usepackage{mathptmx} 
+% \usepackage{mathpazo} 
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+% \usepackage{fancybox}
+% \cornersize*{3.6mm}
+\Fullpages %Định dạng trang đề thi
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{5} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+\tieudetracnghiem
+%\tieudethiviet
+\tieudedapan
+%\tieudetren
+\tieudeduoi
+\daungoac{}{.}                  %Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+%\chuphuongan{\alph}    %Ký tự cho các phương án
+%\chuphuongan{\arabic} %\Roman%\roman%kể cả số cho các phương án
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+\mauchu{red}                     %Mầu số câu hỏi và phương án
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}} %Đường dẫn của nơi để hình
+\khoanh{\cbox}         %Khoanh các phương án: \cbox, \fbox
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+ \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+%\NoRearrange  %Lệnh không trộn đề
+ \motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+%\nhieuphieuthi   %In ra mỗi đề một phiếu thi
+%\coloigiai           %In ra đáp án có lời giải
+\ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+%\OneKey            %Lệnh chỉ in ra 1 bản đáp án
+%\NoKey               %Lệnh không in ra phần đáp án
+
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ MINH HỌA}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}
+\tenmonhoc{Bài thi: Khoa học tự nhiên;  Môn: LỊCH SỬ}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 50 phút, không kể thời gian phát đề}}
+%\soanthao %Lệnh dùng khi soạn cauu hỏi, khi dịch 1 bản và không đảo
+\begin{document}
+
+\setlength{\baselineskip}{12truept}
+ \begin{vnmultiplechoice}[ rearrange=yes, keycolumns=3]%
+
+\begin{question} %%01
+Hội nghị Ianta (2-1945) diễn ra khi cuộc Chiến tranh thế giới thứ hai
+\datcot[4]
+\bonpa
+{\dung{bước vào giai đoạn kết thúc.}}
+{\sai{đã hoàn toàn kết thúc.}}
+{\sai{đang diễn ra vô cùng ác liệt.}}
+{\sai{bùng nổ và ngày càng lan rộng.}}
+\end{question}
+
+\begin{question} %%02
+Một trong những mục đích của tổ chức Liên hợp quốc là
+\datcot[4]
+\bonpa
+{\dung{duy trì hòa bình và an ninh thế giới.}}
+{\sai{trừng trị các hoạt động gây chiến tranh.}}
+{\sai{thúc đẩy quan hệ thương mại tự do.}}
+{\sai{ ngăn chặn tình trạng ô nhiễm môi trường.}}
+\end{question}
+
+\begin{question} %%03
+ Chính sách đối ngoại của Liên bang Nga từ năm 1991 đến năm 2000 là ngả về
+phương Tây, khôi phục và phát triển quan hệ với các nước ở
+\datcot
+\bonpa
+{\dung{ châu Á.}}
+{\sai{châu Âu.}}
+{\sai{châu Phi.}}
+{\sai{châu Mĩ.}}
+\end{question}
+
+\begin{question} %%04
+Sự kiện nào dưới đây được xem là sự kiện khởi đầu cuộc“Chiến tranh lạnh”?
+\datcot[4]
+\bonpa
+{\dung{Thông điệp của Tổng thống Mĩ Truman.}}
+{\sai{ Đạo luật viện trợ nước ngoài của Quốc hội Mĩ.}}
+{\sai{Diễn văn của ngoại trưởng Mĩ Macsan.}}
+{\sai{Chiến lược toàn cầu của Tổng thống Mĩ Rudơven.}}
+\end{question}
+
+\begin{question} %%05
+Những quốc gia Đông Nam Á tuyên bố độc lập trong năm 1945 là
+\datcot[4]
+\bonpa
+{\dung{Inđônêxia, Việt Nam, Lào.}}
+{\sai{Campuchia, Malaixia, Brunây.}}
+{\sai{Inđônêxia, Xingapo, Malaixia.}}
+{\sai{Miến Điện, Việt Nam, Philippin.}}
+\end{question}
+
+\begin{question} %%06
+Miến Điện, Việt Nam, Philippin.
+\datcot[2]
+\bonpa
+{\dung{Đơn cực.}}
+{\sai{Đa cực.}}
+{\sai{ Một cực nhiều trung tâm.}}
+{\sai{Đa cực nhiều trung tâm.}}
+\end{question}
+
+\begin{question} %%07
+Xu thế toàn cầu hoá trên thế giới là hệ quả của
+\datcot
+\bonpa
+{\dung{cuộc cách mạng khoa học – công nghệ.}}
+{\sai{sự phát triển quan hệ thương mại quốc tế.}}
+{\sai{sự ra đời của các công ty xuyên quốc gia.}}
+{\sai{quá trình thống nhất thị trường thế giới.}}
+\end{question}
+
+\begin{question} %%08
+Đặc điểm lớn nhất của cuộc cách mạng khoa học- kĩ thuật sau Chiến tranh thế
+giới thứ hai là
+\datcot[4]
+\bonpa
+{\dung{khoa học trở thành lực lượng sản xuất trực tiếp.}}
+{\sai{kĩ thuật trở thành lực lượng sản xuất trực tiếp.}}
+{\sai{sự bùng nổ của các lĩnh vực khoa học - công nghệ.}}
+{\sai{mọi phát minh kĩ thuật đều bắt nguồn từ sản xuất.}}
+\end{question}
+
+\begin{question} %%09
+Tờ báo nào dưới đây là của tiểu tư sản trí thức ở Việt Nam giai đoạn 1919-
+1925?
+\datcot
+\bonpa
+{\dung{Người nhà quê.}}
+{\sai{Tin tức.}}
+{\sai{Tiền phong.}}
+{\sai{Dân chúng.}}
+\end{question}
+
+\begin{question} %%10
+Tư tưởng cốt lõi trong Cương lĩnh chính trị đầu tiên của Đảng Cộng sản Việt
+Nam là
+\datcot[2]
+\bonpa
+{\dung{độc lập và tự do.}}
+{\sai{tự do và dân chủ.}}
+{\sai{ruộng đất cho dân cày.}}
+{\sai{đoàn kết với cách mạng thế giới.}}
+\end{question}
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{question} %%11
+ Luận cương chính trị (10-1930) của Đảng Cộng sản Đông Dương xác định giai
+cấp lãnh đạo cách mạng là
+\datcot
+\bonpa
+{\dung{công nhân.}}
+{\sai{nông dân.}}
+{\sai{tư sản dân tộc.}}
+{\sai{tiểu tư sản trí thức.}}
+\end{question}
+
+\begin{question} %%12
+Cuộc khởi nghĩa Yên Bái (2-1930) do tổ chức nào dưới đây lãnh đạo?
+\datcot
+\bonpa
+{\dung{Việt Nam Quốc dân Đảng.}}
+{\sai{Đảng Thanh niên.}}
+{\sai{Đảng Lập hiến.}}
+{\sai{Việt Nam nghĩa đoàn.}}
+\end{question}
+
+\begin{question} %%13
+Cho các sự kiện sau:\\
+1. Nhật đầu hàng Đồng minh không điều kiện.\\
+2. Quân Nhật vượt biên giới Việt-Trung, tiến vào miền Bắc Việt Nam.\\
+3. Nhật đảo chính lật đổ Pháp ở Đông Dương.\\
+Hãy sắp xếp các sự kiện trên theo đúng trình tự thời gian.
+\datcot
+\bonpa
+{\dung{2, 3 ,1.}}
+{\sai{1, 2, 3.}}
+{\sai{3, 2, 1.}}
+{\sai{1, 3, 2.}}
+\end{question}
+
+\begin{question} %%14
+Khó khăn nghiêm trọng nhất của nước Việt Nam Dân chủ Cộng hòa sau Cách
+mạng tháng Tám năm 1945 là
+\datcot
+\bonpa
+{\dung{giặc ngoại xâm.}}
+{\sai{tài chính.}}
+{\sai{nạn đói.}}
+{\sai{giặc dốt.}}
+\end{question}
+
+\begin{question} %%15
+“Chúng ta thà hi sinh tất cả chứ nhất định không chịu mất nước, nhất định
+không chịu làm nô lệ...” là lời của Chủ tịch Hồ Chí Minh trong
+\datcot[4]
+\bonpa
+{\dung{Lời kêu gọi Toàn quốc kháng chiến (1946).}}
+{\sai{Tuyên ngôn Độc lập của nước Việt Nam Dân chủ Cộng hòa (1945).}}
+{\sai{Lời kêu gọi chống Mĩ cứu nước (1966).}}
+{\sai{Báo cáo chính trị tại Đại hội lần thứ hai của Đảng (1951).}}
+\end{question}
+
+\begin{question} %%16
+Chiến dịch nào dưới đây là chiến dịch chủ động tiến công lớn đầu tiên của bộ
+đội chủ lực Việt Nam trong cuộc kháng chiến chống thực dân Pháp (1945-1954)?
+\datcot[2]
+\bonpa
+{\dung{Biên giới thu - đông năm 1950.}}
+{\sai{Việt Bắc thu - đông năm 1947.}}
+{\sai{Điện Biên Phủ năm 1954.}}
+{\sai{Thượng Lào năm 1954.}}
+\end{question}
+
+\begin{question} %%17
+Thắng lợi nào của quân dân Việt Nam ở miền Nam đã buộc Mĩ phải tuyên bố
+“phi Mĩ hóa” chiến tranh xâm lược?
+\datcot[4]
+\bonpa
+{\dung{ Cuộc Tổng tiến công và nổi dậy Xuân 1968.}}
+{\sai{Cuộc Tiến công chiến lược năm 1972.}}
+{\sai{Trận “Điện Biên Phủ trên không” năm 1972.}}
+{\sai{Cuộc Tổng tiến công và nổi dậy Xuân 1975.}}
+\end{question}
+
+\begin{question} %%18
+Hiệp định Sơ bộ (6-3-1946) công nhận nước Việt Nam Dân chủ Cộng hòa là
+một quốc gia
+\datcot
+\bonpa
+{\dung{tự do.}}
+{\sai{tự trị.}}
+{\sai{ tự chủ.}}
+{\sai{độc lập.}}
+\end{question}
+
+\begin{question} %%19
+Ngày 12-12-1946, Ban Thường vụ Trung ương Đảng ra Chỉ thị
+\datcot[2]
+\bonpa
+{\dung{Toàn dân kháng chiến.}}
+{\sai{Kháng chiến kiến quốc.}}
+{\sai{Kháng chiến toàn diện.}}
+{\sai{ Trường kì kháng chiến.}}
+\end{question}
+
+\begin{question} %%20
+Khi thực dân Pháp mở cuộc tiến công lên Việt Bắc năm 1947, Trung ương
+Đảng ra chỉ thị nào?
+\datcot[4]
+\bonpa
+{\dung{Phải phá tan cuộc tiến công mùa đông của giặc Pháp.}}
+{\sai{Phải chủ động đón đánh địch ở mọi nơi chúng xuất hiện.}}
+{\sai{Chủ động giữ thế phòng ngự chiến lược trên chiến trường.}}
+{\sai{Nhanh chóng triển khai lực lượng tiêu diệt sinh lực địch.}}
+\end{question}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{question} %%21
+Chiến thắng Việt Bắc năm 1947 của quân dân Việt Nam đã buộc thực dân
+Pháp phải chuyển từ chiến lược đánh nhanh thắng nhanh sang
+\datcot
+\bonpa
+{\dung{đánh lâu dài.}}
+{\sai{phòng ngự.}}
+{\sai{đánh phân tán.}}
+{\sai{đánh tiêu hao.}}
+\end{question}
+
+\begin{question} %%22
+Phương hướng chiến lược của quân đội và nhân dân Việt Nam trong Đông -
+Xuân 1953-1954 là tiến công vào
+\datcot[4]
+\bonpa
+{\dung{ những hướng quan trọng về chiến lược mà địch tương đối yếu.}}
+{\sai{vùng đồng bằng Bắc bộ, nơi tập trung quân cơ động của Pháp.}}
+{\sai{Điện Biên Phủ, trung tâm điểm của kế hoạch quân sự Nava.}}
+{\sai{ toàn bộ các chiến trường ở Việt Nam, Lào và Campuchia.}}
+\end{question}
+
+\begin{question} %%23
+Đại hội đại biểu toàn quốc lần thứ VI của Đảng Cộng sản Việt Nam xác định
+nhiệm vụ trước mắt của kế hoạch 5 năm 1986- 1990 là
+\datcot[4]
+\bonpa
+{\dung{thực hiện mục tiêu của Ba chương trình kinh tế lớn.}}
+{\sai{đổi mới toàn diện, đồng bộ về kinh tế và chính trị.}}
+{\sai{xây dựng cơ sở vật chất của chủ nghĩa xã hội.}}
+{\sai{đẩy mạnh sự nghiệp công nghiệp hoá đất nước.}}
+\end{question}
+
+\begin{question} %%24
+Nền tảng chính sách đối ngoại của Nhật Bản từ năm 1951 đến năm 2000 là
+\datcot[2]
+\bonpa
+{\dung{liên minh chặt chẽ với Mĩ.}}
+{\sai{hướng mạnh về Đông Nam Á.}}
+{\sai{hướng về các nước châu Á.}}
+{\sai{cải thiện quan hệ với Liên Xô.}}
+\end{question}
+
+\begin{question} %%25
+ Nhân tố chủ yếu chi phối quan hệ quốc tế trong phần lớn nửa sau thế kỉ XX là
+\datcot[2]
+\bonpa
+{\dung{cục diện “Chiến tranh lạnh”.}}
+{\sai{xu thế toàn cầu hóa.}}
+{\sai{sự hình thành các liên minh kinh tế.}}
+{\sai{sự ra đời các khối quân sự đối lập.}}
+\end{question}
+
+\begin{question} %%26
+Mâu thuẫn chủ yếu trong xã hội Việt Nam trước Cách mạng tháng Tám năm
+1945 là mâu thuẫn giữa
+\datcot[4]
+\bonpa
+{\dung{toàn thể nhân dân với đế quốc xâm lược và phản động tay sai.}}
+{\sai{giai cấp vô sản với giai cấp tư sản.}}
+{\sai{giai cấp nông dân với giai cấp địa chủ phong kiến.}}
+{\sai{nhân dân lao động với thực dân Pháp và các giai cấp bóc lột.}}
+\end{question}
+
+\begin{question} %%27
+Lí luận nào sau đây đã được cán bộ của Hội Việt Nam Cách mạng Thanh niên
+truyền bá vào Việt Nam?
+\datcot
+\bonpa
+{\dung{Lí luận giải phóng dân tộc.}}
+{\sai{Lí luận Mác - Lênin.}}
+{\sai{Lí luận đấu tranh giai cấp.}}
+{\sai{Lí luận cách mạng vô sản.}}
+\end{question}
+
+\begin{question} %%28
+Điểm mới của Hội nghị tháng 5-1941 so với Hội nghị tháng 11-1939 Ban
+Chấp hành Trung ương Đảng Cộng sản Đông Dương là
+\datcot[4]
+\bonpa
+{\dung{giải quyết vấn đề dân tộc trong khuôn khổ từng nước ở Đông Dương.}}
+{\sai{thành lập mặt trận thống nhất dân tộc rộng rãi để chống đế quốc.}}
+{\sai{đề cao nhiệm vụ giải phóng dân tộc, chống đế quốc và phong kiến.}}
+{\sai{tạm gác khẩu hiệu cách mạng ruộng đất, thực hiện giảm tô, giảm tức.}}
+\end{question}
+
+\begin{question} %%29
+ Sự kiện nào là mốc đánh dấu kết thúc cuộc kháng chiến của dân tộc Việt Nam
+chống thực dân Pháp xâm lược (1945-1954)?
+\datcot[4]
+\bonpa
+{\dung{Hiệp định Giơnevơ về Đông Dương được kí kết.}}
+{\sai{Thắng lợi của chiến dịch Điện Biên Phủ.}}
+{\sai{Bộ đội Việt Nam tiến vào tiếp quản Hà Nội.}}
+{\sai{Quân Pháp xuống tàu rút khỏi Hải Phòng.}}
+\end{question}
+
+\begin{question} %%30
+ Kẻ thù nguy hiểm nhất của nước Việt Nam Dân chủ Cộng hòa trong năm đầu
+sau ngày Cách mạng tháng Tám (1945) thành công là
+\datcot
+\bonpa
+{\dung{Thực dân Pháp.}}
+{\sai{Phát xít Nhật.}}
+{\sai{Đế quốc Anh.}}
+{\sai{Trung Hoa Dân Quốc.}}
+\end{question}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{question} %%31
+Trong thời kì 1954-1975, phong trào nào là mốc đánh dấu bước phát triển của
+cách mạng ở miền Nam Việt Nam từ thế giữ gìn lực lượng sang thế tiến công?
+\datcot[4]
+\bonpa
+{\dung{“Đồng khởi”.}}
+{\sai{Phá “ấp chiến lược”.}}
+{\sai{“Thi đua Ấp Bắc, giết giặc lập công”.}}
+{\sai{“Tìm Mỹ mà đánh, lùng ngụy mà diệt”.}}
+\end{question}
+
+\begin{question} %%32
+ Điều khoản nào của Hiệp định Pari năm 1973 có ý nghĩa quyết định đối với sự
+phát triển của cuộc kháng chiến chống Mĩ, cứu nước?
+\datcot[4]
+\bonpa
+{\dung{Hoa Kì rút hết quân viễn chinh và quân các nước đồng minh.}}
+{\sai{Hai bên ngừng bắn và giữ nguyên vị trí ở miền Nam.}}
+{\sai{Nhân dân miền Nam tự quyết định tương lai chính trị.}}
+{\sai{Các bên thừa nhận thực tế ở miền Nam có hai chính quyền.}}
+\end{question}
+
+\begin{question} %%33
+Điểm chung trong kế hoạch Rơve năm 1949, kế hoạch Đờ Lát đơ Tátxinhi
+năm 1950 và kế hoạch Nava năm 1953 là
+\datcot[4]
+\bonpa
+{\dung{kết thúc chiến tranh trong danh dự.}}
+{\sai{bảo vệ chính quyền Bảo Đại do Pháp lập ra.}}
+{\sai{muốn xoay chuyển cục diện chiến tranh.}}
+{\sai{phô trương thanh thế, tiềm lực, sức mạnh.}}
+\end{question}
+
+\begin{question} %%34
+Yếu tố nào sau đây quyết định sự phát triển của phong trào giải phóng dân tộc
+ở các nước châu Á sau Chiến tranh thế giới thứ hai?
+\datcot[4]
+\bonpa
+{\dung{Ý thức độc lập và sự lớn mạnh của các lực lượng dân tộc.}}
+{\sai{Sự suy yếu của các nước đế quốc chủ nghĩa phương Tây.}}
+{\sai{Thắng lợi của phe Đồng minh trong chiến tranh chống phát xít.}}
+{\sai{Hệ thống xã hội chủ nghĩa hình thành và ngày càng phát triển.}}
+\end{question}
+
+\begin{question} %%35
+Việt Nam có thể rút ra kinh nghiệm gì từ sự phát triển kinh tế của các nước tư
+bản sau Chiến tranh thế giới thứ hai để đẩy mạnh sự nghiệp công nghiệp hóa, hiện
+đại hóa đất nước?
+\datcot[4]
+\bonpa
+{\dung{Ứng dụng các thành tựu khoa học - kĩ thuật.}}
+{\sai{Khai thác và sử dụng hợp lí nguồn tài nguyên.}}
+{\sai{Tăng cường xuất khẩu công nghệ phần mềm.}}
+{\sai{Nâng cao trình độ tập trung vốn và lao động.}}
+\end{question}
+
+\begin{question} %%36
+Nhiệm vụ hàng đầu của cách mạng Việt Nam thời kì 1930-1945 là
+\datcot[4]
+\bonpa
+{\dung{đánh đuổi đế quốc xâm lược giành độc lập dân tộc.}}
+{\sai{đánh đổ các giai cấp bóc lột giành quyền tự do dân chủ.}}
+{\sai{lật đổ chế độ phong kiến giành ruộng đất cho dân cày.}}
+{\sai{ lật đổ chế độ phản động thuộc địa, cải thiện dân sinh.}}
+\end{question}
+
+\begin{question} %%37
+Nhà nước Việt Nam Dân chủ Cộng hòa được thành lập năm 1945 là nhà nước
+của
+\datcot[2]
+\bonpa
+{\dung{toàn thể nhân dân.}}
+{\sai{công, nông, binh.}}
+{\sai{công nhân và nông dân.}}
+{\sai{công, nông và trí thức.}}
+\end{question}
+
+\begin{question} %%38
+Nguyên tắc quan trọng nhất của Việt Nam trong việc kí kết Hiệp định Sơ bộ
+(6-3-1946) và Hiệp định Giơnevơ về Đông Dương (21-7-1954) là
+\datcot[4]
+\bonpa
+{\dung{không vi phạm chủ quyền dân tộc.}}
+{\sai{phân hóa và cô lập cao độ kẻ thù.}}
+{\sai{đảm bảo giành thắng lợi từng bước.}}
+{\sai{giữ vững vai trò lãnh đạo của Đảng.}}
+\end{question}
+
+\begin{question} %%39
+Phong trào dân chủ 1936-1939 ở Việt Nam là một phong trào
+\datcot[2]
+\bonpa
+{\dung{có tính chất dân tộc.}}
+{\sai{chỉ có tính dân chủ.}}
+{\sai{không mang tính cách mạng.}}
+{\sai{không mang tính dân tộc.}}
+\end{question}
+
+\begin{question} %%40
+Hội nghị lần thứ 15 Ban Chấp hành Trung ương Đảng Lao động Việt Nam (1-
+1959) quyết định để nhân dân miền Nam sử dụng bạo lực cách mạng là do
+\datcot[4]
+\bonpa
+{\dung{không thể tiếp tục sử dụng biện pháp hoà bình được nữa.}}
+{\sai{các lực lượng vũ trang cách mạng miền Nam đã phát triển.}}
+{\sai{Mĩ và chính quyền Sài Gòn phá hoại Hiệp định Giơnevơ.}}
+{\sai{đã có lực lượng chính trị và lực lượng vũ trang lớn mạnh.}}
+\end{question}
+
+\begin{examclosing}
+\centerline{-- HẾT --}
+\end{examclosing}
+ \end{vnmultiplechoice}
+\end{document}
+[scribd id=327589426 key=key-oJpAkf8g7Gy0j9JNOeAs mode=scroll]

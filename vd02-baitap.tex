@@ -1,0 +1,313 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+% \usepackage{picinpar}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+% \usepackage[utf8]{vietnam}
+\usepackage[T1]{vntext}
+\usepackage{longtable}%
+\usepackage[colorlinks,hyperindex,plainpages=false,unicode]{hyperref}
+\usepackage{titledot}
+% \usepackage{multicol}%
+% \usepackage{shortlst}
+% \usepackage{color}
+% \usepackage{enumerate}
+\usepackage{mathpazo} 
+% \usepackage{balance} 
+
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 24.5truecm 
+\textwidth 18.5truecm 
+\usepackage[baitap]{dethi}
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ THAM KHẢO}
+\loaidethi{(Đề gồm  0\pageref{LastPage} trang)}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KỲ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA 2017}
+\tenmonhoc{Bài thi: TOÁN}
+\madethi{100}
+\tieudeduoi
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+% \hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+% \sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+
+\usepackage{lastpage}
+\graphicspath{{hinh-tracnghiem/}{hinh/}{hinh-cauhoi/}{images/}{dethamkhao/}} 
+\parindent 10pt
+% \renewcommand{\bonpa}[4]{#1#2#3#4}
+\usepackage{centerpage}
+\begin{document}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+
+%  \setlength{\shortitemwidth}{\textwidth/4-1em}
+%  \setlength{\runitemsep}{1ex}
+%  \setlength{\labelsep}{4pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \sotheo{\thesection.}
+% \section{Aaa}
+% \loadrandomproblems[bttracnghiem]{50}{2017-cauhoi-toan}
+% \input{vd13-cauhoi-detk2017-toan}
+% \loadrandomproblems[lephutu]{10}{vd12-cauhoi-lephulu}
+
+\loadrandomproblems[bttracnghiem]{50}{vd13-cauhoi-detk2017-toan}
+% \renewcommand{\datcot}[1][0]{
+% \ifthenelse{#1=0}{
+% \setlength{\shortitemwidth}{\linewidth/2-3.5em}
+% }{
+% \ifthenelse{#1=2}{
+% \setlength{\shortitemwidth}{\linewidth-1em}
+% }{
+% \ifthenelse{#1=4}{
+% \setlength{\shortitemwidth}{\linewidth-1em}
+% }{
+% }}}}
+
+\baitracnghiem{ABC:b32}{%
+Cho số phức  $z=2+5i$. Tìm số phức  $w=iz+\overline{z}$ .
+}{
+\datcot
+\bonpa
+{\sai {$w=7-3i$.}}
+{\dung{$w=-3-3i$.}}
+{\sai {$w=3+7i$.}}
+{\sai {$w=-7-7i$.}}
+\loigiai{
+$\bar z=2-5i\Rightarrow w=i(2+5i)+2-5i=-3-3i$.
+}  
+}
+
+\baitracnghiemh{ABC:b31}{%
+Cho số phức $z$ thỏa mãn $(1+i)z=3-i$ . 
+\begin{window}[0,r,{
+\parbox[t]{\linewidth/2}{\centering\includegraphics[scale=0.6]{toan04}}
+},{\label{fig:b31}}]
+Hỏi điểm biểu
+diễn của z là điểm nào trong các điểm $M, N, P, Q$ ở hình bên ?
+\end{window}
+}{
+%    \setlength{\shortitemwidth}{0.34\linewidth}
+\datcot[4]
+% \vspace*{1cm}
+\bonpa
+{\sai {Điểm $P$.}}
+{\dung{Điểm $Q$.}}
+{\sai {Điểm $M$.}}
+{\sai {Điểm $N$.}}
+% \end{multicols}
+\loigiai{
+$(1+i)z=3-i\Rightarrow z=\dfrac{3-i}{1+i}=1-2i\Rightarrow Q(1;-2)$ là điểm biểu diễn $z$. 
+}  
+}
+\baitracnghiem{ABC:b44}{%
+Trong không gian với hệ tọa độ $Oxyz$, cho mặt cầu
+$$(S):(x+1)^2+(y-2)^2+(z-1)^2=9.$$
+Tìm tọa độ tâm $I$ và tính bán kính $R$ của $(S)$.
+}{
+\datcot[2]
+% \setlength{\shortitemwidth}{\linewidth/4-3em}%%
+\bonpa
+{\dung{$I(-1;2;1)$ và $R=3$.}}
+{\sai {$I(1;-2;-1)$ và $R=3$.}}
+{\sai {$I(-1;2;1)$ và $R=9$.}}
+{\sai {$I(1;-2;-1)$ và $R=9$.}}
+\loigiai{
+$I(-1;2;1)$ và $R=3$.
+}  
+}
+\baitracnghiem{ABC:b09}{%
+Tìm tất cả các giá trị thực của tham số m sao cho đồ thị của hàm số $y=\dfrac{x+1}{\sqrt{m x^2+1}}$
+}{
+\datcot[2]
+% \setlength{\shortitemwidth}{\linewidth/4-3em}%%
+\bonpa
+{\sai{$m<0$.}}
+{\sai{Không có giá trị thực nào của m thỏa mãn yêu cầu đề bài.}}
+{\sai {$m=0$.}}
+{\dung{$m>0$.}}
+\loigiai{
+Để hàm số có 2 tiệm cận ngang thì phải tồn tại $\lim\limits_{x\rightarrow +\infty} y\ne \lim\limits_{x\rightarrow -\infty}y$.\\
+$\lim\limits_{x\rightarrow +\infty}y=\lim\limits_{x\rightarrow +\infty}\dfrac{x+1}{\sqrt{mx^2+1}}=\lim\limits_{x\rightarrow +\infty}\dfrac{1+\dfrac{1}{x}}{\sqrt{m+\dfrac{1}{x^2}}}=\dfrac{1}{\sqrt{m}}$,  tồn tại khi $m > 0$\\
+Có $\lim\limits_{x\rightarrow +\infty}y=\lim\limits_{x\rightarrow +\infty}\dfrac{x+1}{\sqrt{mx^2+1}}=\lim\limits_{x\rightarrow +\infty}\dfrac{1+\dfrac{1}{x}}{-\sqrt{m+\dfrac{1}{x^2}}}=-\dfrac{1}{\sqrt{m}}$,  tồn tại khi $m > 0$\\
+Khi đó hiển nhiên $\lim\limits_{x\rightarrow +\infty} y\ne \lim\limits_{x\rightarrow -\infty}y$.Vậy $m > 0$.
+}
+}
+
+
+\setlength{\columnsep}{10pt}
+\setlength{\columnseprule}{0.5pt}
+\lamtieude
+\indebai
+% \showanswers
+% \motdafalse
+% \begin{multicols}{2}
+\begin{enumerate}[]
+% \item Câu 01.\useproblem{ABC:b31}
+% \item Câu 02.\useproblem{ABC:b32}
+% \item Câu 03.\useproblem{ABC:b44}
+% \item Câu 04.\useproblem{ABC:b09}
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+ \end{enumerate}
+% \end{multicols}
+
+% \end{document}
+% \newpage
+% 
+% \setcounter{socauhoi}{0}
+% \indebailoigiai
+% \begin{enumerate}[]
+% \foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+% \end{enumerate}
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indebaidapan
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+% 
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indebailoigiai
+\begin{center}
+{\bf ĐỀ BÀI - ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf LỜI GIẢI}
+\end{center}
+\inloigiai
+\begin{enumerate}[]
+%  \setlength{\itemindent}{3em}
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\setlength{\columnseprule}{0pt}
+
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\indapanrutgon
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+ \foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+
+\newpage
+% \setcounter{page}{1}
+\indapanlietke
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ THEO SỐ}
+\end{center}
+\chucauhoi{ }
+\begin{enumerate}[\causo]
+\begin{multicols}{5}
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{multicols}
+\end{enumerate}
+\chucauhoi{Câu }
+
+
+
+\vspace*{1cm}
+\lamtieude
+\indapanso
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ THEO CHỮ PHƯƠNG ÁN}
+\end{center}
+\begin{center}
+\begin{enumerate}[]
+\begin{multicols}{6}
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{multicols}
+\end{enumerate}
+\end{center}
+
+
+
+% \newpage
+% \setcounter{page}{1}
+% \lamtieude
+% \begin{center}
+% {\bf ĐÁP ÁN VÀ LỜI GIẢI}
+% \end{center}
+% \indapanloigiai
+% \begin{enumerate}[\causo]
+% \setlength{\itemindent}{3em}
+% \foreachproblem[bttracnghiem]{\item\thisproblem}
+% \end{enumerate}
+% 
+% 
+% \newpage
+% \setcounter{page}{1}
+% \lamtieude
+% \indapanloigiaio
+% \begin{center}
+% {\bf ĐÁP ÁN LỜI GIẢI O}
+% \end{center}
+% \begin{enumerate}[\causo]
+% \setlength{\itemindent}{3em}
+% \foreachproblem[bttracnghiem]{\item\thisproblem}
+% \end{enumerate}
+
+\newpage
+\setcounter{page}{1}
+\inphieuduclo
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+\newpage
+ 
+\inphieuthi
+\lamphieuthi
+\begin{multicols}{3}
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+
+
+\addtocounter{page}{-2}
+
+
+\end{document}
+https://drive.google.com/open?id=0B6t6keI_Xwz5bDNETXpHSkgtRTA
+https://drive.google.com/open?id=0B6t6keI_Xwz5cjJpTUV0TDYzT2s

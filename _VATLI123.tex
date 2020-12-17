@@ -1,0 +1,157 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{mathpazo} 
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 19truecm 
+\usepackage[baitap]{dethi}
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{dbPage} trang}
+\trangcuoi{dbPage}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\tieudeduoi
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\graphicspath{{hinh-cauhoi/}} 
+\begin{document}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+%%%%%%%%%%%%%
+\loadrandomproblems[made100]{50}{2017-cauhoi-toan}
+\loadrandomproblems[made150]{50}{2017-cauhoi-toan}
+\loadrandomproblems[made160]{50}{2017-cauhoi-toan}
+\loadrandomproblems[made201]{50}{2017-cauhoi-toan}
+\loadrandomproblems[made250]{50}{2017-cauhoi-toan}
+
+\madethi{100}
+\lamtieude
+\indebai
+\begin{enumerate}[] 
+\foreachproblem[made100]{\item\causo\thisproblem}
+\end{enumerate}
+\label{dbPage}
+
+\newpage
+\madethi{150}
+\setcounter{page}{1}
+\lamtieude
+\indebai
+\begin{enumerate}[]
+\foreachproblem[made150]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+\madethi{160}
+\setcounter{page}{1}
+\lamtieude
+\indebai
+\begin{enumerate}[] 
+\foreachproblem[made160]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+\madethi{201}
+\setcounter{page}{1}
+\lamtieude
+\indebai
+\begin{enumerate}[] 
+\foreachproblem[made201]{\item\causo\thisproblem}
+\end{enumerate}
+
+\newpage
+\madethi{250}
+\setcounter{page}{1}
+\lamtieude
+\indebai
+\begin{enumerate}[] 
+\foreachproblem[made250]{\item\causo\thisproblem}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{empty}
+\indapanso
+\setlength{\columnsep}{0pt}
+\setlength{\columnseprule}{0pt}
+\chucauhoi{}
+\begin{center}
+\textbf{ĐỀ THI GIỮA HỌC KỲ 2016-2017: MÔN TOÁN}\\
+\textbf{ĐÁP ÁN MÃ ĐỀ 100}
+\end{center}
+\begin{center}
+\begin{multicols}{10}
+\begin{enumerate}[\causo]
+\foreachproblem[made100]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+
+\begin{center}
+\textbf{ĐÁP ÁN MÃ ĐỀ 150}
+\end{center}
+\indapanso
+\begin{center}
+\begin{multicols}{10}
+\begin{enumerate}[\causo]
+\foreachproblem[made150]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+
+\begin{center}
+\textbf{ĐÁP ÁN MÃ ĐỀ 160}
+\end{center}
+\indapanso
+\begin{center}
+\begin{multicols}{10}
+\begin{enumerate}[\causo]
+\foreachproblem[made160]{\item\thisproblem}
+\end{enumerate}
+\end{multicols}
+\end{center}
+
+\begin{center}
+\textbf{ĐÁP ÁN MÃ ĐỀ 201}
+\end{center}
+\indapanso
+\begin{center}
+\begin{enumerate}[\causo]
+\begin{multicols}{10}
+\foreachproblem[made201]{\item\thisproblem}
+\end{multicols}
+\end{enumerate}
+\end{center}
+
+\begin{center}
+\textbf{ĐÁP ÁN MÃ ĐỀ 250}
+\end{center}
+\indapanso
+\begin{center}
+\begin{enumerate}[\causo]
+\begin{multicols}{10}
+\foreachproblem[made250]{\item\thisproblem}
+\end{multicols}
+\end{enumerate}
+\end{center}
+
+\end{document}

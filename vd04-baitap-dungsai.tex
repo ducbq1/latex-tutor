@@ -1,0 +1,68 @@
+% Tệp mẫu làm đề thi điền chỗ trống dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage[baitap]{dethi}
+\usepackage{mathpazo}
+%\voffset=-0.8in
+\hoffset=-2cm
+\textheight 22truecm 
+\textwidth 18truecm 
+
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\renewcommand{\solutionname}{Lời giải}
+\PSNrandseed{\time}
+\begin{document}
+\lamtieude
+%Lấy 1 lần duy nhất vào bộ nhớ
+% \loadrandomproblems[btdiencho]{5}{cauhoidiencho}
+% \loadrandomproblems[btdungsai]{5}{cauhoi-dungsai}
+\loadrandomproblems[btdungsai]{5}{vd04-cauhoi-dungsai}
+
+%In ra các câu hỏi
+\hideanswers
+
+\noindent {\bf 1. Trả lời đúng sai}
+\begin{enumerate}[]
+\foreachproblem[btdungsai]{\item\causo\thisproblem}
+\end{enumerate}
+
+\vspace*{1cm}
+{\bf Chú ý:} Sinh viên không được mang sách giáo trình và vở ghi chép vào phòng thi.
+
+
+%%Đáp án của câu hỏi
+\newpage
+%\hideproblems
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN }
+\end{center}
+% \showanswers
+
+\medskip
+\noindent {\bf 1. Trả lời đúng sai}
+\indebailoigiai
+\begin{enumerate}[]
+\foreachproblem[btdungsai]{\item\causo\thisproblem}
+\end{enumerate}
+\end{document}
+%%%%%%%%%%

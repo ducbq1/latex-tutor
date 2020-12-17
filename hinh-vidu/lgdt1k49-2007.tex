@@ -1,0 +1,286 @@
+
+% LaTeX Article Template - using defaults
+\documentclass[11pt,a4letter]{article}
+%\usepackage{vnfonts}
+\usepackage{mathptmx,courier}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{indentfirst}
+\usepackage[mathscr]{eucal}
+%\usepackage{graphics,graphpap}
+
+\usepackage{picinpar}
+\usepackage{floatflt}
+\usepackage[vnantique]{vntex}
+\usepackage{epic}
+\usepackage{curves}
+\usepackage{makeidx}
+\usepackage{longtable}%
+\usepackage{multicol}%
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{\bf Ch­¬ng tr×nh}
+
+\voffset=-0.8in
+\hoffset=-1in
+\textheight 25truecm 
+\textwidth 17truecm 
+%\textheight 25truecm 
+%\textwidth 16truecm 
+\font\bfh=vhtimeb
+\font\bfhh=vhtimeb 
+\setlength{\baselineskip}{14truept}
+\newcommand{\vd}[1]{\par\medskip\noindent{\large\bf #1}}
+\newcommand{\chuong}[1]{\par\bigskip\noindent{\large\bfh #1}}
+\newcounter{deso}
+\setcounter{deso}{0}
+\renewcommand{\figurename}{{H×nh}}
+
+
+%\usepackage{program}
+
+\begin{document}
+\setlength{\baselineskip}{14truept}
+
+\centerline{\bfhh Lêi gi¶i ®Ò 1:  Lİ thuyÕt ®å thŞ vµ øng dông}    
+\medskip     
+\centerline{\bf (K49-2007: Thêi gian 90 phót)}
+\vspace*{.5cm}
+\noindent{\bf C©u 1.}  Ph¸t biÓu c¸c quy t¾c t×m chu tr×nh Hamilton. H·y chøng minh r»ng ®å thŞ trong h×nh ~\ref{fig:hinh1} cã chu tr×nh Hamilton:
+\begin{figure}[!ht]
+\centering
+\input hamilton.tex
+\caption{}\label{fig:hinh1}
+\end{figure}
+
+\noindent{\bf Lêi gi¶i.} C¸c quy t¾c t×m chu tr×nh Hamilton nh­ sau:
+{\it Quy t¾c 1:}
+NÕu ®Ønh $V$ cã bËc $2$, th× c¶ hai c¹nh g¾n víi nã ph¶i lµ mét phÇn cña chu tr×nh Hamilton bÊt k×.
+
+{\it Quy t¾c 2:}
+Trong qu¸ tr×nh x©y dùng chu tr×nh Hamilton, kh«ng cã chu tr×nh cã thÓ t¹o thµnh cho tíi khi tÊt c¶ c¸c ®Ønh ®· ®­îc ghĞ qua.
+
+{\it Quy t¾c 3:}
+NÕu trong qu¸ tr×nh x©y dùng chu tr×nh Hamilton hai trong sè c¸c c¹nh g¾n liÒn víi 1 ®Ønh $V$ ®­îc chØ ra, th× tÊt c¶ c¸c c¹nh g¾n liÒn kh¸c cã thÓ bá ®i ®­îc.
+
+
+XĞt ®Ønh 0. Ta cã thÓ chän hai c¹nh tíi ®Ønh nµy lµ: 
+
+a) 01 vµ 05:  Xãa c¸c c¹nh tíi 0 kh¸c (theo quy t¾c 3) ta cßn l¹i ®å thŞ.
+
+C¸c ®Ønh cßn l¹i 2, 3, 4 cßn l¹i bËc 2. VËy ph¶i lÊy c¸c c¹nh 12, 23, 34, 45 nh­ng nh­ vËy t¹o ra chu tr×nh con thùc sù vµ kh«ng t¹o ra chu tr×nh Hamilton ®­îc (h×nh~\ref{fig:h×nh2}).
+
+\begin{figure}[!ht]
+\begin{minipage}[b]{5cm}
+\centering
+\input hamilton1.tex
+\caption{}\label{fig:h×nh2}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{6cm}
+\centering
+\input hamilton2.tex
+\caption{}\label{fig:h×nh3}
+\end{minipage}
+\end{figure}
+b) 01 vµ 02: Xãa c¸c c¹nh tíi 0 kh¸c (theo quy t¾c 3) vµ xãa c¹nh 12 (theo quy t¾c 2) ta cßn l¹i ®å thŞ (h×nh~\ref{fig:h×nh3}).
+
+C¸c ®Ønh 3, 4, 5, 6, 7, 8 cßn l¹i bËc hai ta nhËn ®­îc chu tr×nh Hamilton: 0234567810.
+
+T­¬ng tù c¸c tr­êng hîp chän 01 vµ 03; 01 vµ 04 ®Òu kh«ng ®­îc.
+
+\noindent{\bf C©u 2.} Cã 10 sinh viªn trong mét häc k× häc c¸c m«n tïy chän vµ c¸c m«n b¾t buéc theo b¶ng d­íi ®©y. H·y thiÕt lËp lŞch thi cã İt ®ît nhÊt   sao cho  c¸c sinh viªn nµy kh«ng bŞ nhì thi mét m«n ®· häc nµo:
+\begin{center}
+\begin{tabular}{ l  l }
+ Tªn sinh viªn & M«n ®· chän häc \\
+\hline
+ An & VËt lİ, To¸n, TiÕng Anh \\
+V©n& VËt lİ, Khoa häc tr¸i ®Êt, Kinh tÕ\\
+Lan & Khoa häc tr¸i ®Êt, Kinh doanh\\
+Hµo &Thèng kª, Kinh tÕ\\
+Hïng&To¸n, Kinh doanh\\
+B¶o&VËt lİ, Khoa häc tr¸i ®Êt\\
+Hång& Kinh doanh, Thèng kª\\
+§iÒn &To¸n, Khoa häc tr¸i ®Êt\\
+C­êng&VËt lİ, M«i tr­êng, Thèng kª\\
+Quı&VËt lİ, Kinh tÕ, M«i tr­êng.
+\end{tabular}
+\end{center}
+
+\noindent{\bf Lêi gi¶i.} Gäi c¸c m«n häc lµ c¸c ®Ønh cña ®å thŞ. Hai ®Ønh cã mét c¹nh nÕu mét trong c¸c sinh viªn ®· chän häc hai m«n nµy. Nh­ vËy ®å thŞ ®­îc thiÕt lËp nh­ h×nh~\ref{fig:hinh4}. 
+
+\begin{figure}[!ht]
+\centering
+\input kithi1.tex
+\caption{}\label{fig:hinh4}
+\end{figure}
+
+C¸c ®ît thi ph¶i bè trİ nh­ sau ®Ó c¸c sinh viªn cã thÓ thi ®­îc:
+
+§ît 1: VËt lİ, Kinh doanh
+
+§ît 2: To¸n, Kinh tÕ
+
+§ît 3: TiÕng Anh, Khoa häc tr¸i ®Êt, Thèng kª
+
+§ît 4: M«i tr­êng.
+
+\noindent{\bf C©u 3.} H·y ph¸t biÓu ®Şnh nghÜa vµ c¸c tİnh chÊt cña ®å thŞ Kuratowski. Chøng minh r»ng ®å thŞ  h×nh ~\ref{fig:hinh5} lµ kh«ng ph¼ng.
+
+\begin{figure}[!ht]
+\centering
+\input dothiphang1.tex
+\caption{}\label{fig:hinh5}
+\end{figure}
+
+\noindent{\bf Lêi gi¶i.} 
+§Şnh nghÜa: §å thŞ ®Çy ®ñ $K_5$ vµ ®å thŞ hai phÇn ®Çy ®ñ $K_{3,3}$ ®­îc gäi chung lµ {\it ®å thŞ Kuratowski}.
+
+Tİnh chÊt: §å thŞ Kuratowski lµ ®å thŞ kh«ng ph¼ng. (0.5 ®iÓm).
+
+Ta cã ®Şnh lİ: NÕu mét ®å thŞ chøa mét ®å thŞ con kh«ng ph¼ng, th× ®å thŞ ®ã còng kh«ng ph¼ng. 
+
+Ta vÏ l¹i ®å thŞ h×nh ~\ref{fig:hinh5} thµnh ®å thŞ cña h×nh ~\ref{fig:hinh6}
+
+\begin{figure}[!ht]
+\centering
+\input dothiphang2.tex
+\caption{}\label{fig:hinh6}
+\end{figure}
+
+§å thŞ h×nh ~\ref{fig:hinh6} chøa cÊu h×nh $K_{3,3}$ do ®ã nã kh«ng lµ ®å thŞ ph¼ng.
+
+\newpage
+\noindent{\bf C©u 4.} Tr×nh bµy thuËt to¸n Prime. Dïng thuËt to¸n Prime t×m c©y bao trïm cã träng sè nhá nhÊt trong ®å thŞ trong h×nh ~\ref{fig:hinh7}, b¾t ®Çu tõ ®Ønh $S$.
+
+\begin{figure}[!ht]
+\centering
+\input thuattoan1.tex
+\caption{}\label{fig:hinh7}
+\end{figure}
+
+\noindent{\bf Lêi gi¶i.} 
+
+T×m c©y bao trïm nhá nhÊt Prim ($MSTPrim$)
+
+Procedure $MSTPrim$
+
+§Çu vµo: §å thŞ liªn th«ng träng sè $\mathcal G$. 
+
+§Çu ra:  C©y bao trïm nhá nhÊt $\mathcal T$.
+
+ 1. Chän ®Ønh bÊt k× $S$ cña ®å thŞ $\mathcal G$;
+
+ 2. Khëi t¹o  c©y Prim  $\mathcal T$ b»ng ®Ønh  $S$;
+
+ 3.  Khëi t¹o tËp c¹nh biªn cña c©y $\mathcal T$ b»ng  $\emptyset$;
+
+ 4. WHILE {{\it $<$ C©y Prim $\mathcal T$ ch­a bao trïm  $\mathcal G>$}}
+
+5.  CËp nhËt tËp hîp c¹nh biªn cña $\mathcal T$;
+
+6.  Chän c¹nh biªn $e$ cña c©y $\mathcal  T$ cã träng sè nhá nhÊt;
+
+7.  LÊy $W$ mét ®iÓm cuèi cña c¹nh $e$ mµ n»m ngoµi $\mathcal T$;
+
+8. Thªm c¹nh $e$ (vµ ®Ønh $W$) vµo c©y $\mathcal  T$;
+
+9. Return (C©y $\mathcal  T$ vµ nh·n cña $C_G(V)$).
+
+10. KÕt thóc $MSTPrim$
+%}
+
+C¸c b­íc t×m kiÕm nh­ h×nh ~\ref{fig:hinh8} :
+
+\begin{figure}[!ht]
+\centering
+\input thuattoan2.tex
+\caption{}\label{fig:hinh8}
+\end{figure}
+
+
+\noindent{\bf C©u 5.} Cho ch­¬ng tr×nh nguån sau ®©y b»ng ng«n ng÷ C. 
+
+1. H·y gi¶i thİch c¸c dßng lÖnh cña ch­¬ng tr×nh cã ı nghÜa g×.
+
+2. H·y vÏ l¹i ®å thŞ mµ d÷ liÖu ®· cho trong ch­¬ng tr×nh.
+
+3. Dùa vµo ®å thŞ trªn vµ ch­¬ng tr×nh nguån ®Ó t×m ra kÕt qu¶ ch¹y ch­¬ng tr×nh. 
+\lstset{language=C++,emph={printf,*},emphstyle=\bf,numbers=left, xleftmargin=16pt, numberblanklines=false, numberstyle=\footnotesize, numbersep=5pt, tabsize=4}
+\lstset{emph={printf,fprintf,scanf,fscanf,fclose,fopen,gotoxy,clrscr},emphstyle=\bf}
+\setlength{\columnseprule}{1pt}
+\setlength{\columnsep}{10pt}
+{\small
+\begin{multicols}{2}
+\begin{lstlisting}[caption={\bf Néi dung}, label={ct:dfs}]
+#include <stdio.h>
+#define MAXN 200
+const unsigned n = 14;
+const unsigned v = 5;
+const char A[MAXN][MAXN] = {
+{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+{1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+{0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+{0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+{0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+{0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1},
+{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+{0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0}
+};
+
+char used[MAXN];
+
+void DFS(unsigned i)
+{ 
+  unsigned k;
+  used[i] = 1;
+  printf("%u ", i+1);
+  for (k = 0; k < n; k++)
+    if (A[i][k] && !used[k]) DFS(k);
+}
+
+int main(void) {
+  unsigned k;
+  for (k = 1; k < n; k++) used[k] = 0;
+  printf("Duyet tu dinh %u: \n", v);
+  DFS(v-1);
+  printf("\n");
+  return 0;
+}
+\end{lstlisting}
+\end{multicols}
+}
+
+\noindent{\bf Lêi gi¶i.} 
+1. Th­ viÖn chuÈn c¸c hµm cña C.
+
+2. Sè l­îng ®Ønh cùc ®¹i cña ®å thŞ 200
+
+3. Sè l­îng ®Ønh trong ®å thŞ 14
+
+4. DuyÖt b¾t ®Çu tõ ®Ønh  5
+
+5. Ma trËn c¹nh kÒ cña ®å thŞ
+ 
+\begin{figure}[!ht]
+\centering
+\input thb1.tex
+\caption{}\label{fig:thb1}
+\end{figure}
+
+22. §¸nh dÊu ®· duyÖt
+
+23. T×m kiÕm theo chiÒu s©u
+
+33. Ch­¬ng tr×nh chİnh.
+
+KÕt qu¶ ch¹y ch­¬ng tr×nh
+
+Duyet  tu dinh 5:\\
+5 2 1 3 6 7 11 12 4
+\end{document}

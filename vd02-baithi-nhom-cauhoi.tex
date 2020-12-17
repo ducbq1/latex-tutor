@@ -1,0 +1,261 @@
+%Tệp mẫu làm đề thi trắc nghiệm phiên bản 3.0
+%Tác giả Nguyễn Hữu Điển (ĐHKHTN, Hà Nội)
+% Đề trắc nghiệm được thiết kế trên phông Unicode,
+%Đã dùng lớp examdesign.cls có sửa đổi
+%Cùng với gói lệnh dethi.sty tạo ra:
+%Đề thi trắc nghiệm từ một bộ đề sinh ra các câu hởi được 
+%sắp xếp ngẫu nhiên và các chi tiết của câu hỏi cũng được 
+%xắp sếp ngẫu nhiên. Mỗi đề thi sinh ra đều có thể in ra đáp án riêng biệt.
+%examdesign.cls đòi hỏi các gói lệnh enumerate, multicol, shortlst, keyval.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,latexsym, amssymb, amscd}
+\usepackage[utf8]{vietnam}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{picinpar}
+\usepackage{mathptmx} 
+ \usepackage{textcomp} 
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{shortlst}
+\usepackage[baithi]{dethi} %Gói lệnh cho đề thi Việt Nam
+\usepackage{lastpage}
+\usepackage{tikz}
+\usepackage{fancybox}
+\cornersize*{3.6mm}
+\Fullpages %Định dạng trang đề thi
+\ContinuousNumbering %Đánh số liên tục các bài thi
+\NumberOfVersions{1} %10 là số bài thi khác nhau được in ra
+\SectionPrefix{\relax }%\bf Phần \Roman{sectionindex}. \space}
+\tieudetracnghiem
+%\tieudetuluan
+\tieudedapan
+%\tieudetren
+\tieudeduoi
+\daungoac{\cboxx}{}                  %Dấu quanh phương án trả lời: {(}{)};{}{.};{}{)}
+%\chuphuongan{\alph}    %Ký tự cho các phương án
+%\chuphuongan{\arabic} %\Roman%\roman%kể cả số cho các phương án
+\chucauhoi{Câu}                %Chữ trước các số câu hỏi
+\mauchu{blue}                     %Mầu số câu hỏi và phương án
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\graphicspath{{hinh-cauhoi/}} %Đường dẫn của nơi để hình
+\def\kbox#1{{\Large\textcircled{\normalsize #1}}}
+
+
+% \usepackage{harmony}
+\khoanh{\cboxx}         %Khoanh các phương án: \cbox, \fbox
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+% \tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+%\ketqua{}          %In ra phần Kết quả
+%\giamkhao{}     %In ra phần chữ ký giám khảo ở phiếu thi
+% \NoRearrange  %Lệnh không trộn đề
+\motphieuthi      %In ra một phiếu thi, Mặc định là không hiện ra phiếu thi
+%  \nhieuphieuthi   %In ra mỗi đề một phiếu thi
+%  \coloigiai           %In ra đáp án có lời giải\\
+\ShortKey             %Lệnh hiện ra đáp án mỗi đề thi
+% \OneKey            %Lệnh chỉ in ra 1 bản đáp án
+% \NoKey               %Lệnh không in ra phần đáp án
+\tentruong{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\tenkhoa{ĐỀ MINH HỌA}
+\loaidethi{Đề gồm có \pageref{LastPage} trang}%{ĐỀ THI LẠI}%%{ĐỀ CHÍNH THỨC}
+\tenkythi{KÌ THI TRUNG HỌC PHỔ THÔNG QUỐC GIA NĂM 2017}
+\tenmonhoc{Môn: Toán}
+\madethi{100}
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}
+% \everymath{\displaystyle} 
+% \soanthao
+
+\begin{document}
+
+\setlength{\baselineskip}{12truept}
+% \setlength{\shortitemwidth}{0.20\textwidth}
+% \loadrandomproblems[dtracnghiem]{12}{cauhoi02-dtracnghiem} %PA(1)
+ \begin{vnmultiplechoice}[title={\bf I. Các câu hỏi Địa lý}, keycolumns=3]%
+
+\begin{question} %%01
+Nước Việt Nam nằm ở
+\datcot[4]
+\bonpa
+{\sai{bán đảo Trung Ấn, khu vực cận nhiệt đới.}}
+{\sai{phía đông Thái Bình Dương, khu vực kinh tế sôi động của thế giới.}}
+{\sai{rìa phía đông châu Á, khu vực ôn đới.}}
+{\dung{rìa phía đông bán đảo Đông Dương, gần trung tâm Đông Nam Á.}}
+\end{question}
+
+\begin{question} %%02
+ Lãnh thổ Việt Nam là khối thống nhất và toàn vẹn, bao gồm
+\datcot[2]
+\bonpa
+{\sai{vùng đất, vùng biển, vùng núi.}}
+{\sai{vùng đất, hải đảo, thềm lục địa.}}
+{\sai{vùng đất liền, hải đảo, vùng trời.}}
+{\dung{vùng đất, vùng biển, vùng trời.}}
+\end{question}
+
+\begin{question} %%03
+Đặc điểm nào sau đây chứng tỏ Việt Nam là đất nước nhiều đồi núi?
+\datcot[4]
+\bonpa
+{\sai{Cấu trúc địa hình khá đa dạng.}}
+{\sai{Địa hình thấp dần từ tây bắc xuống đông nam.}}
+{\sai{Địa hình núi cao chiếm 1\% diện tích lãnh thổ.}}
+{\dung{Địa hình đồi núi chiếm 3/4 diện tích lãnh thổ.}}
+\end{question}
+
+\begin{question} %%04
+Đặc điểm đô thị hoá ở nước ta là
+\datcot[2]
+\bonpa
+{\sai{tỉ lệ dân thành thị giảm.}}
+{\sai{phân bố đô thị đều giữa các vùng.}}
+{\sai{quá trình đô thị hoá diễn ra nhanh.}}
+{\dung{trình độ đô thị hoá thấp.}}
+\end{question}
+
+\begin{question} %%05
+Vùng sản xuất lương thực lớn nhất nước ta là
+\datcot[2]
+\bonpa
+{\sai{Đồng bằng sông Hồng.}}
+{\sai{Bắc Trung Bộ.}}
+{\sai{Duyên hải Nam Trung Bộ.}}
+{\dung{Đồng bằng sông Cửu Long.}}
+\end{question}
+
+\begin{question} %%06
+Vùng nào sau đây có nghề nuôi cá nước ngọt phát triển mạnh nhất ở nước ta?
+\datcot[4]
+\bonpa
+{\sai{Đông Nam Bộ và Đồng bằng sông Cửu Long.}}
+{\sai{Đồng bằng sông Hồng và Bắc Trung Bộ.}}
+{\sai{Bắc Trung Bộ và Đông Nam Bộ.}}
+{\dung{Đồng bằng sông Cửu Long và Đồng bằng sông Hồng.}}
+\end{question}
+
+\begin{question} %%07
+Ngành nào sau đây \textbf{không được} xem là ngành công nghiệp trọng điểm của nước ta hiện nay?
+\datcot[2]
+\bonpa
+{\sai{Năng lượng.}}
+{\sai{Chế biến lương thực, thực phẩm.}}
+{\sai{Dệt - may.}}
+{\dung{Luyện kim.}}
+\end{question}
+
+\begin{question} %%08
+Cây công nghiệp quan trọng số một của Tây Nguyên là
+\datcot
+\bonpa
+{\sai{chè.}}
+{\sai{hồ tiêu.}}
+{\sai{cao su.}}
+{\dung{cà phê.}}
+\end{question}
+
+\begin{question} %%09
+Loại đất nào sau đây chiếm diện tích lớn nhất ở Đồng bằng sông Cửu Long?
+\datcot
+\bonpa
+{\sai{Đất phù sa ngọt.}}
+{\sai{Đất mặn.}}
+{\sai{Đất xám.}}
+{\dung{Đất phèn.}}
+\end{question}
+
+\begin{question} %%10
+Điều kiện nào sau đây của vùng biển nước ta thuận lợi để phát triển giao thông vận tải biển?
+\datcot[4]
+\bonpa
+{\sai{Có nhiều bãi tắm rộng, phong cảnh đẹp, khí hậu tốt.}}
+{\sai{Các hệ sinh thái vùng ven biển rất đa dạng và giàu có.}}
+{\sai{Có nhiều sa khoáng với trữ lượng công nghiệp.}}
+{\dung{Nằm gần các tuyến hàng hải quốc tế trên Biển Đông.}}
+\end{question}
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{question} %%11
+Căn cứ vào Atlat Địa lí Việt Nam trang 4 - 5, hãy cho biết trong số 7 tỉnh biên giới trên đất liền
+giáp với Trung Quốc, \textbf{không có} tỉnh nào sau đây?
+\datcot
+\bonpa
+{\sai{Lạng Sơn. }}
+{\sai{Cao Bằng.}}
+{\sai{Hà Giang.}}
+{\dung{Tuyên Quang.}}
+\end{question}
+
+\begin{question} %%12
+Căn cứ vào Atlat Địa lí Việt Nam trang 15, hãy cho biết các đô thị nào sau đây là đô thị đặc biệt
+ở nước ta?
+\datcot
+\bonpa
+{\sai{Hà Nội, Cần Thơ.}}
+{\sai{TP. Hồ Chí Minh, Hải Phòng.}}
+{\sai{TP. Hồ Chí Minh, Đà Nẵng.}}
+{\dung{Hà Nội, TP. Hồ Chí Minh.}}
+\end{question}
+
+\begin{question} %%13
+Căn cứ vào Atlat Địa lí Việt Nam trang 17, hãy cho biết khu kinh tế ven biển nào dưới đây
+\textbf{không thuộc} Bắc Trung Bộ?
+\datcot
+\bonpa
+{\sai{Vũng Áng.}}
+{\sai{Nghi Sơn.}}
+{\sai{Hòn La.}}
+{\dung{Chu Lai.}}
+\end{question}
+
+\begin{question} %%14
+Căn cứ vào Atlat Địa lí Việt Nam trang 25, các trung tâm du lịch có ý nghĩa vùng của Trung du
+và miền núi Bắc Bộ là
+\datcot
+\bonpa
+{\sai{Hạ Long, Thái Nguyên.}}
+{\sai{Hạ Long, Điện Biên Phủ.}}
+{\sai{Thái Nguyên, Việt Trì.}}
+{\dung{Hạ Long, Lạng Sơn.}}
+\end{question}
+
+ \end{vnmultiplechoice}
+% \loadrandomproblems[ktracnghiem]{12}{cauhoi02-ktracnghiem} %PA(1)
+
+ \begin{vnmultiplechoice}[title={\examvspace*{0.5cm}\bf II. Các câu hỏi Toán học}, keycolumns=3]%
+\begin{block}
+\begin{question}
+Tập xác định của hàm số $y=\dfrac{\sqrt{x^2-5x+6}}{x+2}$ là:
+\datcot
+\bapa
+{\sai{$R\setminus \{ 3;2;-2\}$}}
+{\sai{$R\setminus [2;3]$}}
+{\dung{$(-\infty ,2]\cup [3,+\infty)\setminus \{-2\}$}}
+\end{question}
+\begin{question}
+Tập xác định của hàm số $y=\dfrac{\sqrt{x^2-5x+6}}{x+2}$ là:
+\datcot
+\haipa
+{\dung{$R\setminus \{ 3;2;-2\}$}}
+{\sai{$R\setminus [2;3]$}}
+\end{question}
+\begin{question}
+Hàm số $y=x^3-3x-4$ đồng biến trên miền nào dưới đây:
+\datcot
+\bapa
+{\sai{$(-\infty ,-1)\cup (1, +\infty)$}}
+{\dung{$(-\infty ,-1)$ và $(1, +\infty)$}}
+{\sai{$R\setminus [-1;1]$ }}
+\end{question} 
+\end{block}
+%\foreachproblem[ktracnghiem]{\thisproblem} %P(1)
+\selectrandomly{vd02-cauhoi-ktracnghiem}{20} %P(2)
+%  \selectallproblems{cauhoi02-ktracnghiem} %P(3)
+%  \selectallproblems{01cauhoi-toan-2017} %P(3)
+
+\begin{examclosing}
+\centerline{-- HẾT --}
+\end{examclosing}
+
+ \end{vnmultiplechoice}
+\end{document}
+[scribd id=330151056 key=key-JLeLWjI0GmisBwp14lnc mode=scroll]

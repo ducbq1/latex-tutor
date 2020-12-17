@@ -1,0 +1,262 @@
+% Tệp mẫu làm đề thi trắc nghiệm dựa vào gói lệnh lamdethi.sty
+% Tác giả: Nguyên Hữu Điển
+% Khoa Toán Cơ Tin học, ĐHKHTN HN, ĐHQGHN
+% 334, Nguyễn Trãi, Thanh Xuân, Hà Nội
+% huudien@vnu.edu.vn
+% Ngày 26/12/2009
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsxtra,amssymb,latexsym, amscd,amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tkz-tab}
+\usepackage[utf8]{vietnam}
+\usepackage{longtable}%
+\usepackage{mathpazo} 
+
+\voffset=-3cm
+% \hoffset=-2cm
+\textheight 24truecm 
+\textwidth 18truecm 
+\usepackage[baitap]{dethi}
+\tentruong{ĐẠI HỌC KHOA HỌC TỰ NHIÊN}
+\tenkhoa{Khoa Toán - Cơ -Tin học}
+\loaidethi{Đề gồm có \pageref{DebaiPage} trang}
+\tenkythi{ĐỀ THI GIỮA KỲ NĂM HỌC 2016-2017}
+\tenmonhoc{Môn: Toán học tính toán}
+\madethi{100}
+\tieudeduoi
+\thoigian{\underline{Thời gian làm bài: 90 phút, không kể thời gian phát đề}}   
+\hovaten{Họ và tên}         %Nếu không muốn có dòng này không gõ lệnh
+\tenlop{Tên lớp}         %Nếu không muốn có dòng này không gõ lệnh
+\sobaodanh{Số báo danh}  %Nếu không muốn có dòng này không gõ lệnh
+\khoanh{\cboxv}
+\daungoac{\cboxx}{}
+\chuphuongan{\small\bfseries\Alph}
+\mauchu{blue}
+\PSNrandseed{\time}
+\usepackage{centerpage}
+\graphicspath{{hinh-tracnghiem/}{hinh/}{hinh-cauhoi/}{images/}} 
+\parindent 10pt
+\usepackage[colorlinks,hyperindex,plainpages=false,unicode]{hyperref}
+\usepackage{titledot}
+
+
+
+\titlecontents{section}
+[3.5em]{}
+{\contentslabel{2.5em}}
+{}{}
+\titlecontents{subsection}
+[5.5em]{}
+{\contentslabel{3.5em}}
+{}{}
+\begin{document}
+\setlength{\baselineskip}{12truept}
+\def\v#1{\overrightarrow{#1}} %Làm vectơ
+\renewcommand{\contentsname}{ }
+%%%%%%%%%%%%%
+% \sotheo{\thesection.}
+% \section{Aaa}
+
+\lamtieude
+\loadrandomproblems[bttracnghiem]{50}{2017-cauhoi-toan}
+% \loadrandomproblems[bttracnghiem]{5}{vd12-cauhoi-lephulu}
+\indebailoigiai
+\addcontentsline{toc}{section}{Đề thi THPT QG 2016-2017 (Lần 3)}
+\begin{center}
+\textbf{ĐỀ BÀI LÀM ĐỀ}
+\end{center}
+\begin{enumerate}[]
+% \foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\foreachproblem[bttracnghiem]{\item\causo[\textcolor{red}{\textbf{\thisproblemlabel}}]\addcontentsline{toc}{subsection}{Câu \thesocauhoi.[\thisproblemlabel]}\thisproblem}
+ \end{enumerate}
+\label{DebaiPage}
+
+\newpage
+\setcounter{page}{1}
+\loaidethi{(Lời giải  \pageref{magocPage} trang)}
+\trangcuoi{magocPage}
+\indebai
+\lamtieude
+\begin{center}
+\textbf{ĐỀ BÀI VÀ MÃ GỐC}
+\end{center}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo[\textcolor{red}{\textbf{\thisproblemlabel}}]\thisproblem}
+ \end{enumerate}
+\label{magocPage}
+% \begin{enumerate}[]
+% \foreachproblem[bttracnghiem]{\item\ref{ab:\thisproblemlabel}\textcolor{red}{\textbf{\thisproblemlabel}}\addcontentsline{toc}{section}{\thisproblemlabel}\thisproblem}
+%  \end{enumerate}
+
+\newpage
+\thispagestyle{empty}
+\lamtieude
+\indebai
+\begin{center}
+\textbf{CÂU HỎI VÀ MÃ GỐC}
+\end{center}
+\begin{multicols}{3}
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\textcolor{red}{\textbf{\thisproblemlabel}}}
+ \end{enumerate}
+\end{multicols}
+
+\newpage
+\thispagestyle{empty}
+\lamtieude
+\begin{center}
+\textbf{MÃ GỐC LIÊN KẾT VỚI ĐỀ}
+\end{center}
+\begin{multicols}{3}
+\tableofcontents[MÃ ĐỀ THI]
+\end{multicols}
+\end{document}
+
+
+
+
+
+\begin{enumerate}[]
+\foreachsolution[bttracnghiem]{\item\causo\thisproblem}
+ \end{enumerate}
+\end{document}
+\newpage
+\indebailoigiai
+\begin{enumerate}[]
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+ \end{enumerate}
+
+\indapanrutgon
+\begin{enumerate}[\causo]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+ \end{enumerate}
+\end{document}
+\newpage
+\section{BBBBBBB}
+\setcounter{socauhoi}{0}
+% \indebailoigiai
+% \begin{cauhoi}
+% \foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+% \end{cauhoi}
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indebaidapan
+\begin{center}
+{\bf ĐỀ BÀI VÀ ĐÁP ÁN ĐÁNH DẤU}
+\end{center}
+\begin{cauhoi}
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{cauhoi}
+% 
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indebailoigiai
+\begin{center}
+{\bf ĐỀ BÀI - ĐÁP ÁN - LỜI GIẢI}
+\end{center}
+\begin{cauhoi}
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{cauhoi}
+
+
+
+\newpage
+% \setcounter{page}{1}
+\lamtieude
+\indapanrutgon
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN RÚT GỌN}
+\end{center}
+\begin{cauhoi}[2]
+% \begin{multicols}[2]
+ \foreachproblem[bttracnghiem]{\item\thisproblem}
+% \end{multicols}
+\end{cauhoi}
+
+
+
+\newpage
+% \setcounter{page}{1}
+\indapanlietke
+\thispagestyle{empty}
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ}
+\end{center}
+\begin{cauhoi}[2]
+\begin{multicols}{5}
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{multicols}
+\end{cauhoi}
+
+\end{document}
+\vspace*{1cm}
+\lamtieude
+\indapanso
+\begin{center}
+{\bf ĐÁP ÁN LIỆT KÊ THEO SỐ}
+\end{center}
+\begin{center}
+\begin{cauhoi}[3]
+\begin{multicols}{6}
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{multicols}
+\end{cauhoi}
+\end{center}
+
+
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\begin{center}
+{\bf ĐÁP ÁN VÀ LỜI GIẢI}
+\end{center}
+\indapanloigiai
+\begin{cauhoi}
+\foreachproblem[bttracnghiem]{\item\causo\thisproblem}
+\end{cauhoi}
+\end{document}
+\newpage
+\setcounter{page}{1}
+\lamtieude
+\indapanloigiaio
+\begin{center}
+{\bf LỜI GIẢI}
+\end{center}
+\begin{cauhoi}[2]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{cauhoi}
+
+\newpage
+\setcounter{page}{1}
+\inphieuduclo
+\lamphieuthi
+\begin{center}
+\begin{multicols}{3}
+\begin{cauhoi}[2]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{cauhoi}
+\end{multicols}
+\end{center}
+\newpage
+ 
+\inphieuthi
+\lamphieuthi
+\begin{multicols}{3}
+\begin{cauhoi}[2]
+\foreachproblem[bttracnghiem]{\item\thisproblem}
+\end{cauhoi}
+\end{multicols}
+
+
+\addtocounter{page}{-2}
+
+
+\end{document}
+https://drive.google.com/open?id=0B6t6keI_Xwz5dmtjbHlIbjIyc0k
